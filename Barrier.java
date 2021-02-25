@@ -63,4 +63,9 @@ public class Barrier extends JFrame implements Observer {
      * with the permitted vehicles list, and the "vehicle clear" button.
      */
     private boolean raised = true;
+    
+    public Barrier(System_status lnkSystem_status, Vehicle_list lnkVehicle_list) {
+    	this.lnkSystem_status = lnkSystem_status;
+    	this.lnkVehicle_list = lnkVehicle_list;
+    }
 }

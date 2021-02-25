@@ -26,4 +26,5 @@ public class Vehicle_list {
      * @supplierCardinality 0..*
      * @directed*/
     private java.util.Hashtable lnkVehicle;
+    
 }

@@ -70,4 +70,6 @@ abstract public class Permit {
      * @supplierCardinality 0..*
      */
     private Vehicle_info permittedVehicles;
+    
+    //methods to add about/add/delete/modify
 }

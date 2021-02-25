@@ -49,4 +49,10 @@ public class Administration_office extends JFrame implements Observer {
      * @directed
      */
     private System_status lnkSystem_status;
+    
+    public Administration_office(System_status lnkSystem_status, Vehicle_list lnkVehicle_list, Permit_list lnkPermit_list) {
+    	this.lnkSystem_status = lnkSystem_status;
+    	this.lnkVehicle_list = lnkVehicle_list;
+    	this.lnkPermit_list = lnkPermit_list;
+    }
 }
