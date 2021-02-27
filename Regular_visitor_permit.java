@@ -29,4 +29,11 @@ public class Regular_visitor_permit extends Permit {
      * @directed
      */
     private Date lnkDate1;
+    
+    public Regular_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Date lnkDate, Date lnkDate1, String hostName) {
+    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday);
+    	this.lnkDate = lnkDate;
+    	this.lnkDate1 = lnkDate1;
+    	this.hostName = hostName;
+    }
 }

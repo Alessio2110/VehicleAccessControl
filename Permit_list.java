@@ -21,4 +21,19 @@ public class Permit_list {
      * @supplierCardinality 0..*
      * @directed*/
     private java.util.Hashtable lnkPermit;
+    
+    public Permit_list(){
+    	lnkPermit = new java.util.Hashtable<String, Permit>();
+    }
+    
+    public void addPermit(Permit p) {
+    	Permit p2;
+    	p2 = (Permit) lnkPermit.get(p.getName());
+    	if (p2 == null)
+    		lnkPermit.put(p.getName(), p);
+    	else {
+    		System.out.println("Collision occurring:");
+    	}
+    		
+    }
 }

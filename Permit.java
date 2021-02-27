@@ -72,4 +72,43 @@ abstract public class Permit {
     private Vehicle_info permittedVehicles;
     
     //methods to add about/add/delete/modify
+    
+    public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday) {
+    	this.permitHolder = permitHolder;
+    	this.noOfEntries = noOfEntries;
+    	this.warnings = warnings;
+    	this.suspended = suspended;
+    	this.enteredToday = enteredToday;
+
+    }
+    public void addPermit() {
+    	
+    }
+    
+    public void restartEntries() {
+    	noOfEntries = 1;
+    }
+    
+    public void suspend() {
+    	suspended = true;
+    }
+    
+    public void unsuspend() {
+    	suspended = false;
+    }
+    
+    public void setEntered(boolean hasEntered) {
+    	enteredToday = hasEntered;
+    }
+    
+    public void setVehicleUsed(Vehicle_info vehicle) {
+    	vehicleUsedToday = vehicle;
+    }
+    
+    public String getName() {
+    	return permitHolder;
+    }
+    public void deletePermit() {
+    	
+    }
 }

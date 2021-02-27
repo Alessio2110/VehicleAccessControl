@@ -31,4 +31,17 @@ public class Vehicle_info {
      * @directed
      */
     private Permit lnkPermit;
+    
+    public Vehicle_info(String regNo, Permit lnkPermit) {
+    	this.regNo = regNo;
+    	this.lnkPermit = lnkPermit;
+    }
+    
+    public Permit getPermit() {
+    	return lnkPermit;
+    }
+    
+    public String getRegNo() {
+    	return regNo;
+    }
 }

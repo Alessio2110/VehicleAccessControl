@@ -25,6 +25,48 @@ public class Vehicle_list {
      * @clientCardinality 1
      * @supplierCardinality 0..*
      * @directed*/
-    private java.util.Hashtable lnkVehicle;
+//    private java.util.Hashtable lnkVehicle;
+	private java.util.Hashtable lnkVehicle;
+	
+    public Vehicle_list(){
+    	Vehicle_info v;
+    	lnkVehicle = new java.util.Hashtable<String, Vehicle_info>();
+    }
     
+    public boolean isAllowed( String regNo) {
+    	Vehicle_info v;
+    	Permit p;
+    	v = getVehicle(regNo);
+    	if (v != null) {
+    		p = v.getPermit();
+    	}
+    	return true;
+    }
+    public void addVehicle(Vehicle_info v) {
+    	Vehicle_info v2;
+    	v2 = (Vehicle_info) lnkVehicle.get(v.getRegNo());
+    	if (v2 == null)
+    		lnkVehicle.put(v.getRegNo(), v);
+    	else {
+    		System.out.println("Collision occurring:");
+    		System.out.println("New vehicle:" + v.getRegNo() + " " + v.getPermit() + " Registered Vehicle: " + v2.getRegNo() + " " + v2.getPermit());
+    	}
+    		
+    }
+    public Vehicle_info getVehicle(String regNo) {
+    	Vehicle_info v;
+    	v = (Vehicle_info) lnkVehicle.get(regNo);
+    	return v;
+    }
+//    public int hashCode() {
+//    	return 1;
+//    }
+//    
+//    public Object get(Object key) {
+//    	return key;
+//    }
+//    
+//    public boolean equals() {
+//    	return true;
+//    }
 }

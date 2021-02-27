@@ -39,11 +39,13 @@ public class System_status extends Observable {
     
     
     public System_status() { //Constructor 
-    	
+    	today = new Date(1);
     }
     
-    public void setSystemActive(boolean isActive) {
+    public void setActive(boolean isActive) {
     	systemActive = isActive;
+    	setChanged();
+        notifyObservers();
     }
     
     public boolean getSystemActive() {
@@ -53,17 +55,18 @@ public class System_status extends Observable {
     public void showLogs() {
     	for (int i = 0; i < log.length - 1; i ++)
     		System.out.println(log[i]);
+    	setChanged();
+        notifyObservers();
     }
     
-    public Date getToday() {
-    	Date today = new Date();
-    	return today;
+    public int getToday() {
+    	return today.getDay();
     }
     
-// // "Sell": Decrement specified item in database
-//    public void decrement(int n) {
-//      database[n].decrement();
-//      setChanged();
-//      notifyObservers();
-//    }
+    public void nextDay() {
+    	today.increment();
+    	setChanged();
+        notifyObservers();
+    }
+    
 }

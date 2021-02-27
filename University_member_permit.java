@@ -15,4 +15,9 @@ public class University_member_permit extends Permit {
      * @directed
      */
     private Date lnkDate;
+    
+    public University_member_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Date lnkDate) {
+    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday);
+    	this.lnkDate = lnkDate;
+    }
 }
