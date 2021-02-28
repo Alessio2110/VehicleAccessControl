@@ -69,24 +69,45 @@ abstract public class Permit {
      * @label Controls access of
      * @supplierCardinality 0..*
      */
-    private Vehicle_info permittedVehicles;
+    private Vehicle_list permittedVehicles;
     
     //methods to add about/add/delete/modify
-    
-    public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday) {
+    public Permit() {
+    	
+    }
+    public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles) {
     	this.permitHolder = permitHolder;
     	this.noOfEntries = noOfEntries;
     	this.warnings = warnings;
     	this.suspended = suspended;
     	this.enteredToday = enteredToday;
-
+    	this.permittedVehicles = permittedVehicles;
     }
     public void addPermit() {
     	
     }
     
-    public void restartEntries() {
-    	noOfEntries = 1;
+    public void increaseEntries() {
+    	noOfEntries++;
+    }
+    
+    public void setVehicle(Vehicle_info vehicleUsedToday) {
+    	this.vehicleUsedToday = vehicleUsedToday;
+    }
+    public boolean isAllowed() {
+    	if (!suspended)
+    		return true;
+    	else 
+    		return false;
+    }
+    private String status() {
+    	String s = "";
+    	if (suspended)
+    		s += "Yes";
+    	else 
+    		s += "No";
+    	return ("Permit holder name: " + permitHolder + "; # of entries since permit issued: " + noOfEntries + "; # of warnings: "
+    		+ warnings + "; suspended: " + s);
     }
     
     public void suspend() {
@@ -97,18 +118,31 @@ abstract public class Permit {
     	suspended = false;
     }
     
-    public void setEntered(boolean hasEntered) {
-    	enteredToday = hasEntered;
+    public void clearWarnings() {
+    	warnings = 0;
     }
     
-    public void setVehicleUsed(Vehicle_info vehicle) {
-    	vehicleUsedToday = vehicle;
+    public void clearEntries() {
+    	noOfEntries = 0;
+    }
+    
+    public void checkWarnings() {
+    	if (warnings == 3)
+    		suspended = true;
+    }
+    
+    public void setEntered(boolean enteredToday) {
+    	this.enteredToday = enteredToday;
     }
     
     public String getName() {
     	return permitHolder;
     }
     public void deletePermit() {
+    	
+    }
+    
+    public void dailyReset() {
     	
     }
 }

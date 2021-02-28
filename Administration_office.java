@@ -79,7 +79,7 @@ public class Administration_office extends JFrame implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
-		System.out.println("Barrier---Today is: Day #" + lnkSystem_status.getToday());
+		System.out.println("Administration---Today is: Day #" + lnkSystem_status.getToday());
 		
 	}
 }

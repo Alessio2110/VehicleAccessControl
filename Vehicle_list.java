@@ -29,19 +29,37 @@ public class Vehicle_list {
 	private java.util.Hashtable lnkVehicle;
 	
     public Vehicle_list(){
-    	Vehicle_info v;
+//    	Vehicle_info v;
     	lnkVehicle = new java.util.Hashtable<String, Vehicle_info>();
     }
-    
+//    Work in progress method
     public boolean isAllowed( String regNo) {
-    	Vehicle_info v;
-    	Permit p;
-    	v = getVehicle(regNo);
+    	if (regNo.equals(""))
+    		return false;
+    	
+    	boolean allowed = false;
+    	Vehicle_info v = getVehicle(regNo);
+    	
     	if (v != null) {
-    		p = v.getPermit();
+    		Permit p = v.getPermit();
+    		allowed = p.isAllowed();
+    		if (allowed)
+    			updatePermit(p, v);
     	}
-    	return true;
+    	else
+    		allowed = false;
+    	return allowed;
     }
+    
+    public void updatePermit(Permit p, Vehicle_info v) {
+    	p.increaseEntries();
+    	p.setVehicle(v);
+    }
+//    Find Permit info given a Vehicle
+    public Permit getPermit(Vehicle_info v) {
+    	return v.getPermit();
+    }
+    
     public void addVehicle(Vehicle_info v) {
     	Vehicle_info v2;
     	v2 = (Vehicle_info) lnkVehicle.get(v.getRegNo());
@@ -50,9 +68,20 @@ public class Vehicle_list {
     	else {
     		System.out.println("Collision occurring:");
     		System.out.println("New vehicle:" + v.getRegNo() + " " + v.getPermit() + " Registered Vehicle: " + v2.getRegNo() + " " + v2.getPermit());
-    	}
-    		
+    	}	
     }
+    
+    public void addPermitVehicle(Vehicle_info v) {
+    	Vehicle_info v2;
+    	v2 = (Vehicle_info) lnkVehicle.get(v.getRegNo());
+    	if (v2 == null)
+    		lnkVehicle.put(v.getRegNo(), v);
+    	else {
+    		System.out.println("Collision occurring:");
+    		System.out.println("New vehicle:" + v.getRegNo() + " " + v.getPermit() + " Registered Vehicle: " + v2.getRegNo() + " " + v2.getPermit());
+    	}	
+    }
+//    Find vehicle info given the registration number
     public Vehicle_info getVehicle(String regNo) {
     	Vehicle_info v;
     	v = (Vehicle_info) lnkVehicle.get(regNo);

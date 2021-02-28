@@ -29,9 +29,15 @@ public class Regular_visitor_permit extends Permit {
      * @directed
      */
     private Date lnkDate1;
-    
-    public Regular_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Date lnkDate, Date lnkDate1, String hostName) {
-    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday);
+    /**
+    *This requires the name of the University member receiving the visitor, the name of the visitor (the permit holder),
+    *the visitor's vehicle registration numbers and the start and end dates on which the visits will occur. 
+    *This category of visitor would be appropriate for, say, a researcher collaborating with someone in the University for a couple of weeks,
+    *or for actors appearing in a short-running production at the MacRobert Theatre.
+    *required: hostName, permitHolder, vehicleUsedToday, lnkDate, lnkDate1
+    **/
+    public Regular_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles, Date lnkDate, Date lnkDate1, String hostName) {
+    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday, permittedVehicles);
     	this.lnkDate = lnkDate;
     	this.lnkDate1 = lnkDate1;
     	this.hostName = hostName;

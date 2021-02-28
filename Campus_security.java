@@ -62,9 +62,16 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
         Container window = getContentPane();
         window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
         
-        buttonActive = new JButton("Add day");
+        buttonActive = new JButton("Set active");
         window.add(buttonActive);
         buttonActive.addActionListener(this);
+        
+        display = new JTextField("No data", 20);
+//        if (lnkSystem_status.getSystemActive()) 
+//        	display.setText("The barrier system is active ");
+//        else
+        display.setText("The barrier system is NOT active " );
+        add(display);
         
         setSize(400,200);
         setLocation(0, 200);
@@ -73,12 +80,16 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (lnkSystem_status.getSystemActive()) 
+        	display.setText("The barrier system is active ");
+        else
+        	display.setText("The barrier system is NOT active " );
 		// TODO Auto-generated method stub
 		
 	}
 	  public void actionPerformed(ActionEvent e) {
 	    	if (e.getSource() == buttonActive) {
-	    		
+	    		lnkSystem_status.setActive(true);
 	    	}
 	    }
 

@@ -6,8 +6,8 @@
  */
 public class Permanent_visitor_permit extends Permit {
 	
-	public Permanent_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday) {
-		super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday);
+	public Permanent_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles) {
+		super(permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday, permittedVehicles);
 
     }
 }

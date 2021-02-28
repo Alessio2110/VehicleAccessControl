@@ -20,8 +20,8 @@ public class Day_visitor_permit extends Permit {
      */
     private Date lnkDate;
     
-    public Day_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Date lnkDate, String hostName) {
-    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday);
+    public Day_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles, Date lnkDate, String hostName) {
+    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday, permittedVehicles);
     	this.lnkDate = lnkDate;
     	this.hostName = hostName;
     }
