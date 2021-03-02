@@ -72,8 +72,8 @@ abstract public class Permit {
     private Vehicle_list permittedVehicles;
     
     //methods to add about/add/delete/modify
-    public Permit() {
-    	
+    public Permit(String permitHolder) {
+    	noOfEntries = 0;
     }
     public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles) {
     	this.permitHolder = permitHolder;
@@ -82,9 +82,6 @@ abstract public class Permit {
     	this.suspended = suspended;
     	this.enteredToday = enteredToday;
     	this.permittedVehicles = permittedVehicles;
-    }
-    public void addPermit() {
-    	
     }
     
     public void increaseEntries() {
@@ -143,6 +140,7 @@ abstract public class Permit {
     }
     
     public void dailyReset() {
-    	
+    	enteredToday = false;
+    	vehicleUsedToday = null;
     }
 }

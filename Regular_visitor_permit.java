@@ -36,8 +36,9 @@ public class Regular_visitor_permit extends Permit {
     *or for actors appearing in a short-running production at the MacRobert Theatre.
     *required: hostName, permitHolder, vehicleUsedToday, lnkDate, lnkDate1
     **/
-    public Regular_visitor_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles, Date lnkDate, Date lnkDate1, String hostName) {
-    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday, permittedVehicles);
+    public Regular_visitor_permit(String permitHolder, Date lnkDate, Date lnkDate1, String hostName) {
+//    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday, permittedVehicles);
+    	super(permitHolder);
     	this.lnkDate = lnkDate;
     	this.lnkDate1 = lnkDate1;
     	this.hostName = hostName;

@@ -91,10 +91,6 @@ public class Timer extends JFrame
         
     }
     
-//    public void update(Observable o, Object arg) {
-//    	
-//    	display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
-//    }
     public void actionPerformed(ActionEvent e) {
     	if (e.getSource() == addDay) {
 //    		System.out.println("Today is: Day #" + today.getDay());
