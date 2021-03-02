@@ -123,11 +123,18 @@ abstract public class Permit {
     	noOfEntries = 0;
     }
     
-    public void checkWarnings() {
+    public boolean checkMaxWarnings() {
     	if (warnings == 3)
-    		suspended = true;
+    		return true;
+    	return false;
     }
-    
+    public void addWarning() {
+    	warnings++;
+    	if (checkMaxWarnings()) {
+    		warnings = 0;
+    		suspended = true;
+    	}
+    }
     public void setEntered(boolean enteredToday) {
     	this.enteredToday = enteredToday;
     }

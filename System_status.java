@@ -69,4 +69,7 @@ public class System_status extends Observable {
         notifyObservers();
     }
     
+    public String[] getLogs() {
+    	return log;
+    }
 }

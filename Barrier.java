@@ -87,12 +87,11 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
 
-		
 		passStopLabel = new JLabel("PASS");
 		window.add(passStopLabel);
 		passStopLabel.setFont(passStopLabel.getFont().deriveFont(64f));
-		passStopLabel.setBackground(Color.red);
-		
+		passStopLabel.setBackground(Color.green);
+
 		add(new JLabel("Registration number: "));
 
 		registrationField = new JTextField("", 10);
@@ -102,34 +101,46 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		//        vehicleClear.setLocation(0, 0);
 		window.add(checkRegNo);
 		checkRegNo.addActionListener(this);
-
+//		checkRegNo.setBounds(25 , 5 , 5, 5);
+		
 		vehicleClear = new JButton("Vehicle clear");
 		vehicleClear.setLocation(0, 0);
 		window.add(vehicleClear);
 		vehicleClear.addActionListener(this);
 
 
-
-		setSize(200, 250);
+		passStopLabel.setOpaque(true);
+		setSize(250, 250);
 		setVisible(true);
-		setLocation(500, 0);
+		setLocation(600, 0);
 		lnkSystem_status.addObserver(this);
 	}
 	public void update(Observable o, Object arg) {
 		//	 Fetch (potentially) updated information and display it
 		active = getActive();
+		//setRaised(isAllowedThrough);
 		raised = isAllowedThrough();
+//		if (registrationField.getText().length() == 0)
+//			checkRegNo.setEnabled(false);
+//		else
+//			checkRegNo.setEnabled(true);
 		if (!active) //if the system is not active, the barrier MUST be raised
 			setRaised(true);
-		
-		if (raised) //No need to check if the system is active or not, since if it is not active the barrier is up, if it is active it only depends on the barrier position
+
+		if (raised) { //No need to check if the system is active or not, since if it is not active the barrier is up, if it is active it only depends on the barrier position
 			passStopLabel.setText("PASS");		
-		else
+			passStopLabel.setBackground(Color.green);
+		}
+		else {
 			passStopLabel.setText("STOP");
+			passStopLabel.setBackground(Color.red);
+		}
+		
 
 	} // update
 
 	public void actionPerformed(ActionEvent e) {
+		
 		if (e.getSource() == checkRegNo) {
 			regNo = registrationField.getText();
 			registrationField.setText("");
