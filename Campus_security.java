@@ -1,4 +1,5 @@
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener; // Added by Alessio
@@ -57,6 +58,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 	private JLabel labelRegNo;
 	private JTextField fieldRegNo;
 	private JTextArea logArea;
+	JScrollPane scroll;
 	int date;
 	public Campus_security(System_status lnkSystem_status, Vehicle_list lnkVehicle_list) {
 		this.lnkSystem_status = lnkSystem_status;
@@ -96,9 +98,13 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		buttonIssueWarning.addActionListener(this);
 		
 		date = lnkSystem_status.getToday();
-		logArea = new JTextArea("Date: " + date + "\n\n" , 20, 30);
-//		logArea.append("Goodbye Cruel World\n");
-		window.add(logArea);
+		
+		
+		logArea = new JTextArea("Date: " + date + "\n\n" , 20, 40);
+		scroll = new JScrollPane (logArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+//		logArea.setEditable(false);
+		window.add(scroll);
+//		window.add(logArea);
 		
 		setSize(600,500);
 		setLocation(0, 250);

@@ -1,7 +1,3 @@
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Label;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.event.ActionEvent;
@@ -57,25 +53,39 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	 * @directed
 	 */
 	private System_status 	lnkSystem_status;
+
+	//First Panel: Add Permit
 	private JPanel 		addPermitPanel; //Add permit panel
-	private JPanel 		secondPanel;
+	
+	private JLabel 		lblToday;
 	private JLabel		lblPermitHolder; //Permit holder name label
 	private JLabel 		lblRegNo; //Registration number label
 	private JLabel 		lblIssueDate; //Date of Issue label
 	private JLabel 		lblHostName; //Student name label
 	private JLabel 		lblStartDate; //Start date label
 	private JLabel 		lblEndDate; //End date label
+	
 	private JTextField 	tfPermitHolder; //text field to insert permit holder's name
 	private JTextField 	tfRegNo; // text field to insert registration number of a vehicle
 	private JTextField 	tfIssueDate; //text field to insert date of issue
 	private JTextField 	tfHostName; //text field to insert name of the university member
 	private JTextField 	tfStartDate;
 	private JTextField 	tfEndDate;
-	private JTextField display;
-	private JButton addPermit;
+	
+	private JButton 	addPermit;
+	//Second Panel: Record Warning
+	private JPanel 		secondPanel;
+	
+	private JLabel 		lblToday2;
+	private JLabel		lblPermitHolder2;
+	private JLabel		lblRecordWarning;
+	
+	private JTextField 	tfPermitHolder2; 
+	private JTextField 	tfWarnings;
+	
 	private JComboBox cmbPermitList; //ComboBox with 4 permit type options
+	
 	private JTabbedPane tb; 
-	private GridBagConstraints c;
 
 	public Administration_office(System_status lnkSystem_status, Vehicle_list lnkVehicle_list, Permit_list lnkPermit_list) {
 		this.lnkSystem_status = lnkSystem_status;
@@ -87,6 +97,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
 		setLayout(new GridLayout(1, 1));
+		
 		
 		//Add Permit
 		setFirstPanel();
@@ -115,11 +126,9 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 //		tb.addTab("Status Enquiry", );
 //		tb.addTab("Modify Permit",  );
 
-//		getContentPane().add(thePane);
 		add(tb);
 
-
-		setSize(600,400);
+		setSize(600,600);
 		setVisible(true);
 		setLocation(600, 300);
 		lnkSystem_status.addObserver(this);
@@ -128,6 +137,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	@Override
 	public void update(Observable o, Object arg) {
 //		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
+		lblToday.setText("                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday2.setText("                                           Today is:       " + lnkSystem_status.getToday());
 		System.out.println("Administration---Today is: Day #" + lnkSystem_status.getToday());
 
 	}
@@ -231,11 +242,17 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		cmbPermitList.addActionListener(this);
 		addPermitPanel.add(cmbPermitList);
 
-		JLabel empty = new JLabel("");
-		addPermitPanel.add(empty);
+//		JLabel empty = new JLabel("");
+//		addPermitPanel.add(empty);lblToday = new JLabel("                                           Today is:       " + lnkSystem_status.getToday());
+//		lblToday.setBackground(Color.green);
+		lblToday = new JLabel("                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday.setFont(lblToday.getFont().deriveFont(15f));
+		lblToday.setForeground(Color.red);
+		lblToday.setOpaque(true);
+		addPermitPanel.add(lblToday);
 		
 		//		label and textfield for permit holder name        
-		lblPermitHolder = new JLabel("Name:");
+		lblPermitHolder = new JLabel("Permit Holder Name:");
 		tfPermitHolder = new JTextField("", 25);
 
 		addPermitPanel.add(lblPermitHolder);
@@ -289,7 +306,37 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 	
 	public void setSecondPanel() {
+		GridLayout experimentLayout = new GridLayout(0,2);
 		secondPanel = new JPanel();
+		secondPanel.setSize(100, 5);
+		secondPanel.setLayout(experimentLayout);
+		
+		
+		JLabel empty = new JLabel("");
+		secondPanel.add(empty);
+		
+		lblToday2 = new JLabel("                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday2.setFont(lblToday.getFont().deriveFont(15f));
+		lblToday2.setForeground(Color.red);
+		lblToday2.setOpaque(true);
+		secondPanel.add(lblToday2);
+//		label and textfield for permit holder name        
+		lblRecordWarning = new JLabel("Record Warning:");
+		secondPanel.add(lblRecordWarning);
+		tfWarnings = new JTextField("", 3);
+		secondPanel.add(tfWarnings);
+		
+		lblPermitHolder2 = new JLabel("Permit Holder Name: ");
+		secondPanel.add(lblPermitHolder2);
+		tfPermitHolder2 = new JTextField("", 3);
+		secondPanel.add(tfPermitHolder2);
+		
+//		tfPermitHolder = new JTextField("", 25);
+
+		for (int i=0; i < 10; i++)
+			secondPanel.add(new JLabel(""));
+		
+		
 		
 	}
 }
