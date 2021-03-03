@@ -20,7 +20,7 @@ public class Vehicle_info {
      * Each vehicle (and so each registration number) is associated with exactly one permit,
      * which describes its authorization to enter the campus (or not!).
      *
-     * This attribute references the permit associated with this vehicle. It alows the permit
+     * This attribute references the permit associated with this vehicle. It allows the permit
      * status of any vehicle to be accessed via the Vehicle_list knowing only the registration
      * number - for example for barrier checks, recording warnings, and so on.
      *
@@ -32,6 +32,25 @@ public class Vehicle_info {
      */
     private Permit lnkPermit;
     
+    private String carMake;
+    
+    private String carModel;
+    
+    private String carColour;
+    
+    public Vehicle_info(String regNo) {
+    	this.regNo = regNo;
+    }
+    public Vehicle_info(String regNo, String carMake) {
+    	this.regNo = regNo;
+    	this.carMake = carMake;
+    }
+    public Vehicle_info (String regNo, String carMake, String carModel) {
+    	this.regNo = regNo;
+    	this.carMake = carMake;
+    	this.carModel = carModel;
+    }
+    
     public Vehicle_info(String regNo, Permit lnkPermit) {
     	this.regNo = regNo;
     	this.lnkPermit = lnkPermit;
@@ -40,7 +59,9 @@ public class Vehicle_info {
     public Permit getPermit() {
     	return lnkPermit;
     }
-    
+    public Permit getPermit(Vehicle_info v) {
+    	return v.getPermit();
+    }
     public String getRegNo() {
     	return regNo;
     }
