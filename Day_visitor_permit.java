@@ -25,4 +25,12 @@ public class Day_visitor_permit extends Permit {
     	this.lnkDate = lnkDate;
     	this.hostName = hostName;
     }
+    
+    public Date getDate() {
+    	return lnkDate;
+    }
+    
+    public String getHostName() {
+    	return hostName;
+    }
 }

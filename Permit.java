@@ -74,6 +74,7 @@ abstract public class Permit {
     //methods to add about/add/delete/modify
     public Permit(String permitHolder) {
     	this.permitHolder = permitHolder;
+    	permittedVehicles = new Vehicle_list();
     }
     public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles) {
     	this.permitHolder = permitHolder;
@@ -156,6 +157,15 @@ abstract public class Permit {
     		return false;
     }
     
+    public void addPermittedVehicle(Vehicle_info v) {
+    	System.out.println("Permit ---" + v.getRegNo());
+    	permittedVehicles.addPermitVehicle(v);
+//    	permittedVehicles.addSimpleVehicle(v.getRegNo());
+    }
+    
+    public void showPermittedVehicles() {
+    	
+    }
     private String status() {
     	String s = "Permit holder name: " + getName() + "; # of entries since permit issued: " + getEntries() + "; # of warnings: "
         		+ getWarnings() + "; suspended: ";
@@ -168,8 +178,6 @@ abstract public class Permit {
     	
     	return s;
     }
-    
-    
     
     public void dailyReset() {
     	setNotEnteredToday();

@@ -28,17 +28,29 @@ public class Permit_list {
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
-    public void createRVP(String permitHolder, Date lnkDate, Date lnkDate1, String hostName) {
-    	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, lnkDate, lnkDate1, hostName);
-    	lnkPermit.put(permitHolder, rvp);
+    public void createRVP(String permitHolder, int lnkDate, int lnkDate1, String hostName) {
+//    	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, lnkDate, lnkDate1, hostName);
+//    	lnkPermit.put(permitHolder, rvp);
 //    	addPermit(rvp);
     }
+    
+    public Permit getPermit(String permitHolder) {
+    	return lnkPermit.get(permitHolder);
+    }
+    public void createUMP(String permitHolder, int lnkDate) {
+//    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
+//    	lnkPermit.put(permitHolder, ump);
+//    	addPermit(rvp);
+    }
+    
     public boolean checkNameExists(String permitHolder) {
     	return lnkPermit.containsKey(permitHolder);
 
-
     }
     
+    public void removePermit(String permitHolder) {
+    	lnkPermit.remove(permitHolder);
+    }
     public int getSize() {
     	return lnkPermit.size();
     }

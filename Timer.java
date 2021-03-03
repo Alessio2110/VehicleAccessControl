@@ -97,8 +97,11 @@ public class Timer extends JFrame
 //    		System.out.println("Today is: Day #" + today.getDay());
 //    		today.increment();
     		lnkSystem_status.nextDay();
+    		lnkPermit_list.dailyUpdateAll();
 //    		today.increment();
     		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
+
+    		lnkPermit_list.annualUpdateAll();
     		System.out.println("Timer--- Today is: Day #" + lnkSystem_status.getToday());
     	}
     }

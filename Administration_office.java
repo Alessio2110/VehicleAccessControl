@@ -57,9 +57,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	 * @directed
 	 */
 	private System_status 	lnkSystem_status;
-	private JPanel 		firstPanel; //Add permit panel
+	private JPanel 		addPermitPanel; //Add permit panel
 	private JPanel 		secondPanel;
-	private JLabel 		secondLabel;
 	private JLabel		lblPermitHolder; //Permit holder name label
 	private JLabel 		lblRegNo; //Registration number label
 	private JLabel 		lblIssueDate; //Date of Issue label
@@ -75,7 +74,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JTextField display;
 	private JButton addPermit;
 	private JComboBox cmbPermitList; //ComboBox with 4 permit type options
-	private JTabbedPane thePane; 
+	private JTabbedPane tb; 
 	private GridBagConstraints c;
 
 	public Administration_office(System_status lnkSystem_status, Vehicle_list lnkVehicle_list, Permit_list lnkPermit_list) {
@@ -87,30 +86,37 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Container window = getContentPane();
 		window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
-		setLayout(null);
-		// set grid layout for the frame
-		//        getContentPane().setLayout(new GridLayout(1, 1));
-		setFirstPanel();
-
-		//        secondPanel = makePanel("HI 2");
-		secondPanel = new JPanel();
-
-		//        firstLabel = new JLabel();
-		secondLabel = new JLabel();
-		thePane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
 		setLayout(new GridLayout(1, 1));
-
-
-
-
-
-		//        firstPanel.add(firstLabel);
-		secondPanel.add(secondLabel);
-		thePane.addTab("Add Permit   ", firstPanel);
-		thePane.addTab("Second Panel", secondPanel);
+		
+		//Add Permit
+		setFirstPanel();
+		
+//		Record Warning
+		setSecondPanel();
+		
+//		Delete Warning
+//		setThirdPanel();
+		
+//		Cancel Permit
+//		setFourthPanel();
+		
+//		Status Enquiry
+//		setFifthPanel();
+		
+//		Modify Permit
+//		SetSixthPermit
+		
+		tb = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		
+		tb.addTab("Add Permit   ", addPermitPanel);
+		tb.addTab("Record Warning", secondPanel);
+//		tb.addTab("Delete Warning", );
+//		tb.addTab("Cancel Permit", );
+//		tb.addTab("Status Enquiry", );
+//		tb.addTab("Modify Permit",  );
 
 //		getContentPane().add(thePane);
-		add(thePane);
+		add(tb);
 
 
 		setSize(600,400);
@@ -210,14 +216,12 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 	
 	public void setFirstPanel() {
-//		firstPanel = new JPanel(new GridBagLayout());
-		firstPanel = new JPanel();
+		GridLayout experimentLayout = new GridLayout(0,2);
+		addPermitPanel = new JPanel();
+		addPermitPanel.setLayout(experimentLayout);
+//		addPermitPanel = new JPanel(new GridBagLayout());
 //		c = new GridBagConstraints();
 //		c.insets = new Insets(10, 10, 10, 10);
-//		display = new JTextField("", 20);
-//		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
-//		firstPanel.add(display);
-//		
 //		c.gridx = 0;
 //		c.gridy = 0;
 		//      JCombBox permit types
@@ -225,34 +229,31 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		cmbPermitList = new JComboBox(permitTypes);
 		cmbPermitList.setSelectedIndex(2);
 		cmbPermitList.addActionListener(this);
-		firstPanel.add(cmbPermitList, c);
+		addPermitPanel.add(cmbPermitList);
 
+		JLabel empty = new JLabel("");
+		addPermitPanel.add(empty);
 		
 		//		label and textfield for permit holder name        
 		lblPermitHolder = new JLabel("Name:");
-		tfPermitHolder = new JTextField("", 20);
-//		c.gridx = 0;
-//		c.gridy = 1;
-		firstPanel.add(lblPermitHolder);
-//		c.gridx = 1;
-//		c.gridy = 1;
-		firstPanel.add(tfPermitHolder, c);
+		tfPermitHolder = new JTextField("", 25);
 
-//		c.gridx = 1;
-//		c.gridy = 0;
+		addPermitPanel.add(lblPermitHolder);
+		addPermitPanel.add(tfPermitHolder);
+
 		//		label and textfield for registration number        
 		lblRegNo = new JLabel("Registration #:");
-		tfRegNo = new JTextField("", 20);
-		firstPanel.add(lblRegNo);
-		firstPanel.add(tfRegNo);
+		tfRegNo = new JTextField("", 10);
+		addPermitPanel.add(lblRegNo);
+		addPermitPanel.add(tfRegNo);
 
 		//      University member permit
 
 		//		label and textfield for a University member permit       
 		lblIssueDate = new JLabel("Date of issue:");
-		tfIssueDate = new JTextField("", 20);
-		firstPanel.add(lblIssueDate);
-		firstPanel.add(tfIssueDate);
+		tfIssueDate = new JTextField("", 3);
+		addPermitPanel.add(lblIssueDate);
+		addPermitPanel.add(tfIssueDate);
 		lblIssueDate.setVisible(false);
 		tfIssueDate.setVisible(false);
 		
@@ -261,29 +262,34 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		//		label and textfield for a Regular Visitor Permit   
 		lblHostName = new JLabel("Name of the university member hosting the visit:");
 		tfHostName = new JTextField("", 20);
-		firstPanel.add(lblHostName);
-		firstPanel.add(tfHostName);
+		addPermitPanel.add(lblHostName);
+		addPermitPanel.add(tfHostName);
 		lblHostName.setVisible(false);
 		tfHostName.setVisible(false);
 
 		//		label and textfield for a Regular Visitor Permit   
 		lblStartDate = new JLabel("Start Date:");
-		tfStartDate = new JTextField("", 20);
-		firstPanel.add(lblStartDate);
-		firstPanel.add(tfStartDate);
+		tfStartDate = new JTextField("", 3);
+		addPermitPanel.add(lblStartDate);
+		addPermitPanel.add(tfStartDate);
 		lblStartDate.setVisible(false);
 		tfStartDate.setVisible(false);
 
 		//		label and textfield for a Regular Visitor Permit   
 		lblEndDate = new JLabel("End Date:");
-		tfEndDate = new JTextField("", 20);
-		firstPanel.add(lblEndDate);
-		firstPanel.add(tfEndDate);
+		tfEndDate = new JTextField("", 3);
+		addPermitPanel.add(lblEndDate);
+		addPermitPanel.add(tfEndDate);
 		lblEndDate.setVisible(false);
 		tfEndDate.setVisible(false);
 		
 		addPermit = new JButton("Add permit");
 		addPermit.addActionListener(this);
-		firstPanel.add(addPermit);
+		addPermitPanel.add(addPermit);
+	}
+	
+	public void setSecondPanel() {
+		secondPanel = new JPanel();
+		
 	}
 }
