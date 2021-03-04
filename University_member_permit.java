@@ -16,8 +16,8 @@ public class University_member_permit extends Permit {
      */
     private Date lnkDate;
     
-    public University_member_permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles, Date lnkDate) {
-    	super( permitHolder, noOfEntries, warnings, suspended, enteredToday, vehicleUsedToday, permittedVehicles);
+    public University_member_permit(String permitHolder, Date lnkDate) {
+    	super( permitHolder);
     	this.lnkDate = lnkDate;
     }
 }

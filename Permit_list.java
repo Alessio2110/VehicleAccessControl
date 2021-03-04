@@ -22,19 +22,46 @@ public class Permit_list {
      * @clientCardinality 1
      * @supplierCardinality 0..*
      * @directed*/
-    private java.util.Hashtable lnkPermit;
+    private java.util.Hashtable<String, Permit> lnkPermit;
     
     public Permit_list(){
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
+    public void createRVP(String permitHolder, int lnkDate, int lnkDate1, String hostName) {
+//    	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, lnkDate, lnkDate1, hostName);
+//    	lnkPermit.put(permitHolder, rvp);
+//    	addPermit(rvp);
+    }
+    
+    public Permit getPermit(String permitHolder) {
+    	return lnkPermit.get(permitHolder);
+    }
+    public void createUMP(String permitHolder, int lnkDate) {
+//    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
+//    	lnkPermit.put(permitHolder, ump);
+//    	addPermit(rvp);
+    }
+    
+    public boolean checkNameExists(String permitHolder) {
+    	return lnkPermit.containsKey(permitHolder);
+
+    }
+    
+    public void removePermit(String permitHolder) {
+    	lnkPermit.remove(permitHolder);
+    }
+    public int getSize() {
+    	return lnkPermit.size();
+    }
     public void addPermit(Permit p) {
     	Permit p2;
     	p2 = (Permit) lnkPermit.get(p.getName());
     	if (p2 == null)
     		lnkPermit.put(p.getName(), p);
     	else {
-    		System.out.println("Collision occurring: two permits cannot share a common permit holder name");
+    		System.out.println("Permit List --- Collision occurring: two permits cannot share a common permit holder name ");
+    		System.out.println("Existing permit name: " + p2.getName() + " New permit name: " + p.getName());
     	}	
     }
     

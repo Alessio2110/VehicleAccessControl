@@ -65,12 +65,12 @@ public class Timer extends JFrame
     private Date today;
     
     private JButton addDay;
-    private JTextField display;
+    private JLabel display;
     
     public Timer(System_status lnkSystem_status, Permit_list lnkPermit_list) {
     	this.lnkSystem_status = lnkSystem_status;
     	this.lnkPermit_list = lnkPermit_list;
-    	setTitle("Controller");
+    	setTitle("Timer");
     	setDefaultCloseOperation(EXIT_ON_CLOSE);
         Container window = getContentPane();
         window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
@@ -80,11 +80,12 @@ public class Timer extends JFrame
         window.add(addDay);
         addDay.addActionListener(this);
         
-        display = new JTextField("No data", 20);
-        display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
+        display = new JLabel("");
+        display.setText("Days passed since 01/09:  " + lnkSystem_status.getToday());
         add(display);
         
         setSize(250,100);
+        setLocation(250, 100);
         setVisible(true);
         
 //        add(new JLabel("View5"));
@@ -96,8 +97,11 @@ public class Timer extends JFrame
 //    		System.out.println("Today is: Day #" + today.getDay());
 //    		today.increment();
     		lnkSystem_status.nextDay();
+    		lnkPermit_list.dailyUpdateAll();
 //    		today.increment();
     		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
+
+    		lnkPermit_list.annualUpdateAll();
     		System.out.println("Timer--- Today is: Day #" + lnkSystem_status.getToday());
     	}
     }

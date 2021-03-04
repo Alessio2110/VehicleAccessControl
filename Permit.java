@@ -73,7 +73,8 @@ abstract public class Permit {
     
     //methods to add about/add/delete/modify
     public Permit(String permitHolder) {
-    	noOfEntries = 0;
+    	this.permitHolder = permitHolder;
+    	permittedVehicles = new Vehicle_list();
     }
     public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday, Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles) {
     	this.permitHolder = permitHolder;
@@ -84,27 +85,42 @@ abstract public class Permit {
     	this.permittedVehicles = permittedVehicles;
     }
     
+    public String getName() {
+    	return permitHolder;
+    }
+    
     public void increaseEntries() {
     	noOfEntries++;
     }
     
-    public void setVehicle(Vehicle_info vehicleUsedToday) {
-    	this.vehicleUsedToday = vehicleUsedToday;
+    public int getEntries() {
+    	return noOfEntries;
     }
-    public boolean isAllowed() {
-    	if (!suspended)
+    
+    public void clearEntries() {
+    	noOfEntries = 0;
+    }
+    
+    public int getWarnings() {
+    	return warnings;
+    }
+    
+    public void addWarning() {
+    	warnings++;
+    	if (checkMaxWarnings()) {
+    		warnings = 0;
+    		suspended = true;
+    	}
+    }
+    
+    public boolean checkMaxWarnings() {
+    	if (warnings == 3)
     		return true;
-    	else 
-    		return false;
+    	return false;
     }
-    private String status() {
-    	String s = "";
-    	if (suspended)
-    		s += "Yes";
-    	else 
-    		s += "No";
-    	return ("Permit holder name: " + permitHolder + "; # of entries since permit issued: " + noOfEntries + "; # of warnings: "
-    		+ warnings + "; suspended: " + s);
+    
+    public void clearWarnings() {
+    	warnings = 0;
     }
     
     public void suspend() {
@@ -115,32 +131,60 @@ abstract public class Permit {
     	suspended = false;
     }
     
-    public void clearWarnings() {
-    	warnings = 0;
+    public void setEnteredToday() {
+    	enteredToday = true;
     }
     
-    public void clearEntries() {
-    	noOfEntries = 0;
+    public void setNotEnteredToday() {
+    	enteredToday = false;
     }
     
-    public void checkWarnings() {
-    	if (warnings == 3)
-    		suspended = true;
+    public void setVehicle(Vehicle_info vehicleUsedToday) {
+    	this.vehicleUsedToday = vehicleUsedToday;
     }
     
-    public void setEntered(boolean enteredToday) {
-    	this.enteredToday = enteredToday;
+    public Vehicle_info getVehicleUsedToday(){
+    	return vehicleUsedToday;
     }
     
-    public String getName() {
-    	return permitHolder;
+    public boolean isSuspended() {
+    	return suspended;
     }
-    public void deletePermit() {
+    public boolean isAllowed() {
+    	if (!suspended)
+    		return true;
+    	else 
+    		return false;
+    }
+    
+    public void addPermittedVehicle(Vehicle_info v) {
+    	System.out.println("Permit ---" + v.getRegNo());
+    	permittedVehicles.addPermitVehicle(v);
+//    	permittedVehicles.addSimpleVehicle(v.getRegNo());
+    }
+    
+    public void showPermittedVehicles() {
     	
+    }
+    private String status() {
+    	String s = "Permit holder name: " + getName() + "; # of entries since permit issued: " + getEntries() + "; # of warnings: "
+        		+ getWarnings() + "; suspended: ";
+    	if (isSuspended())
+    		s += "Yes; ";
+    	else 
+    		s += "No; ";
+    	if (getVehicleUsedToday() != null)
+    	s += "Registration number of the vehicle used today: " + getVehicleUsedToday().getRegNo();
+    	
+    	return s;
     }
     
     public void dailyReset() {
-    	enteredToday = false;
-    	vehicleUsedToday = null;
+    	setNotEnteredToday();
+    	setVehicle(null);
     }
+    
+//    public void addNewVehicle(){
+//    	permittedVehicles.add
+//    }
 }
