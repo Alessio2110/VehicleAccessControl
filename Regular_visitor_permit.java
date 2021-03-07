@@ -43,4 +43,13 @@ public class Regular_visitor_permit extends Permit {
     	this.lnkDate1 = lnkDate1;
     	this.hostName = hostName;
     }
+    
+//    public String toString() {
+//		String s = "Type: Regular Visitor Permit, name: " + this.getName() 
+//				+ "Permit valid between day #" + lnkDate.getDay() + " and day #" + lnkDate1.getDay() + ". Hosted by: " + hostName
+//				+ "; #entries:" + this.getEntries() + "; warnings: " + this.getWarnings() 
+//				+ ". Suspended? " + this.isSuspended() + ". Vehicle used today: " + this.getVehicleUsedToday().getRegNo() + ". Number of permitted vehicles:"
+//				+ this.getVList().getSize();
+//		return s;
+//	}
 }

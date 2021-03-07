@@ -10,6 +10,13 @@ public class Permanent_visitor_permit extends Permit {
 		super(permitHolder);
 
     }
+	
+	public String toString() {
+		String s = "Type: Permanent Visitor Permit, name: " + this.getName() + "; #entries:" + this.getEntries() + "; warnings: " + this.getWarnings() 
+				+ ". Suspended? " + this.isSuspended() + ". Vehicle used today: " + this.getVehicleUsedToday().getRegNo() + ". Number of permitted vehicles:"
+				+ this.getVList().getSize();
+		return s;
+	}
 }
 
 

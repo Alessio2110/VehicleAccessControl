@@ -55,7 +55,8 @@ public class Permit_list {
         while(keys.hasMoreElements()){
             String key = keys.nextElement();
             keysList.add(key);
-            System.out.println("Value of "+key+" is: "+lnkPermit.get(key));
+            System.out.println("Permi List --- Value of key: "+key+" is: ");
+//            +lnkPermit.get(key).toString()
     }
         return keysList;
     }

@@ -107,7 +107,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
 		setLayout(new GridLayout(1, 1));
 		
-		
+//		Regular_visitor_permit rvp1 = new Regular_visitor_permit("a", new Date(2), new Date(4),"A");
+//		lnkPermit_list.addPermit(rvp1);
+//		Regular_visitor_permit rvp2 = new Regular_visitor_permit("b", new Date(1), new Date(3),"B");
+//		lnkPermit_list.addPermit(rvp2);
 		//Add Permit
 		setFirstPanel();
 		
@@ -158,21 +161,25 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addPermit) {
 			//tfPermitHolder.setEditable(false);
-			System.out.println("DISATTIVAA");
 			System.out.println(msg);
 			
 			System.out.println("size is " + lnkPermit_list.getKeys().size()); 
 			switch (msg) {
-			//case "Day Visitor": Day_visitor_permit dayVis = new Day_visitor_permit(tfPermitHolder.getText(), );
-			//break;
+			case "Day Visitor": Day_visitor_permit dayVis = new Day_visitor_permit(tfPermitHolder.getText(), new Date(Integer.parseInt(tfStartDate.getText())), tfHostName.getText()); 
+			lnkPermit_list.addPermit(dayVis);
+			cleanTFP1();
+			break;
 			case "Regular visitor": Regular_visitor_permit regVis = new Regular_visitor_permit(tfPermitHolder.getText(),new Date(Integer.parseInt(tfStartDate.getText())),new Date(Integer.parseInt(tfEndDate.getText())),tfHostName.getText());
-			lnkPermit_list.addPermit(regVis);
+			lnkPermit_list.addPermit(regVis); 
+			cleanTFP1();
 			break;
 			case "Permanent visitor": Permanent_visitor_permit perVis = new Permanent_visitor_permit(tfPermitHolder.getText());
 			lnkPermit_list.addPermit(perVis);
+			cleanTFP1();
 			break;
 			case "University member": University_member_permit uniMem = new University_member_permit(tfPermitHolder.getText(),new Date(Integer.parseInt(tfIssueDate.getText())));
 			lnkPermit_list.addPermit(uniMem);
+			cleanTFP1();
 			break;
 			}
 			System.out.println(lnkPermit_list.getSize());
@@ -404,8 +411,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		//String[] permitTypes = {"Paul", "Robert", "Jason", "Jacob"};
 		
 		DefaultListModel model = new DefaultListModel();
-		System.out.println("THIS " + lnkPermit_list.getSize());
-		System.out.println("THIS " + lnkPermit_list.getSize());
+		System.out.println("THIS Size of permit list: " + lnkPermit_list.getSize());
 		
 		for (int i = 0; i < lnkPermit_list.getSize(); i++) {
 		    model.addElement(lnkPermit_list.getKeys().get(i));
@@ -428,6 +434,15 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		deleteWarning = new JButton("Delete warning");
 		deleteWarning.addActionListener(this);
 		deleteWarningPanel.add(deleteWarning);
+	}
+//	Clean text fields panel 1
+	public void cleanTFP1() {
+		tfPermitHolder.setText(""); 
+		tfRegNo.setText(""); 
+		tfIssueDate.setText(""); 
+		tfHostName.setText(""); 
+		tfStartDate.setText(""); 
+	 	tfEndDate.setText(""); 
 	}
 	
 }
