@@ -165,16 +165,21 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			
 			System.out.println("size is " + lnkPermit_list.getKeys().size()); 
 			switch (msg) {
-			//case "Day Visitor": Day_visitor_permit dayVis = new Day_visitor_permit(tfPermitHolder.getText(), );
-			//break;
+			case "Day Visitor": Day_visitor_permit dayVis = new Day_visitor_permit(tfPermitHolder.getText(), new Date(Integer.parseInt(tfStartDate.getText())), tfHostName.getText()); 
+			lnkPermit_list.addPermit(dayVis);
+			cleanTFP1();
+			break;
 			case "Regular visitor": Regular_visitor_permit regVis = new Regular_visitor_permit(tfPermitHolder.getText(),new Date(Integer.parseInt(tfStartDate.getText())),new Date(Integer.parseInt(tfEndDate.getText())),tfHostName.getText());
-			lnkPermit_list.addPermit(regVis);
+			lnkPermit_list.addPermit(regVis); 
+			cleanTFP1();
 			break;
 			case "Permanent visitor": Permanent_visitor_permit perVis = new Permanent_visitor_permit(tfPermitHolder.getText());
 			lnkPermit_list.addPermit(perVis);
+			cleanTFP1();
 			break;
 			case "University member": University_member_permit uniMem = new University_member_permit(tfPermitHolder.getText(),new Date(Integer.parseInt(tfIssueDate.getText())));
 			lnkPermit_list.addPermit(uniMem);
+			cleanTFP1();
 			break;
 			}
 			System.out.println(lnkPermit_list.getSize());
@@ -429,6 +434,15 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		deleteWarning = new JButton("Delete warning");
 		deleteWarning.addActionListener(this);
 		deleteWarningPanel.add(deleteWarning);
+	}
+//	Clean text fields panel 1
+	public void cleanTFP1() {
+		tfPermitHolder.setText(""); 
+		tfRegNo.setText(""); 
+		tfIssueDate.setText(""); 
+		tfHostName.setText(""); 
+		tfStartDate.setText(""); 
+	 	tfEndDate.setText(""); 
 	}
 	
 }
