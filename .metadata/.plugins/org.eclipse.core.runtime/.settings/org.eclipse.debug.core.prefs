@@ -1,0 +1,2 @@
+eclipse.preferences.version=1
+prefWatchExpressions=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\n<watchExpressions>\n    <expression enabled\="true" text\="lnkPermit_list"/>\n    <expression enabled\="true" text\="lnkPermit_list.getSize()"/>\n    <expression enabled\="true" text\="lnkPermit_list.getKeys().get(i)"/>\n</watchExpressions>\n
