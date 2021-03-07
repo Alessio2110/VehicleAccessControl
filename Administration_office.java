@@ -107,7 +107,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
 		setLayout(new GridLayout(1, 1));
 		
-		
+//		Regular_visitor_permit rvp1 = new Regular_visitor_permit("a", new Date(2), new Date(4),"A");
+//		lnkPermit_list.addPermit(rvp1);
+//		Regular_visitor_permit rvp2 = new Regular_visitor_permit("b", new Date(1), new Date(3),"B");
+//		lnkPermit_list.addPermit(rvp2);
 		//Add Permit
 		setFirstPanel();
 		
@@ -158,7 +161,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addPermit) {
 			//tfPermitHolder.setEditable(false);
-			System.out.println("DISATTIVAA");
 			System.out.println(msg);
 			
 			System.out.println("size is " + lnkPermit_list.getKeys().size()); 
@@ -404,8 +406,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		//String[] permitTypes = {"Paul", "Robert", "Jason", "Jacob"};
 		
 		DefaultListModel model = new DefaultListModel();
-		System.out.println("THIS " + lnkPermit_list.getSize());
-		System.out.println("THIS " + lnkPermit_list.getSize());
+		System.out.println("THIS Size of permit list: " + lnkPermit_list.getSize());
 		
 		for (int i = 0; i < lnkPermit_list.getSize(); i++) {
 		    model.addElement(lnkPermit_list.getKeys().get(i));

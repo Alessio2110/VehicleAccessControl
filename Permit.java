@@ -131,6 +131,10 @@ abstract public class Permit {
     	suspended = false;
     }
     
+    public boolean isSuspended() {
+    	return suspended;
+    }
+    
     public void setEnteredToday() {
     	enteredToday = true;
     }
@@ -147,16 +151,16 @@ abstract public class Permit {
     	return vehicleUsedToday;
     }
     
-    public boolean isSuspended() {
-    	return suspended;
-    }
+    
     public boolean isAllowed() {
     	if (!suspended)
     		return true;
     	else 
     		return false;
     }
-    
+    public Vehicle_list getVList() {
+    	return permittedVehicles;
+    }
     public void addPermittedVehicle(Vehicle_info v) {
     	System.out.println("Permit ---" + v.getRegNo());
     	permittedVehicles.addPermitVehicle(v);
