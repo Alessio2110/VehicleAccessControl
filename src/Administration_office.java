@@ -401,7 +401,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		
 		//Permanent_visitor_permit perVis = new Permanent_visitor_permit("oreo");
 		//lnkPermit_list.addPermit(perVis);
-		//String[] permitTypes = {"Paul", "Robert", "Jason", "Jacob"};
+		//String[] permitTypes = {"Paul", "Robert", "Jason", "July"};
 		
 		DefaultListModel model = new DefaultListModel();
 		System.out.println("THIS " + lnkPermit_list.getSize());
