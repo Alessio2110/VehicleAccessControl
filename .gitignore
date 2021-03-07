@@ -1,8 +1,15 @@
+.DS_Store
+
 # Compiled class file
 *.class
 
 # Log file
 *.log
+
+# Eclipse files
+.project
+.classpath
+.metadata/
 
 # BlueJ files
 *.ctxt
