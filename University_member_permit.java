@@ -29,4 +29,8 @@ public class University_member_permit extends Permit {
 				+ this.getVList().getSize();
 		return s;
 	}
+    
+    public void changeDate(Date d) {
+    	lnkDate = d;
+    }
 }

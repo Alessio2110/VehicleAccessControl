@@ -35,8 +35,16 @@ public class Day_visitor_permit extends Permit {
 //		return s;
 //	}
     
-    public Date getDate() {
+    public Date getVisitDate() {
     	return lnkDate;
+    }
+    
+    public void changeDate(Date d) {
+    	lnkDate = d;
+    }
+    
+    public void changeHostName(String s) {
+    	hostName = s;
     }
     
     public String getHostName() {
