@@ -40,7 +40,7 @@ public class Date {
 			dayNumber++;
 		else
 			dayNumber = 1;
-//		System.out.println("HEY")
+		//		System.out.println("HEY")
 	}
 	/**
 	 * Return the day number
@@ -60,20 +60,18 @@ public class Date {
 	/**
 	 * This operation returns a boolean value, true the first date comes before the second date, false if the second date comes before the first date
 	 */
-	public boolean isBefore(int date1, int date2) {
-		if (date1 < date2)
+	public boolean isBefore(Date d1) {
+		if (dayNumber < d1.getDay())
 			return true;
-		else
-			return false;
+		return false;
 	}
 	/**
 	 * This operation returns a boolean value, true the first date comes after the second date, false if the second date comes after the first date
 	 */
-	public boolean isAfter(int date1, int date2) {
-		if (date1 > date2)
+	public boolean isAfter(Date d1) {
+		if (dayNumber > d1.getDay())
 			return true;
-		else
-			return false;
+		return false;
 	}
 	/**
 	 * This operation returns a boolean value, true if the two dates represent the same day, false if they do not.
