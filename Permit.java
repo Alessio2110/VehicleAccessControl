@@ -92,6 +92,9 @@ abstract public class Permit {
     public void increaseEntries() {
     	noOfEntries++;
     }
+    public void setEntries(int entries) {
+    	noOfEntries += entries;
+    }
     
     public int getEntries() {
     	return noOfEntries;
@@ -103,6 +106,10 @@ abstract public class Permit {
     
     public int getWarnings() {
     	return warnings;
+    }
+    
+    public void setWarning(int warnings) {
+    	this.warnings += warnings;
     }
     
     public void addWarning() {
