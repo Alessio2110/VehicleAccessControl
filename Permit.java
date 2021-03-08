@@ -170,7 +170,7 @@ abstract public class Permit {
     public void showPermittedVehicles() {
     	
     }
-    private String status() {
+    public String status() {
     	String s = "Permit holder name: " + getName() + "; # of entries since permit issued: " + getEntries() + "; # of warnings: "
         		+ getWarnings() + "; suspended: ";
     	if (isSuspended())
