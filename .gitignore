@@ -6,11 +6,6 @@
 # Log file
 *.log
 
-# Eclipse files
-.project
-.classpath
-.metadata/
-
 # BlueJ files
 *.ctxt
 
