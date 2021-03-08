@@ -159,6 +159,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		tb.addTab("Add Permit   ", addPermitPanel);
 		tb.addTab("Record Warning", secondPanel);
 		tb.addTab("Delete Warning", deleteWarningPanel);
+
 		// tb.addTab("Cancel Permit", );
 		tb.addTab("Status Enquiry", statusMainPanel );
 		tb.addTab("Modify Permit", modifyPanel);
