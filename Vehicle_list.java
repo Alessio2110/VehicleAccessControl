@@ -107,20 +107,10 @@ public class Vehicle_list {
 	
 	public void printVehicles(){
     	Enumeration<String> keys = lnkVehicle.keys();
+    	 System.out.println("Vehicle List --- There are " + getSize() + " vehicles:");
         while(keys.hasMoreElements()){
-            String key = keys.nextElement();
-            System.out.println("Permi List --- Value of key: "+ key+" is: " + lnkVehicle.get(key).getRegNo());
+            String key = keys.nextElement(); 
+            System.out.println("Vehicle List --- Value of key: "+ key+" Vehicle regNo is: " + lnkVehicle.get(key).getRegNo());
         }
 	}
-//    public int hashCode() {
-//    	return 1;
-//    }
-//    
-//    public Object get(Object key) {
-//    	return key;
-//    }
-//    
-//    public boolean equals() {
-//    	return true;
-//    }
 }
