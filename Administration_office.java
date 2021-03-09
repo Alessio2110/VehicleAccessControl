@@ -336,7 +336,16 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			{
 				Date today = new Date(lnkSystem_status.getToday());
 				lnkPermit_list.createUMP(name, today);
+				if (!tfRegNo.getText().isEmpty()) {
+					lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+				} 
+				else {
+					JOptionPane.showMessageDialog(null, "Must have atleast one registration number");
+					tfRegNo.setBorder(border);
+
+				}
 			}
+
 		}
 	}
 
@@ -346,30 +355,36 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			tfPermitHolder.setBorder(border);
 		} else {
 			String name = tfPermitHolder.getText();
-			int d1;
-			int d2;
 			if (lnkPermit_list.checkNameExists(name)) {
 				JOptionPane.showMessageDialog(null, "Holder name already exsist");
 				tfPermitHolder.setBorder(border);
 			} else {
 				if (isInt(tfStartDate.getText()) && isInt(tfEndDate.getText())) {
-					Date startDate = new Date(d1 = Integer.parseInt(tfStartDate.getText()));
-					Date endDate = new Date(d2 = Integer.parseInt(tfEndDate.getText()));
+					Date startDate = new Date(Integer.parseInt(tfStartDate.getText()));
+					Date endDate = new Date(Integer.parseInt(tfEndDate.getText()));
 					if (!startDate.isBefore(endDate)) {
 						JOptionPane.showMessageDialog(null,"This is not a time machine, end date should come after start date");
 						tfEndDate.setBorder(border);
-					} else {
+					} 
+					else {
 						lnkPermit_list.createRVP(name, startDate, endDate, name);
-						JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully");
+						//						JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
+						lblMsg1.setText("Regular visitor permit added susccesfully");
+						//The lines below should be modified since you could create a permit without a vehicle
+						//It should check whether the vehicle already exists in another permit before being added
+						if (!tfRegNo.getText().isEmpty()) {
+							lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+						} 
+						else {
+							JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
+							tfRegNo.setBorder(border);
+						}
 					}
 				}
+				else JOptionPane.showMessageDialog(null,"Entered Date(s) are not a valid day number [1 - 365]");
+
 			}
-			if (!tfRegNo.getText().isEmpty()) {
-				lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
-			} else {
-				JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
-				tfRegNo.setBorder(border);
-			}
+
 		}
 	}
 
@@ -392,21 +407,58 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	public void newDVP() {
-		String name = tfPermitHolder.getText();
-		String date_string = tfStartDate.getText();
-		if (lnkPermit_list.checkNameExists(name)) {
-			lblMsg1.setText(" \" " + name + "\" is already a permit holder, please try a new name");
+		//		String name = tfPermitHolder.getText();
+		//		String date_string = tfStartDate.getText();
+		//		if (lnkPermit_list.checkNameExists(name)) {
+		//			lblMsg1.setText(" \" " + name + "\" is already a permit holder, please try a new name");
+		//		} else {
+		//			if (isInt(date_string)) {
+		//				Date date = new Date(Integer.parseInt(date_string));
+		//				String hostName = tfHostName.getText();
+		//				Day_visitor_permit dayVis = new Day_visitor_permit(name, date, hostName);
+		//				lnkPermit_list.addPermit(dayVis);
+		//				lblMsg1.setText("Day visitor permit added susccesfully");
+		//			} else
+		//				lblMsg1.setText("Entered Date is not a valid number [1 - 365]");
+		//		}
+		if (tfPermitHolder.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Holder name must not be empty");
+			tfPermitHolder.setBorder(border);
 		} else {
-			if (isInt(date_string)) {
-				Date date = new Date(Integer.parseInt(date_string));
-				String hostName = tfHostName.getText();
-				Day_visitor_permit dayVis = new Day_visitor_permit(name, date, hostName);
-				lnkPermit_list.addPermit(dayVis);
-				lblMsg1.setText("Day visitor permit added susccesfully");
-			} else
-				lblMsg1.setText("Entered Date is not a valid number [1 - 365]");
-		}
+			String name = tfPermitHolder.getText();
+			if (lnkPermit_list.checkNameExists(name)) {
+				JOptionPane.showMessageDialog(null, "Holder name already exsist");
+				tfPermitHolder.setBorder(border);
+			} else {
+				if (isInt(tfStartDate.getText())) {
+					Date startDate = new Date(Integer.parseInt(tfStartDate.getText()));
+					if (tfHostName.getText().isEmpty()) {
+						JOptionPane.showMessageDialog(null, "Host name cannot be empty");
+						tfHostName.setBorder(border);
+					}
+					else {
+						lnkPermit_list.createDVP(name,startDate, name);
+						//JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
+						lblMsg1.setText("Regular visitor permit added susccesfully");
+						//The lines below should be modified since you could create a permit without a vehicle
+						//It should check whether the vehicle already exists in another permit before being added
+						if (!tfRegNo.getText().isEmpty()) {
+							lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+//							lnkPermit_list.getPermit(name).getVList().
+						} 
+						else {
+							JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
+							tfRegNo.setBorder(border);
+						}
+					}
 
+
+				}
+				else JOptionPane.showMessageDialog(null,"Entered Date(s) are not a valid day number [1 - 365]");
+
+			}
+
+		}
 	}
 
 	// Set university member permit labels and text fields

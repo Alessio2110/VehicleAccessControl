@@ -64,7 +64,6 @@ public class Permit_list {
     
     public boolean checkNameExists(String permitHolder) {
     	return lnkPermit.containsKey(permitHolder);
-
     }
     
     public LinkedList<String> getKeys() {
@@ -73,7 +72,7 @@ public class Permit_list {
         while(keys.hasMoreElements()){
             String key = keys.nextElement();
             keysList.add(key);
-            System.out.println("Permi List --- Value of key: "+key+" is: ");
+//            System.out.println("Permi List --- Value of key: "+key+" is: ");
 //            +lnkPermit.get(key).toString()
     }
         return keysList;
@@ -82,9 +81,11 @@ public class Permit_list {
     public void removePermit(String permitHolder) {
     	lnkPermit.remove(permitHolder);
     }
+    
     public int getSize() {
     	return lnkPermit.size();
     }
+    
     public void addPermit(Permit p) {
     	Permit p2;
     	p2 = (Permit) lnkPermit.get(p.getName());
