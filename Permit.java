@@ -92,6 +92,9 @@ abstract public class Permit {
     public void increaseEntries() {
     	noOfEntries++;
     }
+    public void setEntries(int entries) {
+    	noOfEntries += entries;
+    }
     
     public int getEntries() {
     	return noOfEntries;
@@ -111,6 +114,10 @@ abstract public class Permit {
     		warnings = 0;
     		suspended = true;
     	}
+    }
+    
+    public void setWarning(int warnings) {
+    	this.warnings += warnings;
     }
     
     public boolean checkMaxWarnings() {
