@@ -21,7 +21,7 @@ public class Regular_visitor_permit extends Permit {
 	 * @link aggregation
 	 * @directed
 	 */
-	private LocalDate lnkDate;
+	private Date lnkDate;
 
 	/**
 	 * The date that the visit ends - entry will not be allowed after this date.
@@ -32,7 +32,7 @@ public class Regular_visitor_permit extends Permit {
 	 * @link aggregation
 	 * @directed
 	 */
-	private LocalDate lnkDate1;
+	private Date lnkDate1;
 
 	/**
 	 * This requires the name of the University member receiving the visitor, the
@@ -43,7 +43,7 @@ public class Regular_visitor_permit extends Permit {
 	 * in a short-running production at the MacRobert Theatre. required: hostName,
 	 * permitHolder, vehicleUsedToday, lnkDate, lnkDate1
 	 **/
-	public Regular_visitor_permit(String permitHolder, LocalDate startDate, LocalDate endDate, String hostName) {
+	public Regular_visitor_permit(String permitHolder, Date startDate, Date endDate, String hostName) {
 		// super( permitHolder, noOfEntries, warnings, suspended, enteredToday,
 		// vehicleUsedToday, permittedVehicles);
 		super(permitHolder);
@@ -60,19 +60,19 @@ public class Regular_visitor_permit extends Permit {
 		return hostName;
 	}
 
-	public LocalDate getStartDate() {
+	public Date getStartDate() {
 		return lnkDate;
 	}
 
-	public void changeStartDate(LocalDate d) {
+	public void changeStartDate(Date d) {
 		lnkDate = d;
 	}
 
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return lnkDate1;
 	}
 
-	public void changeEndDate(LocalDate d) {
+	public void changeEndDate(Date d) {
 		lnkDate1 = d;
 	}
 

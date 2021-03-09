@@ -187,12 +187,13 @@ abstract public class Permit {
 	public boolean addPermittedVehicle(String v) {
 		String str = v;
 		String[] arrOfStr = str.split(", ");
+		boolean added = false;
 		for (String a : arrOfStr) {
 			if (permittedVehicles.addPermitVehicle(a)) {
-				return true;
+				added = true;
 			}
 		}
-		return false;
+		return added;
 	}
 
 	public void showPermittedVehicles() {
