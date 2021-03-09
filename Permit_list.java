@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.LinkedList;
 
@@ -29,10 +30,10 @@ public class Permit_list {
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
-    public void createRVP(String permitHolder, int lnkDate, int lnkDate1, String hostName) {
-//    	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, lnkDate, lnkDate1, hostName);
-//    	lnkPermit.put(permitHolder, rvp);
-//    	addPermit(rvp);
+    public void createRVP(String permitHolder, LocalDate startDate, LocalDate endDate, String hostName) {
+   	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
+   	lnkPermit.put(permitHolder, rvp);
+   	addPermit(rvp);
     }
     
     public Permit getPermit(String permitHolder) {
