@@ -2,6 +2,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -340,23 +342,26 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	public void newRVP() {
 		String name = tfPermitHolder.getText();
+		LocalDate startDate;
+		LocalDate endDate;
 		if (lnkPermit_list.checkNameExists(name)) {
 			lblMsg1.setText(" \" " + name + "\" is already a permit holder, please try a new name");
+			tfPermitHolder.setBorder(border);
 		} else {
-			if (isInt(tfStartDate.getText()) && isInt(tfEndDate.getText())) {
-				Date d1 = new Date(Integer.parseInt(tfStartDate.getText()));
-				Date d2 = new Date(Integer.parseInt(tfEndDate.getText()));
-				if (!d1.isBefore(d2))
+			if (validateDate(tfStartDate.getText()) && validateDate(tfEndDate.getText())) {
+				startDate = LocalDate.parse(tfStartDate.getText());
+				endDate = LocalDate.parse(tfEndDate.getText());
+				if (!startDate.isBefore(endDate)) {
 					lblMsg1.setText("This is not a time machine, end date should come after start date");
-				else {
-					Regular_visitor_permit regVis = new Regular_visitor_permit(name,
-							new Date(Integer.parseInt(tfStartDate.getText())),
-							new Date(Integer.parseInt(tfEndDate.getText())), tfHostName.getText());
-					lnkPermit_list.addPermit(regVis);
+					tfEndDate.setBorder(border);
+				} else {
+					lnkPermit_list.createRVP(name, startDate, endDate, name);
 					lblMsg1.setText("Regular visitor permit added susccesfully");
 				}
-			} else
-				lblMsg1.setText("Date(s): not a valid number [1 - 365]");
+			}
+		}
+		if (!tfRegNo.getText().isEmpty()) {
+			lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
 		}
 	}
 
@@ -436,6 +441,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	// Set Day visitor permit labels and text fields
 	public void setDVP() {
+
 		lblHostName.setVisible(true);
 		tfHostName.setVisible(true);
 		lblStartDate.setVisible(true);
@@ -446,6 +452,25 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// Hide RVP
 		lblEndDate.setVisible(false);
 		tfEndDate.setVisible(false);
+	}
+	
+	private boolean validateDate(String s) {
+
+		String input = s;
+
+		try {
+			LocalDate date = LocalDate.parse(input);
+			if (LocalDate.now().isAfter(date)) {
+				JOptionPane.showMessageDialog(null, "Date cannot be before today");
+				return false;
+			}
+		} catch (DateTimeParseException e) {
+			JOptionPane.showMessageDialog(null, "Incorrect date format try again");
+			return false;
+		}
+
+		return true;
+
 	}
 
 	public void setFirstPanel() {
@@ -491,7 +516,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// University member permit
 
 		// label and textfield for a University member permit
-		lblIssueDate = new JLabel("Date of issue:");
+		lblIssueDate = new JLabel("Date of issue: (yyyy-mm-dd)");
 		tfIssueDate = new JTextField("", 3);
 		addPermitPanel.add(lblIssueDate);
 		addPermitPanel.add(tfIssueDate);
@@ -509,7 +534,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		tfHostName.setVisible(false);
 
 		// label and textfield for a Regular Visitor Permit
-		lblStartDate = new JLabel("Start Date:");
+		lblStartDate = new JLabel("Start Date: (yyyy-mm-dd)");
 		tfStartDate = new JTextField("", 3);
 		addPermitPanel.add(lblStartDate);
 		addPermitPanel.add(tfStartDate);
@@ -517,7 +542,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		tfStartDate.setVisible(false);
 
 		// label and textfield for a Regular Visitor Permit
-		lblEndDate = new JLabel("End Date:");
+		lblEndDate = new JLabel("End Date: (yyyy-mm-dd)");
 		tfEndDate = new JTextField("", 3);
 		addPermitPanel.add(lblEndDate);
 		addPermitPanel.add(tfEndDate);
