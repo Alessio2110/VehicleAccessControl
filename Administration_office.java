@@ -121,7 +121,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JTextField modifyWarnings;
 	private JTextField modifySuspended;
 	private JTextField modifyEnteredToday;
-	private JTextField modifyVehicleInfo;
 	private JTextField addVehicleInfo;
 	private JTextField removeVehicleInfo;
 	private JTextField updateDate;
@@ -170,15 +169,12 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		tb.addTab("Add Permit   ", addPermitPanel);
 		tb.addTab("Record Warning", secondPanel);
 		tb.addTab("Delete Warning", deleteWarningPanel);
-
 		// tb.addTab("Cancel Permit", );
 		tb.addTab("Status Enquiry", statusMainPanel);
 		tb.addTab("Modify Permit", modifyPanel);
-
 		// warnings.add("test", deleteWarningPanel);
 
 		add(tb);
-
 		setSize(800, 600);
 		setVisible(true);
 		setLocation(600, 300);
@@ -341,27 +337,35 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	public void newRVP() {
-		String name = tfPermitHolder.getText();
-		LocalDate startDate;
-		LocalDate endDate;
-		if (lnkPermit_list.checkNameExists(name)) {
-			lblMsg1.setText(" \" " + name + "\" is already a permit holder, please try a new name");
+		if (tfPermitHolder.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Holder name must not be empty");
 			tfPermitHolder.setBorder(border);
 		} else {
-			if (validateDate(tfStartDate.getText()) && validateDate(tfEndDate.getText())) {
-				startDate = LocalDate.parse(tfStartDate.getText());
-				endDate = LocalDate.parse(tfEndDate.getText());
-				if (!startDate.isBefore(endDate)) {
-					lblMsg1.setText("This is not a time machine, end date should come after start date");
-					tfEndDate.setBorder(border);
-				} else {
-					lnkPermit_list.createRVP(name, startDate, endDate, name);
-					lblMsg1.setText("Regular visitor permit added susccesfully");
+			String name = tfPermitHolder.getText();
+			int d1;
+			int d2;
+			if (lnkPermit_list.checkNameExists(name)) {
+				JOptionPane.showMessageDialog(null, "Holder name already exsist");
+				tfPermitHolder.setBorder(border);
+			} else {
+				if (isInt(tfStartDate.getText()) && isInt(tfEndDate.getText())) {
+					Date startDate = new Date(d1 = Integer.parseInt(tfStartDate.getText()));
+					Date endDate = new Date(d2 = Integer.parseInt(tfEndDate.getText()));
+					if (!startDate.isBefore(endDate)) {
+						JOptionPane.showMessageDialog(null,"This is not a time machine, end date should come after start date");
+						tfEndDate.setBorder(border);
+					} else {
+						lnkPermit_list.createRVP(name, startDate, endDate, name);
+						JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully");
+					}
 				}
 			}
-		}
-		if (!tfRegNo.getText().isEmpty()) {
-			lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+			if (!tfRegNo.getText().isEmpty()) {
+				lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+			} else {
+				JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
+				tfRegNo.setBorder(border);
+			}
 		}
 	}
 
@@ -452,25 +456,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// Hide RVP
 		lblEndDate.setVisible(false);
 		tfEndDate.setVisible(false);
-	}
-	
-	private boolean validateDate(String s) {
-
-		String input = s;
-
-		try {
-			LocalDate date = LocalDate.parse(input);
-			if (LocalDate.now().isAfter(date)) {
-				JOptionPane.showMessageDialog(null, "Date cannot be before today");
-				return false;
-			}
-		} catch (DateTimeParseException e) {
-			JOptionPane.showMessageDialog(null, "Incorrect date format try again");
-			return false;
-		}
-
-		return true;
-
 	}
 
 	public void setFirstPanel() {
@@ -646,9 +631,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		try {
 			int i = Integer.parseInt(s);
 			return true;
-		}
-
-		catch (NumberFormatException er) {
+		} catch (NumberFormatException er) {
 			return false;
 		}
 	}

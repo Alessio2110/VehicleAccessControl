@@ -30,7 +30,7 @@ public class Permit_list {
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
-    public void createRVP(String permitHolder, LocalDate startDate, LocalDate endDate, String hostName) {
+    public void createRVP(String permitHolder, Date startDate, Date endDate, String hostName) {
    	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
    	lnkPermit.put(permitHolder, rvp);
    	addPermit(rvp);
