@@ -30,20 +30,37 @@ public class Permit_list {
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
-    public void createRVP(String permitHolder, Date startDate, Date endDate, String hostName) {
-   	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
-   	lnkPermit.put(permitHolder, rvp);
-   	addPermit(rvp);
-    }
-    
     public Permit getPermit(String permitHolder) {
     	return lnkPermit.get(permitHolder);
     }
-    public void createUMP(String permitHolder, int lnkDate) {
-//    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
-//    	lnkPermit.put(permitHolder, ump);
-//    	addPermit(rvp);
+    
+    //Create a new University Member Permit (UMP) and add it to the permit list
+    public void createUMP(String permitHolder, Date lnkDate) {
+    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
+    	lnkPermit.put(permitHolder, ump);
+    	addPermit(ump);
     }
+    
+    //Create a new Permanent Visitor Permit (PVP) and add it to the permit list
+    public void createPVP(String permitHolder) {
+    	Permanent_visitor_permit pvp = new Permanent_visitor_permit(permitHolder);
+    	lnkPermit.put(permitHolder, pvp);
+    	addPermit(pvp);
+    }
+    
+    //Create a new Regular Visitor Permit (RVP) and add it to the permit list
+    public void createRVP(String permitHolder, Date startDate, Date endDate, String hostName) {
+       	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
+       	lnkPermit.put(permitHolder, rvp);
+       	addPermit(rvp);
+        }
+    
+  //Create a new Day Visitor Permit (DVP) and add it to the permit list
+    public void createDVP(String permitHolder, Date lnkDate, String hostName) {
+    	Day_visitor_permit dvp = new Day_visitor_permit(permitHolder, lnkDate, hostName);
+       	lnkPermit.put(permitHolder, dvp);
+       	addPermit(dvp);
+        }
     
     public boolean checkNameExists(String permitHolder) {
     	return lnkPermit.containsKey(permitHolder);
