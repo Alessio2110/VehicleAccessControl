@@ -337,7 +337,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				Date today = new Date(lnkSystem_status.getToday());
 				lnkPermit_list.createUMP(name, today);
 				if (!tfRegNo.getText().isEmpty()) {
-					lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+					newVehicle(name);
 				} 
 				else {
 					JOptionPane.showMessageDialog(null, "Must have atleast one registration number");
@@ -370,11 +370,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lnkPermit_list.createRVP(name, startDate, endDate, name);
 						//						JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
 						lblMsg1.setText("Regular visitor permit added susccesfully");
+						if (!tfRegNo.getText().isEmpty()) 
+							newVehicle(name);
 						//The lines below should be modified since you could create a permit without a vehicle
 						//It should check whether the vehicle already exists in another permit before being added
-						if (!tfRegNo.getText().isEmpty()) {
-							lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
-						} 
 						else {
 							JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
 							tfRegNo.setBorder(border);
@@ -402,6 +401,9 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			else
 			{
 				lnkPermit_list.createPVP(name);
+				lblMsg1.setText("Permanent visitor permit added susccesfully");
+				if (!tfRegNo.getText().isEmpty()) 
+					newVehicle(name);
 			}
 		}
 	}
@@ -426,7 +428,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lnkPermit_list.createDVP(name,startDate, name);
 						//JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
 						lblMsg1.setText("Regular visitor permit added susccesfully");
-						
+
 						if (!tfRegNo.getText().isEmpty()) 
 							newVehicle(name);
 					} //end else statement
@@ -445,10 +447,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		for (String v: arrOfStr) {
 			if (!lnkPermit_list.vehicleIsRegistered2(v))
 				lnkPermit_list.getPermit(name).addPermittedVehicle(v);
-			else {
-				JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
-				tfRegNo.setBorder(border);
-			} //end if statement
 		} //end for loop
 		System.out.println("Printing all vehicles for each permit:");
 		lnkPermit_list.printAllVehicles();
