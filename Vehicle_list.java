@@ -61,8 +61,15 @@ public class Vehicle_list {
 		return allowed;
 	}
 
-	public boolean checkVehicle(String reg) {
-		return lnkVehicle.containsKey(reg);
+	public boolean isRegistered(String reg) {
+		if (lnkVehicle.containsKey(reg)) {
+			System.out.println("Vehicle List--" + reg + " already exists");
+			return true;
+		}
+		else {
+			System.out.println("Vehicle " + reg + " not found");
+		return false;
+		}
 	}
 
 	public void updatePermit(Permit p, Vehicle_info v) {
@@ -70,19 +77,22 @@ public class Vehicle_list {
 		p.setVehicle(v);
 	}
 
-	public void addSimpleVehicle(String regNo) {
-		Vehicle_info v = new Vehicle_info(regNo);
-		lnkVehicle.put(v.getRegNo(), v);
-	}
+//	public void addSimpleVehicle(String regNo) {
+//		Vehicle_info v = new Vehicle_info(regNo);
+//		lnkVehicle.put(v.getRegNo(), v);
+//	}
 
-	public boolean addPermitVehicle(String reg) {
-		if (!lnkVehicle.containsKey(reg)) {
-			lnkVehicle.put(reg, new Vehicle_info(reg));
-			System.out.println(reg + " added");
-			return true;
-		} else {
-			return false;
-		}
+//	public boolean addPermitVehicle(String reg) {
+//		if (!lnkVehicle.containsKey(reg)) {
+//			lnkVehicle.put(reg, new Vehicle_info(reg));
+//			System.out.println(reg + " added");
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
+	public void addPermitVehicle(String reg) {
+		lnkVehicle.put(reg, new Vehicle_info(reg));
 	}
 	
 	public boolean removeVehicle(String reg) {

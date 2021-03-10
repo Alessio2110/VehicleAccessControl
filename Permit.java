@@ -184,16 +184,16 @@ abstract public class Permit {
 		return permittedVehicles;
 	}
 
-	public boolean addPermittedVehicle(String v) {
-		String str = v;
-		String[] arrOfStr = str.split(", ");
-		boolean added = false;
-		for (String a : arrOfStr) {
-			if (permittedVehicles.addPermitVehicle(a)) {
-				added = true;
-			}
-		}
-		return added;
+//	public boolean addPermittedVehicle(String v) {
+//		boolean added = false;
+//		if (permittedVehicles.addPermitVehicle(v))
+//			added = true;
+//		return added;
+//	}
+	
+	public void addPermittedVehicle(String v) {
+		System.out.println("Permit.addPermittedVehicle ---Adding vehicle: " + v);
+		permittedVehicles.addPermitVehicle(v);
 	}
 
 	public void showPermittedVehicles() {
