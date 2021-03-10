@@ -337,7 +337,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				Date today = new Date(lnkSystem_status.getToday());
 				lnkPermit_list.createUMP(name, today);
 				if (!tfRegNo.getText().isEmpty()) {
-					lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
+					newVehicle(name);
 				} 
 				else {
 					JOptionPane.showMessageDialog(null, "Must have atleast one registration number");
@@ -370,11 +370,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lnkPermit_list.createRVP(name, startDate, endDate, name);
 						//						JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
 						lblMsg1.setText("Regular visitor permit added susccesfully");
+						if (!tfRegNo.getText().isEmpty()) 
+							newVehicle(name);
 						//The lines below should be modified since you could create a permit without a vehicle
 						//It should check whether the vehicle already exists in another permit before being added
-						if (!tfRegNo.getText().isEmpty()) {
-							lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
-						} 
 						else {
 							JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
 							tfRegNo.setBorder(border);
@@ -402,6 +401,9 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			else
 			{
 				lnkPermit_list.createPVP(name);
+				lblMsg1.setText("Permanent visitor permit added susccesfully");
+				if (!tfRegNo.getText().isEmpty()) 
+					newVehicle(name);
 			}
 		}
 	}
@@ -426,18 +428,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lnkPermit_list.createDVP(name,startDate, name);
 						//JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
 						lblMsg1.setText("Regular visitor permit added susccesfully");
-						//The lines below should be modified since you could create a permit without a vehicle
-						//It should check whether the vehicle already exists in another permit before being added
-						if (!tfRegNo.getText().isEmpty()) {
-							lnkPermit_list.getPermit(name).addPermittedVehicle(tfRegNo.getText());
-//							lnkPermit_list.getPermit(name).getVList().printVehicles();
-							lnkPermit_list.printAllVehicles();
-						} 
-						else {
-							JOptionPane.showMessageDialog(null, "Must have atleast one regestration number");
-							tfRegNo.setBorder(border);
-						}
-					}
+
+						if (!tfRegNo.getText().isEmpty()) 
+							newVehicle(name);
+					} //end else statement
 				}
 				else JOptionPane.showMessageDialog(null,"Entered Date(s) are not a valid day number [1 - 365]");
 
@@ -446,6 +440,17 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		}
 	}
 
+	public void newVehicle(String name) {
+		String vehicleNames = tfRegNo.getText();
+		String str = vehicleNames;
+		String[] arrOfStr = str.split(", ");
+		for (String v: arrOfStr) {
+			if (!lnkPermit_list.vehicleIsRegistered2(v))
+				lnkPermit_list.getPermit(name).addPermittedVehicle(v);
+		} //end for loop
+		System.out.println("Printing all vehicles for each permit:");
+		lnkPermit_list.printAllVehicles();
+	}
 	// Set university member permit labels and text fields
 	public void setUMP() {
 		// Set UMP visible
@@ -510,22 +515,13 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		GridLayout experimentLayout = new GridLayout(0, 2);
 		addPermitPanel = new JPanel();
 		addPermitPanel.setLayout(experimentLayout);
-		// addPermitPanel = new JPanel(new GridBagLayout());
-		// c = new GridBagConstraints();
-		// c.insets = new Insets(10, 10, 10, 10);
-		// c.gridx = 0;
-		// c.gridy = 0;
-		// JCombBox permit types
+
 		String[] permitTypes = { "Day Visitor", "Regular visitor", "Permanent visitor", "University member" };
 		cmbPermitList = new JComboBox(permitTypes);
 		cmbPermitList.setSelectedIndex(2);
 		cmbPermitList.addActionListener(this);
 		addPermitPanel.add(cmbPermitList);
 
-		// JLabel empty = new JLabel("");
-		// addPermitPanel.add(empty);lblToday = new JLabel(" Today is: " +
-		// lnkSystem_status.getToday());
-		// lblToday.setBackground(Color.green);
 		lblToday = new JLabel(
 				"                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday.setFont(lblToday.getFont().deriveFont(15f));
