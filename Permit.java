@@ -184,20 +184,23 @@ abstract public class Permit {
 		return permittedVehicles;
 	}
 
-//	public boolean addPermittedVehicle(String v) {
-//		boolean added = false;
-//		if (permittedVehicles.addPermitVehicle(v))
-//			added = true;
-//		return added;
-//	}
-	
 	public void addPermittedVehicle(String v) {
 		System.out.println("Permit.addPermittedVehicle ---Adding vehicle: " + v);
 		permittedVehicles.addPermitVehicle(v);
 	}
 
-	public void showPermittedVehicles() {
+	public boolean getPermittedVehicle(String v) {
+		if (permittedVehicles.isRegistered(v)) {
+			return true;
+		}
+		return false;
+	}
 
+	public boolean removePermittedVehicle(String v) {
+		if (permittedVehicles.removeVehicle(v)) {
+			return true;
+		}
+		return false;
 	}
 
 	public String status() {
@@ -217,8 +220,4 @@ abstract public class Permit {
 		setNotEnteredToday();
 		setVehicle(null);
 	}
-
-//    public void addNewVehicle(){
-//    	permittedVehicles.add
-//    }
 }
