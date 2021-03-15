@@ -126,17 +126,27 @@ abstract public class Permit {
 	public void addWarning() {
 		warnings++;
 		if (checkMaxWarnings()) {
-			warnings = 0;
+//			warnings = 0;
 			suspended = true;
 		}
 	}
+	
+	public void addMultipleWarnings(int w) {
+		warnings += w;
+	}
 
+	public void removeWarning() {
+		warnings--;
+		if (!checkMaxWarnings())
+			suspended = false;
+			
+	}
 	public void setWarning(int warnings) {
 		this.warnings += warnings;
 	}
 
 	public boolean checkMaxWarnings() {
-		if (warnings == 3)
+		if (warnings >= 3)
 			return true;
 		return false;
 	}
@@ -197,7 +207,7 @@ abstract public class Permit {
 	}
 
 	public void showPermittedVehicles() {
-
+		permittedVehicles.printVehicles();
 	}
 
 	public String status() {

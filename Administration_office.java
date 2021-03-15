@@ -1,5 +1,7 @@
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -90,13 +92,11 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JButton addPermit;
 	// Second Panel: Record Warning
 	private JPanel secondPanel;
-
 	private JLabel lblToday2;
-	private JLabel lblPermitHolder2;
-	private JLabel lblRecordWarning;
+	private JLabel lblRegNo2;
+	private JTextField tfRegNo2;
+	private JButton btnAddWarning;
 
-	private JTextField tfPermitHolder2;
-	private JTextField tfWarnings;
 
 	private JComboBox cmbPermitList; // ComboBox with 4 permit type options
 
@@ -105,16 +105,22 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	// Third panel: Delete warning
 	private JPanel deleteWarningPanel;
 	private JButton deleteWarning;
-	private JList warnings = new javax.swing.JList();;
+	private JLabel lblToday3;
+	private JComboBox cmbPermits;
+	private JList warnings;
+	private JScrollPane scrollList;
+//	private JList warnings = new javax.swing.JList();
 	// private JLabel
 
-	// Status Panel
+	// Fourth panel: Status Panel
 	private JPanel statusMainPanel;
 	private JTextField statusPermitHolder;
 	private JButton statusSearch;
+	private JLabel lblToday4;
 	private JLabel statusInfo;
-	// Modify Panel
+	// Fifth Panel: Modify Panel
 	private JPanel modifyPanel;
+	private JLabel lblToday5;
 	private JLabel invalidInfo;
 	private JTextField modifyPermitName;
 	private JTextField modifynoOfEntries;
@@ -125,7 +131,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JTextField removeVehicleInfo;
 	private JTextField updateDate;
 	private JButton updatePermit;
-
+	
+	
 	String msg = "Permanent visitor";
 
 	public Administration_office(System_status lnkSystem_status, Vehicle_list lnkVehicle_list,
@@ -147,6 +154,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// new Date(3),"B");
 		// lnkPermit_list.addPermit(rvp2);
 		// Add Permit
+		//Test
+		lnkPermit_list.createUMP("Name1", new Date(1));
+		lnkPermit_list.createUMP("Name2", new Date(2));
+		lnkPermit_list.createUMP("Name3", new Date(3));
 		setFirstPanel();
 
 		// Record Warning
@@ -186,8 +197,42 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
 		lblToday.setText("                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday2.setText("                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday3.setText("                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday4.setText("                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday5.setText("                                           Today is:       " + lnkSystem_status.getToday());
+		
+		updateList();
+		
+//		cmbPermits.setModel(theList);
+//		updateList();
+		
 		System.out.println("Administration---Today is: Day #" + lnkSystem_status.getToday());
 
+	}
+	
+	public void updateList() {
+		LinkedList<String> keys = lnkPermit_list.getKeys();
+		DefaultListModel theList = (DefaultListModel) warnings.getModel();
+		theList.clear();
+		
+		for (String key: keys)
+			theList.addElement(key);
+//		cmbPermits.removeAllItems();
+////		DefaultComboBoxModel model = (DefaultComboBoxModel) cmbPermits.getModel();
+//		model.removeAllElements();
+//		System.out.println("model " + model.getSize());
+//		LinkedList<String> keys = lnkPermit_list.getKeys();
+//		for (String key: keys) {
+//			model.addElement(key);
+//			System.out.println(key);
+//		}
+//		System.out.println("model " + model.getSize());
+//		cmbPermits.setModel(model);
+////		deleteWarning.add(cmbPermits);
+//		System.out.println("Keys Size:" + keys.size());
+//		Vector<String> vector = new Vector<String>(keys);
+//		DefaultComboBoxModel  theList = new DefaultComboBoxModel(vector);
+//		cmbPermits.setModel(new JComboBox<String>(theList).getModel());
 	}
 
 	@Override
@@ -222,6 +267,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			// lnkPermit_list.addPermit(p);
 		}
 		if (e.getSource() == cmbPermitList) {
+			//First Panel: Add Permit
 			JComboBox cb = (JComboBox) e.getSource();
 			msg = (String) cb.getSelectedItem();
 			// Day Visitor", "Regular visitor", "Permanent visitor", "University member
@@ -240,6 +286,11 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				break;
 			}
 		}
+		//Second Panel: Add Warning
+		if (e.getSource() == btnAddWarning) {
+			addWarning();		
+		}
+		//Third Panel: Delete Warning
 		if (e.getSource() == deleteWarning) {
 			String selected = (String) warnings.getSelectedValue(); // get name of selected permit
 
@@ -276,7 +327,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				}
 				if (!modifyWarnings.getText().isEmpty()) {
 					try {
-						Integer.parseInt(modifyWarnings.getText());// try's to convert the string to an int
+						Integer.parseInt(modifyWarnings.getText());// tries to convert the string to an int
 
 						// if statement checks the current number of warnings are below 3 and then
 						// checks to see if current warnings and new warnings together will be 3 or less
@@ -320,7 +371,30 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 		setThirdPanel();
 	}
-
+	
+	public void addWarning() {
+		//If text field is empty, i.e. no name was typed
+		if (tfRegNo2.getText().isEmpty()){
+			//Print error message and make borders red
+			JOptionPane.showMessageDialog(null, "Permit holder name must not be empty");
+			tfRegNo2.setBorder(border);
+		}
+		else {
+			String regNo = tfRegNo2.getText();
+			//If there is a permit holder with that name
+//			if (lnkPermit_list.checkNameExists(regNo)) {
+			if (lnkPermit_list.findPermit(regNo) != null) {
+			//Add warning
+			lnkPermit_list.findPermit(regNo).addWarning();
+			//Remove (red) borders
+			tfRegNo2.setBorder(null);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Permit holder not found in permit list, please try another name");
+				tfRegNo2.setBorder(border);
+			}
+		}
+	}
 	public void newUMP() {
 		if (tfPermitHolder.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Holder name must not be empty");
@@ -428,22 +502,20 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lnkPermit_list.createDVP(name,startDate, name);
 						//JOptionPane.showMessageDialog(null,"Regular visitor permit added susccesfully"); //Probably better to have it on a label, and only have pop-up messages for errors (?)
 						lblMsg1.setText("Regular visitor permit added susccesfully");
-
 						if (!tfRegNo.getText().isEmpty()) 
 							newVehicle(name);
+
 					} //end else statement
 				}
 				else JOptionPane.showMessageDialog(null,"Entered Date(s) are not a valid day number [1 - 365]");
-
 			}
-
 		}
 	}
 
 	public void newVehicle(String name) {
 		String vehicleNames = tfRegNo.getText();
 		String str = vehicleNames;
-		String[] arrOfStr = str.split(", ");
+		String[] arrOfStr = str.split(",");
 		for (String v: arrOfStr) {
 			if (!lnkPermit_list.vehicleIsRegistered2(v))
 				lnkPermit_list.getPermit(name).addPermittedVehicle(v);
@@ -537,7 +609,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		addPermitPanel.add(tfPermitHolder);
 
 		// label and textfield for registration number
-		lblRegNo = new JLabel("Registration #:");
+		//		lblRegNo = new JLabel("Registration # (use \",\" to insert multiple vehicles(NO SPACES!):");
+		lblRegNo = new JLabel("<html>Registration #: <br>(use \",\" to insert multiple vehicles(NO SPACES!)</html>");
 		tfRegNo = new JTextField("", 10);
 		addPermitPanel.add(lblRegNo);
 		addPermitPanel.add(tfRegNo);
@@ -602,15 +675,15 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblToday2.setOpaque(true);
 		secondPanel.add(lblToday2);
 		// label and textfield for permit holder name
-		lblRecordWarning = new JLabel("Record Warning:");
-		secondPanel.add(lblRecordWarning);
-		tfWarnings = new JTextField("", 3);
-		secondPanel.add(tfWarnings);
 
-		lblPermitHolder2 = new JLabel("Permit Holder Name: ");
-		secondPanel.add(lblPermitHolder2);
-		tfPermitHolder2 = new JTextField("", 3);
-		secondPanel.add(tfPermitHolder2);
+		lblRegNo2 = new JLabel("Vehicle Registration Number: ");
+		secondPanel.add(lblRegNo2);
+		tfRegNo2 = new JTextField("", 3);
+		secondPanel.add(tfRegNo2);
+
+		btnAddWarning = new JButton("Add Warning");
+		btnAddWarning.addActionListener(this);
+		secondPanel.add(btnAddWarning);
 
 		// tfPermitHolder = new JTextField("", 25);
 
@@ -622,40 +695,85 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	public void setThirdPanel() {
 		GridLayout experimentLayout = new GridLayout(0, 2);
 		deleteWarningPanel = new JPanel();
-		deleteWarningPanel.setSize(100, 5);
-		// deleteWarningPanel.setLayout(experimentLayout);
+		deleteWarningPanel.setLayout(experimentLayout);
 
+		//		deleteWarningPanel.setSize(100, 5);
+		// deleteWarningPanel.setLayout(experimentLayout);
+		JLabel empty = new JLabel("");
+		deleteWarningPanel.add(empty);
 		//		System.out.println("thirdPanel");
-		JLabel lblToday3 = new JLabel("Size of permit list is:       " + lnkPermit_list.getSize());
+		//		JLabel lblToday3 = new JLabel("Size of permit list is:       " + lnkPermit_list.getSize());
+		lblToday3 = new JLabel(
+				"                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday3.setFont(lblToday.getFont().deriveFont(15f));
 		lblToday3.setForeground(Color.red);
 		lblToday3.setOpaque(true);
 		deleteWarningPanel.add(lblToday3);
 
+		JLabel lblSize = new JLabel("Size of permit list is:       " + lnkPermit_list.getSize());
+		deleteWarningPanel.add(lblSize);
+		
+//		String[] permitTypes = { "Day Visitor", "Regular visitor", "Permanent visitor", "University member" };
+//		LinkedList<String> keys = lnkPermit_list.getKeys();
+//		cmbPermits.setModel(new DefaultComboBoxModel<String>(keys.toArray(new String[0])));
+//		cmbPermitList = new JComboBox(permitTypes);
+//		cmbPermitList.setSelectedIndex(2);
+//		cmbPermitList.addActionListener(this);
+//		addPermitPanel.add(cmbPermitList);
+		
+//		LinkedList<String> keys = lnkPermit_list.getKeys();
+//		Vector<String> vector = new Vector<String>(keys);
+//		DefaultComboBoxModel  theList = new DefaultComboBoxModel(vector);
+//		cmbPermits = new JComboBox(theList);
+////		cmbPermitList.setSelectedIndex(1);
+//		cmbPermits.addActionListener(this);
+//		deleteWarningPanel.add(cmbPermits);
+		
 		// Permanent_visitor_permit perVis = new Permanent_visitor_permit("oreo");
 		// lnkPermit_list.addPermit(perVis);
 		// String[] permitTypes = {"Paul", "Robert", "Jason", "Jacob"};
 
-		DefaultListModel model = new DefaultListModel();
-		//		System.out.println("THIS Size of permit list: " + lnkPermit_list.getSize());
-
-		for (int i = 0; i < lnkPermit_list.getSize(); i++) {
-			model.addElement(lnkPermit_list.getKeys().get(i));
-			model.addElement(i);
-			System.out.println(lnkPermit_list.getKeys().get(i));
-		}
-
-		warnings.setModel(model);
-
-		// warnings = new JList((lnkPermit_list.getKeys()).toArray());
-		// warnings.setSelectedIndex(2);
-		deleteWarningPanel.add(warnings);
-
-		warnings.updateUI();
-		deleteWarningPanel.updateUI();
-		// = new JList( model );
-		// slnkPermit_list.getSize();
-
+//		DefaultListModel model = new DefaultListModel();
+//		//		System.out.println("THIS Size of permit list: " + lnkPermit_list.getSize());
+//
+//		for (int i = 0; i < lnkPermit_list.getSize(); i++) {
+//			model.addElement(lnkPermit_list.getKeys().get(i));
+//			model.addElement(i);
+//			System.out.println(lnkPermit_list.getKeys().get(i));
+//		}
+//
+//		warnings.setModel(model);
+//
+//		// warnings = new JList((lnkPermit_list.getKeys()).toArray());
+//		// warnings.setSelectedIndex(2);
+//		deleteWarningPanel.add(warnings);
+//
+//		warnings.updateUI();
+//		deleteWarningPanel.updateUI();
+//		// = new JList( model );
+//		// slnkPermit_list.getSize();
+		
+//		Extract list = model.getInStock();    // Get list of in-stock items in the DB
+//	    DefaultListModel theList = (DefaultListModel) stockList.getModel();  // Get the displayed stock list
+//	    theList.clear();     // Clear the stockList
+//	    // Then re-fill it
+//	    for (int i = 0; i <= list.top; i++)   // Add each stock item in list to the stockList
+//	      theList.addElement(list.items[i]);
+//	    deselect();
+//	    showDetails();      
+		warnings = new JList(new DefaultListModel());
+		scrollList = new JScrollPane(warnings, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		LinkedList<String> keys = lnkPermit_list.getKeys();
+		DefaultListModel theList = (DefaultListModel) warnings.getModel();
+		theList.clear();
+		
+		for (String key: keys)
+			theList.addElement(key);
+		
+		warnings.setVisibleRowCount(5);
+		deleteWarningPanel.add(scrollList);
+		
 		deleteWarning = new JButton("Delete warning");
 		deleteWarning.addActionListener(this);
 		deleteWarningPanel.add(deleteWarning);
@@ -679,7 +797,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			return false;
 		}
 	}
-
+	//Fourth Panel
 	public void setStatusPanel() {
 		GridLayout mainLayout = new GridLayout(2, 1);
 		statusMainPanel = new JPanel();
@@ -691,17 +809,20 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		statusMainPanel.add(statusPanelTop);
 		statusMainPanel.add(statusPanelBot);
 
-		JLabel day = new JLabel("Day: ");
-		lblToday2 = new JLabel(" " + lnkSystem_status.getToday());
-		lblToday2.setFont(lblToday.getFont().deriveFont(15f));
+		JLabel empty = new JLabel("");
+		lblToday4 = new JLabel(
+				"                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday4.setFont(lblToday4.getFont().deriveFont(15f));
+		lblToday4.setForeground(Color.red);
+		lblToday4.setOpaque(true);
 		lblPermitHolder = new JLabel("Permit Holder Name: ");
 		statusPermitHolder = new JTextField("", 3);
 		statusSearch = new JButton("Search");
 		statusSearch.addActionListener(this);
 		statusInfo = new JLabel();
 
-		statusPanelTop.add(day);
-		statusPanelTop.add(lblToday2);
+		statusPanelTop.add(empty);
+		statusPanelTop.add(lblToday4);
 		statusPanelTop.add(lblPermitHolder);
 		statusPanelTop.add(statusPermitHolder);
 		statusPanelTop.add(statusSearch);
@@ -717,30 +838,43 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifyPanel.setLayout(infoLayout);
 
 		// creating and assigning all components
-		lblToday2 = new JLabel(" " + lnkSystem_status.getToday());
+		lblToday5 = new JLabel(
+				"                                           Today is:       " + lnkSystem_status.getToday());
+		lblToday5.setFont(lblToday5.getFont().deriveFont(15f));
+		lblToday5.setForeground(Color.red);
+		lblToday5.setOpaque(true);
 		JLabel day = new JLabel("Day: ");
+
 		lblPermitHolder = new JLabel("Permit Holder Name: ");
 		modifyPermitName = new JTextField();
+
 		JLabel lblmodifyNoOfEntries = new JLabel("No Of Entries: ");
 		modifynoOfEntries = new JTextField();
+
 		JLabel lblmodifyWarnings = new JLabel("Warnings : ");
 		modifyWarnings = new JTextField();
+
 		JLabel lblmodifySuspended = new JLabel("Suspended (True/False) : ");
 		modifySuspended = new JTextField();
+
 		JLabel lblmodifyEnteredToday = new JLabel("Entered Today (True/False) : ");
 		modifyEnteredToday = new JTextField();
+
 		JLabel lbladdVehicleInfo = new JLabel(" Add Vehicle Info: ");
 		addVehicleInfo = new JTextField();
+
 		JLabel lblremoveVehicleInfo = new JLabel(" Remove Vehicle Info: ");
 		removeVehicleInfo = new JTextField();
+
 		JLabel lblChangeDate = new JLabel(" Update Date: ");
 		updateDate = new JTextField();
+
 		updatePermit = new JButton("Update");
 		updatePermit.addActionListener(this);
 		invalidInfo = new JLabel();
 
 		modifyPanel.add(day);
-		modifyPanel.add(lblToday2);
+		modifyPanel.add(lblToday5);
 		modifyPanel.add(lblPermitHolder);
 		modifyPanel.add(modifyPermitName);
 		modifyPanel.add(lblmodifyNoOfEntries);

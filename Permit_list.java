@@ -72,11 +72,19 @@ public class Permit_list {
     	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
     }
     
-    public void vehicleIsRegistered(String regNo) {
+    public Permit findPermit(String regNo) {
     	LinkedList<String> keys = getKeys();
-//    	keys.forEach((key -> System.out.println(key)));
-    	keys.forEach((key) -> lnkPermit.get(key).getVList().isRegistered(regNo));
+    	for (String key: keys) {
+    		if(lnkPermit.get(key).getVList().isRegistered(regNo))
+    			return lnkPermit.get(key);
+    	}
+    	return null;
     }
+//    public void vehicleIsRegistered(String regNo) {
+//    	LinkedList<String> keys = getKeys();
+////    	keys.forEach((key -> System.out.println(key)));
+//    	keys.forEach((key) -> lnkPermit.get(key).getVList().isRegistered(regNo));
+//    }
     
     public boolean vehicleIsRegistered2(String regNo) {
     	LinkedList<String> keys = getKeys();
@@ -85,12 +93,6 @@ public class Permit_list {
     			return true;
     	}
     	return false;
-//    	keys.forEach((key) ->{
-//    		if(lnkPermit.get(key).getVList().isRegistered(regNo))
-//    			return true;
-//    		else
-//    			return false;
-//    		};
     }
     
     public LinkedList<String> getKeys() {
