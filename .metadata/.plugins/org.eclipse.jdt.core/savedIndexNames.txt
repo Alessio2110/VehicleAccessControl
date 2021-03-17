@@ -1,0 +1,2 @@
+INDEX VERSION 1.131+/Users/polinamarkova/git/P6Assignment Import/.metadata/.plugins/org.eclipse.jdt.core
+3249186665.index
