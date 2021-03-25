@@ -32,11 +32,11 @@ public class Vehicle_info {
      */
     private Permit lnkPermit;
     
-    private String carMake;
-    
-    private String carModel;
-    
-    private String carColour;
+//    private String carMake;
+//    
+//    private String carModel;
+//    
+//    private String carColour;
     
     public Vehicle_info(String regNo) {
     	this.regNo = regNo;
