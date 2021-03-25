@@ -26,8 +26,25 @@ public class Day_visitor_permit extends Permit {
     	this.hostName = hostName;
     }
     
-    public Date getDate() {
+//    public String toString() {
+//		String s = "Type: Day Visitor Permit, name: " + this.getName() 
+//				+ "Permit valid on day: #" + lnkDate.getDay()
+//				+ "; #entries:" + this.getEntries() + "; warnings: " + this.getWarnings() 
+//				+ ". Suspended? " + this.isSuspended() + ". Vehicle used today: " + this.getVehicleUsedToday().getRegNo() + ". Number of permitted vehicles:"
+//				+ this.getVList().getSize();
+//		return s;
+//	}
+    
+    public Date getVisitDate() {
     	return lnkDate;
+    }
+    
+    public void changeDate(Date d) {
+    	lnkDate = d;
+    }
+    
+    public void changeHostName(String s) {
+    	hostName = s;
     }
     
     public String getHostName() {

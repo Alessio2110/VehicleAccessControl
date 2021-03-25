@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.LinkedList;
 
@@ -29,24 +30,67 @@ public class Permit_list {
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
-    public void createRVP(String permitHolder, int lnkDate, int lnkDate1, String hostName) {
-//    	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, lnkDate, lnkDate1, hostName);
-//    	lnkPermit.put(permitHolder, rvp);
-//    	addPermit(rvp);
-    }
-    
     public Permit getPermit(String permitHolder) {
     	return lnkPermit.get(permitHolder);
     }
-    public void createUMP(String permitHolder, int lnkDate) {
-//    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
+    
+    //Create a new University Member Permit (UMP) and add it to the permit list
+    public void createUMP(String permitHolder, Date lnkDate) {
+    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
 //    	lnkPermit.put(permitHolder, ump);
-//    	addPermit(rvp);
+    	addPermit(ump);
     }
+    
+    //Create a new Permanent Visitor Permit (PVP) and add it to the permit list
+    public void createPVP(String permitHolder) {
+    	Permanent_visitor_permit pvp = new Permanent_visitor_permit(permitHolder);
+//    	lnkPermit.put(permitHolder, pvp);
+    	addPermit(pvp);
+    }
+    
+    //Create a new Regular Visitor Permit (RVP) and add it to the permit list
+    public void createRVP(String permitHolder, Date startDate, Date endDate, String hostName) {
+       	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
+//       	lnkPermit.put(permitHolder, rvp);
+       	addPermit(rvp);
+        }
+    
+  //Create a new Day Visitor Permit (DVP) and add it to the permit list
+    public void createDVP(String permitHolder, Date lnkDate, String hostName) {
+    	Day_visitor_permit dvp = new Day_visitor_permit(permitHolder, lnkDate, hostName);
+//       	lnkPermit.put(permitHolder, dvp);
+       	addPermit(dvp);
+        }
     
     public boolean checkNameExists(String permitHolder) {
     	return lnkPermit.containsKey(permitHolder);
-
+    }
+    
+    public void printAllVehicles() {
+    	LinkedList<String> keys = getKeys();
+//    	keys.forEach((key -> System.out.println(key)));
+    	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
+    }
+    
+    public void vehicleIsRegistered(String regNo) {
+    	LinkedList<String> keys = getKeys();
+//    	keys.forEach((key -> System.out.println(key)));
+    	keys.forEach((key) -> lnkPermit.get(key).getVList().isRegistered(regNo));
+    }
+    
+    public boolean vehicleIsRegistered2(String regNo) {
+    	LinkedList<String> keys = getKeys();
+    	for (String key: keys) {
+    		if(lnkPermit.get(key).getVList().isRegistered(regNo))
+    			return true;
+    	}
+    	return false;
+//    	keys.forEach((key) ->{
+//    		if(lnkPermit.get(key).getVList().isRegistered(regNo))
+//    			return true;
+//    		else
+//    			return false;
+//    		};
     }
     
     public LinkedList<String> getKeys() {
@@ -55,7 +99,8 @@ public class Permit_list {
         while(keys.hasMoreElements()){
             String key = keys.nextElement();
             keysList.add(key);
-            System.out.println("Value of "+key+" is: "+lnkPermit.get(key));
+//            System.out.println("Permi List --- Value of key: "+key+" is: ");
+//            +lnkPermit.get(key).toString()
     }
         return keysList;
     }
@@ -63,9 +108,11 @@ public class Permit_list {
     public void removePermit(String permitHolder) {
     	lnkPermit.remove(permitHolder);
     }
+    
     public int getSize() {
     	return lnkPermit.size();
     }
+    
     public void addPermit(Permit p) {
     	Permit p2;
     	p2 = (Permit) lnkPermit.get(p.getName());
