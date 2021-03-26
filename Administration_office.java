@@ -101,14 +101,36 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JTextField tfWarnings;
 
 	private JComboBox cmbPermitList; // ComboBox with 4 permit type options
+	private JComboBox cmbPermitList2; // ComboBox with 4 permit type options
 
 	private JTabbedPane tb;
 
 	// Third panel: Delete warning
-	private JPanel deleteWarningPanel;
-	private JButton deleteWarning;
-	private JList warnings = new javax.swing.JList();;
-	// private JLabel
+//	private JPanel deleteWarningPanel;
+//	private JButton deleteWarning;
+//	private JList warnings = new javax.swing.JList();
+	// Third panel: Delete warning 
+
+	private JPanel deleteWarningPanel; 
+	private JButton deleteWarning; 
+	private JButton deleteAllWarnings; 
+	private JTextField tfDeleteWarningPermitHolderName; 
+	private JLabel lblDeleteWarningPermitHolderName; 
+	private JLabel lblMsgDelete; 
+	private JLabel lblNumberSelectedFromComboBox; 
+	private JComboBox cmbDeleteWarningList; // ComboBox with 3 options of amount of warnings to delete
+	//stores the amount of warnings the user wants to delete, changes whenever new option is selected from cmbDeleteWarningList 
+	private int amountOfWarningsToDelete = 0; 
+	
+	//Fourth panel: Cancel Permit 
+
+	private JPanel cancelPermitPanel; 
+	private JButton cancelPermit; 
+	private JTextField tfCancelPermitHolderName; 
+	private JLabel lblCancelPermitHolderName; 
+	private JLabel lblMsgCancel; 
+
+	// Delete Warning 
 
 	// Status Panel
 	private JPanel statusMainPanel;
@@ -117,15 +139,17 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JLabel statusInfo;
 	// Modify Panel
 	private JPanel modifyPanel;
+	private JLabel lblChangeStartDate;
+	private JLabel lblChangeEndDate;
 	private JTextField modifyPermitName;
 	private JTextField modifynoOfEntries;
 	private JTextField modifyWarnings;
-	private JTextField modifySuspended;
 	private JTextField modifyEnteredToday;
-	private JTextField addVehicleInfo;
-	private JTextField removeVehicleInfo;
-	private JTextField updateDate;
+	private JTextField modifyVehicleInfo;
+	private JTextField modifyStartDate;
+	private JTextField modifyEndDate;
 	private JButton updatePermit;
+	private JButton searchPermit;
 
 	String msg = "Permanent visitor";
 
@@ -157,7 +181,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		setThirdPanel();
 
 		// Cancel Permit
-		// setFourthPanel();
+		setFourthPanel();
 
 		// Status Enquiry
 		setStatusPanel();
@@ -170,7 +194,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		tb.addTab("Add Permit   ", addPermitPanel);
 		tb.addTab("Record Warning", secondPanel);
 		tb.addTab("Delete Warning", deleteWarningPanel);
-		// tb.addTab("Cancel Permit", );
+		tb.addTab("Cancel Permit", cancelPermitPanel);
 		tb.addTab("Status Enquiry", statusMainPanel);
 		tb.addTab("Modify Permit", modifyPanel);
 		// warnings.add("test", deleteWarningPanel);
@@ -223,8 +247,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			// lnkPermit_list.addPermit(p);
 		}
 		if (e.getSource() == cmbPermitList) {
-			JComboBox cb = (JComboBox) e.getSource();
-			msg = (String) cb.getSelectedItem();
+			msg = cmbPermitList.getSelectedItem().toString();
 			// Day Visitor", "Regular visitor", "Permanent visitor", "University member
 			switch (msg) {
 			case "Day Visitor":
@@ -241,20 +264,125 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				break;
 			}
 		}
-		if (e.getSource() == deleteWarning) {
-			String selected = (String) warnings.getSelectedValue(); // get name of selected permit
+		
+//		if (e.getSource() == deleteWarning) {
+//			String selected = (String) warnings.getSelectedValue(); // get name of selected permit
+//
+//			if (lnkPermit_list.getPermit(selected) != null) { // check if selected permit is not null
+//				lnkPermit_list.getPermit(selected).clearWarnings(); // delete warnings from selected permit
+//				System.out.println(selected);
+//				System.out.println("Warning deleted");
+//			}
+//		}
+		if(e.getSource() == cmbDeleteWarningList) { 
 
-			if (lnkPermit_list.getPermit(selected) != null) { // check if selected permit is not null
-				lnkPermit_list.getPermit(selected).clearWarnings(); // delete warnings from selected permit
-				System.out.println(selected);
-				System.out.println("Warning deleted");
-			}
-		}
+			amountOfWarningsToDelete = (int) cmbDeleteWarningList.getSelectedItem(); //sets the amount of warnings the user wants to delete 
+
+		} 
+
+		if (e.getSource() == deleteWarning) { 
+
+			if(lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()) != null) { 
+
+				int amountOfWarnings = 0; 
+
+				amountOfWarnings = lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()).getWarnings(); 
+				switch(amountOfWarnings) { //switch statement based on amount of warnings the selected permit holder has 
+				case 0: 
+					lblMsgDelete.setText("Warnings not removed, permit holder has no warnings."); 
+					return; 
+				case 1: 
+					if(amountOfWarningsToDelete == 1) {  
+						lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()).deleteWarning(amountOfWarningsToDelete); 
+					} 
+					else { 
+						lblMsgDelete.setText("Warnings not removed, permit holder has less number of warnings than selected."); 
+						return; 
+					} 
+					break; 
+				case 2: 
+					if(amountOfWarningsToDelete <= 2) { 
+						lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()).deleteWarning(amountOfWarningsToDelete); 
+					} 
+					else { 
+						lblMsgDelete.setText("Warnings not removed, permit holder has less number of warnings than selected."); 
+						return; 
+					} 
+					break; 
+				case 3: 
+					if(amountOfWarningsToDelete <= 3) { 
+						lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()).deleteWarning(amountOfWarningsToDelete); 
+					} 
+					else { 
+						lblMsgDelete.setText("Warnings not removed, permit holder has less number of warnings than selected."); 
+						return; 
+					} 
+					break; 
+				} 
+				lblMsgDelete.setText("Warnings removed succesfully!"); 
+				tfDeleteWarningPermitHolderName.setText(""); 
+			} else { 
+				lblMsgDelete.setText("Warnings not removed, invalid permit holder name entered."); 
+			} 
+		} 
+		if	(e.getSource() == deleteAllWarnings) 
+		{ 
+			if(lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()) != null) { 
+				if(lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()).getWarnings() > 0) { 
+					lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()).clearWarnings(); 
+					lblMsgDelete.setText("All warnings removed succesfully!"); 
+					tfDeleteWarningPermitHolderName.setText(""); 
+				} 
+				else { 
+					lblMsgDelete.setText("Warnings not removed, permit holder has no warnings."); 
+				} 
+			} else { 
+				lblMsgDelete.setText("Warnings not removed, invalid permit holder name entered."); 
+			} 
+		} 
+		if (e.getSource() == cancelPermit) { 
+			if(lnkPermit_list.getPermit(tfCancelPermitHolderName.getText()) != null){ 
+				System.out.println("canceling permit"); 
+				lnkPermit_list.removePermit(tfCancelPermitHolderName.getText()); 
+				lblMsgCancel.setText("Permit cancelled succesfully!"); 
+				tfCancelPermitHolderName.setText(""); 
+			} 
+			else { 
+				lblMsgCancel.setText("Permit not cancelled succesfully, incorrect permit holder name entered."); 
+			} 
+		} 
+//		
+//		
+//		
 		if (e.getSource() == statusSearch) {
 			if (lnkPermit_list.checkNameExists(statusPermitHolder.getText())) {
 				statusInfo.setText(lnkPermit_list.getPermit(statusPermitHolder.getText()).status());
 			} else {
 				statusInfo.setText("Invalid Name");
+			}
+		}
+		if (e.getSource() == searchPermit) {
+			String name = modifyPermitName.getText();
+			if (name.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Please enter a Permit Holder name");
+			} else{
+				
+				msg = cmbPermitList2.getSelectedItem().toString();
+				// Day Visitor", "Regular visitor", "Permanent visitor", "University member
+				switch (msg) {
+				case "Day Visitor":
+					setModifyInfo(name);
+					break;
+				case "Regular visitor":
+					setModifyInfo(name);
+					break;
+				case "Permanent visitor":
+					setModifyInfo(name);
+					break;
+				case "University member":
+					setModifyInfo(name);
+					break;
+				}
 			}
 		}
 		if (e.getSource() == updatePermit) {
@@ -299,16 +427,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 							modifyWarnings.setBorder(border);
 						}
 					}
-					if (!modifySuspended.getText().isEmpty()) {
-						if (modifySuspended.getText().toLowerCase() == "true") {
-							lnkPermit_list.getPermit(name).isSuspended();
-						} else if (modifySuspended.getText().toLowerCase() == "false") {
-							lnkPermit_list.getPermit(name).isAllowed();
-						} else {
-							JOptionPane.showMessageDialog(null, "Suspention must be True or False");
-							modifySuspended.setBorder(border);
-						}
-					}
 					if (!modifyEnteredToday.getText().isEmpty()) {
 						if (modifyEnteredToday.getText().toLowerCase() == "true") {
 							lnkPermit_list.getPermit(name).setEnteredToday();
@@ -319,29 +437,20 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 							modifyEnteredToday.setBorder(border);
 						}
 					}
-					if (!addVehicleInfo.getText().isEmpty()) {
-						if (lnkPermit_list.getPermit(name).getPermittedVehicle(addVehicleInfo.getText())) {
+					if (!modifyVehicleInfo.getText().isEmpty()) {
+						if (lnkPermit_list.getPermit(name).getPermittedVehicle(modifyVehicleInfo.getText())) {
 							JOptionPane.showMessageDialog(null, "Vehicle already on permit");
-							addVehicleInfo.setBorder(border);
+							modifyVehicleInfo.setBorder(border);
 						} else {
-							lnkPermit_list.getPermit(name).addPermittedVehicle(addVehicleInfo.getText());
+							lnkPermit_list.getPermit(name).addPermittedVehicle(modifyVehicleInfo.getText());
 							JOptionPane.showMessageDialog(null, "Vehicle has been added");
 						}
 					}
-					if (!removeVehicleInfo.getText().isEmpty()) {
-						if (lnkPermit_list.getPermit(name).getPermittedVehicle(addVehicleInfo.getText())) {
-							JOptionPane.showMessageDialog(null, "Vehicle does not exsist on permit");
-							removeVehicleInfo.setBorder(border);
-						} else {
-							lnkPermit_list.getPermit(name).removePermittedVehicle(removeVehicleInfo.getText());
-							JOptionPane.showMessageDialog(null, "Vheicle has been removed from permit");
-						}
-					}
-					if (!updateDate.getText().isEmpty()) {
-						
-					}
+				}
+				if (!modifyStartDate.getText().isEmpty()) {
 
 				}
+
 			}
 		}
 	}
@@ -643,48 +752,49 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	}
 
-	public void setThirdPanel() {
-		GridLayout experimentLayout = new GridLayout(0, 2);
-		deleteWarningPanel = new JPanel();
-		deleteWarningPanel.setSize(100, 5);
-		// deleteWarningPanel.setLayout(experimentLayout);
+	public void setThirdPanel() { 
+		GridLayout experimentLayout = new GridLayout(0, 2); 
+		deleteWarningPanel = new JPanel(); 
+		deleteWarningPanel.setSize(100, 5); 
+		// label and textfield for permit holder name 
+		lblDeleteWarningPermitHolderName = new JLabel("Permit Holder Name:"); 
+		tfDeleteWarningPermitHolderName = new JTextField("", 25); 
+		lblNumberSelectedFromComboBox = new JLabel("Select # of warnings"); 
+		deleteWarningPanel.add(lblNumberSelectedFromComboBox); 
+		Integer[] amountOfWarningsToDelete = {1, 2, 3}; 
+		cmbDeleteWarningList = new JComboBox(amountOfWarningsToDelete); 
+		cmbDeleteWarningList.setSelectedIndex(2); 
+		cmbDeleteWarningList.addActionListener(this); 
+		deleteWarningPanel.add(cmbDeleteWarningList); 
+		deleteWarningPanel.add(lblDeleteWarningPermitHolderName); 
+		deleteWarningPanel.add(tfDeleteWarningPermitHolderName); 
+		deleteWarning = new JButton("Delete warning"); 
+		deleteWarning.addActionListener(this); 
+		deleteWarningPanel.add(deleteWarning); 
+		deleteAllWarnings = new JButton("Delete ALL warnings"); 
+		deleteAllWarnings.addActionListener(this); 
+		deleteWarningPanel.add(deleteAllWarnings); 
+		lblMsgDelete = new JLabel(""); 
+		deleteWarningPanel.add(lblMsgDelete); 
+	} 
 
-		// System.out.println("thirdPanel");
-		JLabel lblToday3 = new JLabel("Size of permit list is:       " + lnkPermit_list.getSize());
-		lblToday3.setFont(lblToday.getFont().deriveFont(15f));
-		lblToday3.setForeground(Color.red);
-		lblToday3.setOpaque(true);
-		deleteWarningPanel.add(lblToday3);
 
-		// Permanent_visitor_permit perVis = new Permanent_visitor_permit("oreo");
-		// lnkPermit_list.addPermit(perVis);
-		// String[] permitTypes = {"Paul", "Robert", "Jason", "Jacob"};
-
-		DefaultListModel model = new DefaultListModel();
-		// System.out.println("THIS Size of permit list: " + lnkPermit_list.getSize());
-
-		for (int i = 0; i < lnkPermit_list.getSize(); i++) {
-			model.addElement(lnkPermit_list.getKeys().get(i));
-			model.addElement(i);
-			System.out.println(lnkPermit_list.getKeys().get(i));
-		}
-
-		warnings.setModel(model);
-
-		// warnings = new JList((lnkPermit_list.getKeys()).toArray());
-		// warnings.setSelectedIndex(2);
-		deleteWarningPanel.add(warnings);
-
-		warnings.updateUI();
-		deleteWarningPanel.updateUI();
-		// = new JList( model );
-		// slnkPermit_list.getSize();
-
-		deleteWarning = new JButton("Delete warning");
-		deleteWarning.addActionListener(this);
-		deleteWarningPanel.add(deleteWarning);
-	}
-
+	public void setFourthPanel() { 
+		GridLayout experimentLayout = new GridLayout(0, 2); 
+		cancelPermitPanel = new JPanel(); 
+		cancelPermitPanel.setSize(100, 5); 
+		// label and textfield for permit holder name 
+		lblCancelPermitHolderName = new JLabel("Permit Holder Name:"); 
+		tfCancelPermitHolderName = new JTextField("", 25); 
+		cancelPermitPanel.add(lblCancelPermitHolderName); 
+		cancelPermitPanel.add(tfCancelPermitHolderName); 
+		cancelPermit = new JButton("Cancel Permit"); 
+		cancelPermit.addActionListener(this); 
+		cancelPermitPanel.add(cancelPermit); 
+		lblMsgCancel = new JLabel(""); 
+		cancelPermitPanel.add(lblMsgCancel);
+	} 
+		
 	// Clean text fields panel 1
 	public void cleanTFP1() {
 		tfPermitHolder.setText("");
@@ -737,8 +847,18 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	public void setModifyPermitPanel() {
 		modifyPanel = new JPanel();
-		GridLayout infoLayout = new GridLayout(0, 2);
+		GridLayout infoLayout = new GridLayout(2, 1);
 		modifyPanel.setLayout(infoLayout);
+		GridLayout infoLayout2 = new GridLayout(0, 2);
+		JPanel modifyTopPanel = new JPanel();
+		modifyTopPanel.setLayout(infoLayout2);
+		JPanel modifyBotPanel = new JPanel();
+		modifyBotPanel.setLayout(infoLayout2);
+
+		String[] permitTypes2 = { "Day Visitor", "Regular visitor", "Permanent visitor", "University member" };
+		cmbPermitList2 = new JComboBox(permitTypes2);
+		cmbPermitList2.setSelectedIndex(2);
+		cmbPermitList2.addActionListener(this);
 
 		// creating and assigning all components
 		lblToday2 = new JLabel(" " + lnkSystem_status.getToday());
@@ -749,37 +869,50 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifynoOfEntries = new JTextField();
 		JLabel lblmodifyWarnings = new JLabel("Warnings : ");
 		modifyWarnings = new JTextField();
-		JLabel lblmodifySuspended = new JLabel("Suspended (True/False) : ");
-		modifySuspended = new JTextField();
 		JLabel lblmodifyEnteredToday = new JLabel("Entered Today (True/False) : ");
 		modifyEnteredToday = new JTextField();
-		JLabel lbladdVehicleInfo = new JLabel(" Add Vehicle Info: ");
-		addVehicleInfo = new JTextField();
-		JLabel lblremoveVehicleInfo = new JLabel(" Remove Vehicle Info: ");
-		removeVehicleInfo = new JTextField();
-		JLabel lblChangeDate = new JLabel(" Update Date: ");
-		updateDate = new JTextField();
+		JLabel lbladdVehicleInfo = new JLabel("Modify Vehicles: ");
+		modifyVehicleInfo = new JTextField();
+		lblChangeStartDate = new JLabel(" Update Start Date: ");
+		lblChangeEndDate = new JLabel(" Update End Date: ");
+		lblChangeEndDate.setVisible(false);
+		modifyStartDate = new JTextField();
+		modifyEndDate = new JTextField();
+		modifyEndDate.setVisible(false);
 		updatePermit = new JButton("Update");
 		updatePermit.addActionListener(this);
+		searchPermit = new JButton("Search");
+		searchPermit.addActionListener(this);
 
-		modifyPanel.add(day);
-		modifyPanel.add(lblToday2);
-		modifyPanel.add(lblPermitHolder);
-		modifyPanel.add(modifyPermitName);
-		modifyPanel.add(lblmodifyNoOfEntries);
-		modifyPanel.add(modifynoOfEntries);
-		modifyPanel.add(lblmodifyWarnings);
-		modifyPanel.add(modifyWarnings);
-		modifyPanel.add(lblmodifySuspended);
-		modifyPanel.add(modifySuspended);
-		modifyPanel.add(lblmodifyEnteredToday);
-		modifyPanel.add(modifyEnteredToday);
-		modifyPanel.add(lbladdVehicleInfo);
-		modifyPanel.add(addVehicleInfo);
-		modifyPanel.add(lblremoveVehicleInfo);
-		modifyPanel.add(removeVehicleInfo);
-		modifyPanel.add(lblChangeDate);
-		modifyPanel.add(updateDate);
-		modifyPanel.add(updatePermit);
+		modifyPanel.add(modifyTopPanel);
+		modifyPanel.add(modifyBotPanel);
+		modifyTopPanel.add(day);
+		modifyTopPanel.add(lblToday2);
+		modifyTopPanel.add(lblPermitHolder);
+		modifyTopPanel.add(modifyPermitName);
+		modifyTopPanel.add(searchPermit);
+		modifyBotPanel.add(lblmodifyNoOfEntries);
+		modifyBotPanel.add(modifynoOfEntries);
+		modifyBotPanel.add(lblmodifyWarnings);
+		modifyBotPanel.add(modifyWarnings);
+		modifyBotPanel.add(lblmodifyEnteredToday);
+		modifyBotPanel.add(modifyEnteredToday);
+		modifyBotPanel.add(lbladdVehicleInfo);
+		modifyBotPanel.add(modifyVehicleInfo);
+		modifyBotPanel.add(lblChangeStartDate);
+		modifyBotPanel.add(modifyStartDate);
+		modifyBotPanel.add(lblChangeEndDate);
+		modifyBotPanel.add(modifyEndDate);
+		modifyBotPanel.add(updatePermit);
+	}
+
+	private void setModifyInfo(String name) {
+		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
+		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
+		modifyVehicleInfo.setText("" + lnkPermit_list.getPermit(name).getAllVehicles());
+		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getVehicleUsedToday());
+		modifyStartDate.setText("Date");
+		modifyEndDate.setText("Date");
+
 	}
 }
