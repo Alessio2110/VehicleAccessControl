@@ -131,7 +131,11 @@ abstract public class Permit {
 			suspended = true;
 		}
 	}
-
+	
+	public void deleteWarning(int deletedWarnings) { 
+		this.warnings -= deletedWarnings; 
+		} 
+	
 	public void setWarning(int warnings) {
 		this.warnings += warnings;
 	}
