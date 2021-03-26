@@ -26,58 +26,101 @@ public class Permit_list {
      * @directed*/
     private java.util.Hashtable<String, Permit> lnkPermit;
     
+    /**
+   	 * Constructor, create a hashtable with Permit as the object stored, and the permit holder name, a String, as the key
+   	 */ 
     public Permit_list(){
     	lnkPermit = new java.util.Hashtable<String, Permit>();
     }
     
+    /**
+	 * Get the Permit object
+	 * 
+	 * @param permitHolder the permit holder name of the Permit object
+	 */  
     public Permit getPermit(String permitHolder) {
     	return lnkPermit.get(permitHolder);
     }
     
-    //Create a new University Member Permit (UMP) and add it to the permit list
+    /**
+  	 * Create a new University Member Permit (UMP) and add it to the permit list
+  	 * 
+  	 * @param permitHolder the permit holder name of the University Member Permit object
+  	 * @param lnkDate the date the permit was issued
+  	 */  
     public void createUMP(String permitHolder, Date lnkDate) {
     	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
 //    	lnkPermit.put(permitHolder, ump);
     	addPermit(ump);
     }
     
-    //Create a new Permanent Visitor Permit (PVP) and add it to the permit list
+    /**
+   	 * Create a new Permanent Visitor Permit (PVP) and add it to the permit listst
+   	 * 
+   	 * @param permitHolder the permit holder name of the University Member Permit objectd
+   	 */ 
     public void createPVP(String permitHolder) {
     	Permanent_visitor_permit pvp = new Permanent_visitor_permit(permitHolder);
 //    	lnkPermit.put(permitHolder, pvp);
     	addPermit(pvp);
     }
     
-    //Create a new Regular Visitor Permit (RVP) and add it to the permit list
+    /**
+   	 * Create a new Regular Visitor Permit (RVP) and add it to the permit list
+   	 * 
+   	 * @param permitHolder the permit holder name of the Regular Visitor Permit object
+   	 * @param startDate the first day the RVP is allowed to pass through the barrier
+   	 * @param endDate the last day the RVP is allowed to pass through the barrier
+   	 * @param hostName the name of the university member hosting the visit
+   	 */  
     public void createRVP(String permitHolder, Date startDate, Date endDate, String hostName) {
        	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
 //       	lnkPermit.put(permitHolder, rvp);
        	addPermit(rvp);
         }
     
-  //Create a new Day Visitor Permit (DVP) and add it to the permit list
+    /**
+  	 * Create a new Day Visitor Permit (DVP) and add it to the permit list
+  	 * 
+  	 * @param permitHolder the permit holder name of the Regular Visitor Permit object
+  	 * @param lnkDate the day the DVP is allowed to pass through the barrier
+  	 * @param hostName the name of the university member hosting the visit
+  	 */  
     public void createDVP(String permitHolder, Date lnkDate, String hostName) {
     	Day_visitor_permit dvp = new Day_visitor_permit(permitHolder, lnkDate, hostName);
 //       	lnkPermit.put(permitHolder, dvp);
        	addPermit(dvp);
         }
     
+    /**
+  	 * Check whether there is a Permit with a given name
+  	 * 
+  	 * @param permitHolder the permit holder name of the Permit
+  	 */  
     public boolean checkNameExists(String permitHolder) {
     	return lnkPermit.containsKey(permitHolder);
     }
     
+    /**
+  	 * Print vehicles for each permit
+  	 */  
     public void printAllVehicles() {
     	LinkedList<String> keys = getKeys();
 //    	keys.forEach((key -> System.out.println(key)));
     	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
     }
     
-    public void vehicleIsRegistered(String regNo) {
-    	LinkedList<String> keys = getKeys();
-//    	keys.forEach((key -> System.out.println(key)));
-    	keys.forEach((key) -> lnkPermit.get(key).getVList().isRegistered(regNo));
-    }
+//    public void vehicleIsRegistered(String regNo) {
+//    	LinkedList<String> keys = getKeys();
+////    	keys.forEach((key -> System.out.println(key)));
+//    	keys.forEach((key) -> lnkPermit.get(key).getVList().isRegistered(regNo));
+//    }
     
+    /**
+  	 * Check whether the given vehicle registration number is found in any of the vehicle lists of each permit
+  	 * 
+  	 * @param regNo the registration number of the vehicle
+  	 */  
     public boolean vehicleIsRegistered2(String regNo) {
     	LinkedList<String> keys = getKeys();
     	for (String key: keys) {
@@ -93,6 +136,9 @@ public class Permit_list {
 //    		};
     }
     
+    /**
+  	 * Get all the keys of the permits in permit list
+  	 */  
     public LinkedList<String> getKeys() {
     	LinkedList<String> keysList = new LinkedList<String>();
     	Enumeration<String> keys = lnkPermit.keys();
@@ -105,14 +151,25 @@ public class Permit_list {
         return keysList;
     }
     
+    /**
+  	 * Permanently remove a permit from the permit list
+  	 * 
+  	 * @param permitHolder the name of the permit holder we want to delete from the permit list
+  	 */  
     public void removePermit(String permitHolder) {
     	lnkPermit.remove(permitHolder);
     }
     
+    /**
+   	 * Get number of permits in permit list
+   	 */  
     public int getSize() {
     	return lnkPermit.size();
     }
     
+    /**
+  	 * add a Permit to the permit list, this could be any of the four subclasses of Permit
+  	 */  
     public void addPermit(Permit p) {
     	Permit p2;
     	p2 = (Permit) lnkPermit.get(p.getName());
@@ -124,6 +181,9 @@ public class Permit_list {
     	}	
     }
     
+    /**
+     * Make daily update on each permit in permit list
+     */  
     public void dailyUpdateAll() {
     	Enumeration e = lnkPermit.elements();
     	while(e.hasMoreElements()) {
@@ -132,6 +192,9 @@ public class Permit_list {
     		}
     }
     
+    /**
+   	 * Make annual update on each permit in permit list
+   	 */  
     public void annualUpdateAll() {
     	Enumeration e = lnkPermit.elements();
     	while(e.hasMoreElements()) {
