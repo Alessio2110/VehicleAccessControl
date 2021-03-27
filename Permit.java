@@ -99,85 +99,121 @@ abstract public class Permit {
 		this.enteredToday = enteredToday;
 		this.permittedVehicles = permittedVehicles;
 	}
-
-	public String getName() {
-		return permitHolder;
-	}
-
-	public void increaseEntries() {
-		noOfEntries++;
-	}
-
-	public void setEntries(int entries) {
-		noOfEntries += entries;
-	}
-
-	public int getEntries() {
-		return noOfEntries;
-	}
-
-	public void clearEntries() {
-		noOfEntries = 0;
-	}
-
-	public int getWarnings() {
-		return warnings;
-	}
-
+	
+	/**
+	 * Get name of permit holder
+	 */  
+	public String getName() { return permitHolder;}
+		
+	/**
+	 * Increase entries by one
+	 */
+	public void increaseEntries() {	noOfEntries++;}
+	
+	/**
+	 * Set entries to a given value
+	 * 
+	 * @param entries The number of entries to be set as the new value
+	 */
+	public void setEntries(int entries) {	noOfEntries = entries;}
+	
+	/**
+	 * Get entries made in this year
+	 */
+	public int getEntries() {return noOfEntries;}
+		
+	/**
+	 * Set entries to zero
+	 */
+	public void clearEntries() {	noOfEntries = 0;}
+	
+	/**
+	 * Get number of warnings
+	 */
+	public int getWarnings() {	return warnings;}
+	
+	/**
+	 * Add a warning, if they are greater than 3, suspend permit
+	 */
 	public void addWarning() {
 		warnings++;
 		if (checkMaxWarnings()) {
-			warnings = 0;
+			warnings = 3;
 			suspended = true;
 		}
 	}
 	
-	public void deleteWarning(int deletedWarnings) { 
-		this.warnings -= deletedWarnings; 
-		} 
+	/**
+	 * Delete a number of warnings
+	 * 
+	 * @param deletedWarnings the number of deleted warnings to be deleted from the permit
+	 */
+	public void deleteWarning(int deletedWarnings) { this.warnings -= deletedWarnings;} 
 	
-	public void setWarning(int warnings) {
-		this.warnings += warnings;
-	}
-
+	/**
+	 * Add a certain amount of warnings
+	 * 
+	 * @param warnings The number of warnings to be added
+	 */
+	public void setWarning(int warnings) {	this.warnings += warnings;}
+	
+	
+	/**
+	 * Check if the there are at least three warnings
+	 */
 	public boolean checkMaxWarnings() {
-		if (warnings == 3)
+		if (warnings >= 3)
 			return true;
 		return false;
 	}
 
-	public void clearWarnings() {
-		warnings = 0;
-	}
+	/**
+	 * Clear all warnings
+	 */
+	public void clearWarnings() { warnings = 0;}
+	
+	/**
+	 * Suspend Permit
+	 */
+	public void suspend() {	suspended = true;}
+	
+	/**
+	 * Unsuspend Permit
+	 */
+	public void unsuspend() { suspended = false;}
+	
+	
 
-	public void suspend() {
-		suspended = true;
-	}
-
-	public void unsuspend() {
-		suspended = false;
-	}
-
-	public boolean isSuspended() {
-		return suspended;
-	}
-
-	public void setEnteredToday() {
-		enteredToday = true;
-	}
-
-	public void setNotEnteredToday() {
-		enteredToday = false;
-	}
-
-	public void setVehicle(Vehicle_info vehicleUsedToday) {
-		this.vehicleUsedToday = vehicleUsedToday;
-	}
-
-	public Vehicle_info getVehicleUsedToday() {
-		return vehicleUsedToday;
-	}
-
+	/**
+	 * Check whether permit is suspended
+	 */
+	public boolean isSuspended() {	return suspended;}
+	
+	/**
+	 * Set that a vehicle has passed through the barrier today
+	 */
+	public void setEnteredToday() {	enteredToday = true;}
+	
+	/**
+	 * Set that a vehicle has not passed through the barrier today
+	 */
+	public void setNotEnteredToday() {	enteredToday = false;}
+	
+	/**
+	 * Set the vehicle that has passed through the barrier today
+	 * 
+	 * @param vehicleUsedToday The vehicle used today by the permit holder
+	 */
+	public void setVehicle(Vehicle_info vehicleUsedToday) {	this.vehicleUsedToday = vehicleUsedToday;}
+	
+	/**
+	 * Get vehicle used today
+	 */
+	public Vehicle_info getVehicleUsedToday() {	return vehicleUsedToday;}
+	
+	/**
+	 * Check whether the permit holder is allowed to pass through
+	 */
 	public boolean isAllowed() {
 		if (!suspended)
 			return true;
@@ -185,22 +221,37 @@ abstract public class Permit {
 			return false;
 	}
 
-	public Vehicle_list getVList() {
-		return permittedVehicles;
-	}
-
+	/**
+	 * Get the list of vehicles registered for the permit holder
+	 */
+	public Vehicle_list getVList() {	return permittedVehicles;}
+	
+	
+	/**
+	 * Add a vehicle to the vehicle list of this permit holder
+	 */
 	public void addPermittedVehicle(String v) {
 		System.out.println("Permit.addPermittedVehicle ---Adding vehicle: " + v);
 		permittedVehicles.addPermitVehicle(v);
 	}
 
-	public boolean getPermittedVehicle(String v) {
+	/**
+	 * Check whether a vehicle in vehicle list is allowed to pass through the barrier
+	 * 
+	 * @param v The vehicle registration number we need to check
+	 */
+	public boolean isVehiclePermitted(String v) {
 		if (permittedVehicles.isRegistered(v)) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * Remove a vehicle from the vehicle list of a permit
+	 * 
+	 * @param v The vehicle registration number we need to remove
+	 */
 	public boolean removePermittedVehicle(String v) {
 		if (permittedVehicles.removeVehicle(v)) {
 			return true;
@@ -208,6 +259,9 @@ abstract public class Permit {
 		return false;
 	}
 
+	/**
+	 * Get the string with the information of a Permit
+	 */
 	public String status() {
 		String s = "Permit holder name: " + getName() + "; # of entries since permit issued: " + getEntries()
 				+ "; # of warnings: " + getWarnings() + "; suspended: ";
@@ -221,10 +275,24 @@ abstract public class Permit {
 		return s;
 	}
 
+	/**
+	 * Daily update for this permit
+	 */
 	public void dailyReset() {
 		setNotEnteredToday();
 		setVehicle(null);
 	}
+	
+	/**
+	 * Annual update for this permit
+	 */
+	public void annualReset() {
+		
+	}
+	
+	/**
+	 * Get the array list with all vehicles for this permit
+	 */
 	public ArrayList<String> getAllVehicles(){
 		return permittedVehicles.getAllVehicles();
 	}
