@@ -73,14 +73,17 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	 */
 	private boolean raised = true;
 
+	private Permit_list p_list;
+	
 	private String regNo = "";
 	private JLabel passStopLabel;
 	private JButton checkRegNo;
 	private JButton vehicleClear;
 	private JTextField registrationField;
-	public Barrier(System_status lnkSystem_status, Vehicle_list lnkVehicle_list) {
+	public Barrier(System_status lnkSystem_status, Vehicle_list lnkVehicle_list, Permit_list p_list) {
 		this.lnkSystem_status = lnkSystem_status;
 		this.lnkVehicle_list = lnkVehicle_list;
+		this.p_list = p_list;
 
 		setTitle("Barrier");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -102,8 +105,10 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		window.add(checkRegNo);
 		checkRegNo.addActionListener(this);
 //		checkRegNo.setBounds(25 , 5 , 5, 5);
+		checkRegNo.setEnabled(false);
 		
 		vehicleClear = new JButton("Vehicle clear");
+		vehicleClear.setEnabled(false);
 		vehicleClear.setLocation(0, 0);
 		window.add(vehicleClear);
 		vehicleClear.addActionListener(this);
@@ -119,13 +124,11 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		//	 Fetch (potentially) updated information and display it
 		active = getActive();
 		//setRaised(isAllowedThrough);
-		raised = isAllowedThrough();
-//		if (registrationField.getText().length() == 0)
-//			checkRegNo.setEnabled(false);
-//		else
-//			checkRegNo.setEnabled(true);
-		if (!active) //if the system is not active, the barrier MUST be raised
+		raised = getRaised();
+		if (!active) {//if the system is not active, the barrier MUST be raised
 			setRaised(true);
+		checkRegNo.setEnabled(false);
+		} else {checkRegNo.setEnabled(true);}
 
 		if (raised) { //No need to check if the system is active or not, since if it is not active the barrier is up, if it is active it only depends on the barrier position
 			passStopLabel.setText("PASS");		
@@ -143,12 +146,22 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		
 		if (e.getSource() == checkRegNo) {
 			regNo = registrationField.getText();
-			registrationField.setText("");
+			if (p_list.vehicleIsRegistered2(regNo) == true && p_list.vehicleisSuspended(regNo) == true) {
+				setRaised(true); vehicleClear.setEnabled(true);
+				passStopLabel.setText("PASS");		
+				passStopLabel.setBackground(Color.green);}
+			else {}
+			
 		}
 		if (e.getSource() == vehicleClear) {
-			raised = false;
+			registrationField.setText("");
+			setRaised(false);
+			vehicleClear.setEnabled(false);
+			passStopLabel.setText("STOP");
+			passStopLabel.setBackground(Color.red);
 		}
-	}
+		}
+		
 	public void setRaised(boolean raised) {
 		this.raised = raised;
 	}
