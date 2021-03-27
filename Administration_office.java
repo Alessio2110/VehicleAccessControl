@@ -438,7 +438,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						}
 					}
 					if (!modifyVehicleInfo.getText().isEmpty()) {
-						if (lnkPermit_list.getPermit(name).getPermittedVehicle(modifyVehicleInfo.getText())) {
+						if (lnkPermit_list.getPermit(name).isVehiclePermitted(modifyVehicleInfo.getText())) {
 							JOptionPane.showMessageDialog(null, "Vehicle already on permit");
 							modifyVehicleInfo.setBorder(border);
 						} else {
