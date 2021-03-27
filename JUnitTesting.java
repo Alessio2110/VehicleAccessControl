@@ -11,7 +11,6 @@ public class JUnitTesting  extends Permit_list{
 
     @Test
     public void testCreateAndCheckPermit() {
-        //assertEquals(2,ret());
        permit_list.createPVP(("John"));
        assertTrue("Permit with name John does not exist in current list", permit_list.checkNameExists("John"));
 
