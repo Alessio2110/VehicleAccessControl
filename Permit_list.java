@@ -136,6 +136,24 @@ public class Permit_list {
 //    		};
     }
     
+    public boolean vehicleisSuspended(String regNo) {
+    	LinkedList<String> keys = getKeys();
+    	for (String key: keys) {
+    		if(lnkPermit.get(key).getVList().isAllowed(regNo))
+    			return true;
+    	}
+    	return false;
+    }
+    
+//    public boolean hasbeenUsed(String regNo) {
+//    	LinkedList<String> keys = getKeys();
+//    	for (String key: keys) {
+//    		if(lnkPermit.get(key).)
+//    			return false;
+//    	}
+//    	return true;
+//    }
+    
     /**
   	 * Get all the keys of the permits in permit list
   	 */  
