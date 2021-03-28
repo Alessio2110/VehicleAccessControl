@@ -95,10 +95,10 @@ public class Timer extends JFrame
     public void actionPerformed(ActionEvent e) {
     	if (e.getSource() == addDay) {
 //    		System.out.println("Today is: Day #" + today.getDay());
-//    		today.increment();
     		lnkSystem_status.nextDay();
     		lnkPermit_list.dailyUpdateAll();
-//    		today.increment();
+    		//On the first day of the year update all permits
+    		if (lnkSystem_status.getDate().getDay() == 1) lnkPermit_list.annualUpdateAll();
     		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
 
     		lnkPermit_list.annualUpdateAll();

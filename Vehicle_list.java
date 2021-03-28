@@ -85,25 +85,7 @@ public class Vehicle_list {
 	public void addVehicle(Vehicle_info v) {
 		lnkVehicle.put(v.getRegNo(), v);
 	}
-//	public void addSimpleVehicle(String regNo) {
-//		Vehicle_info v = new Vehicle_info(regNo);
-//		lnkVehicle.put(v.getRegNo(), v);
-//	}
 
-//	public boolean addPermitVehicle(String reg) {
-//		if (!lnkVehicle.containsKey(reg)) {
-//			lnkVehicle.put(reg, new Vehicle_info(reg));
-//			System.out.println(reg + " added");
-//			return true;
-//		} else {
-//			return false;
-//		}
-//	}
-	
-//	public void addPermitVehicle(Vehicle_info v) {
-//		lnkVehicle.put(v.getRegNo(), v);
-//	}
-	
 	public boolean removeVehicle(String reg) {
 		if (lnkVehicle.containsKey(reg)) {
 			lnkVehicle.remove(reg);

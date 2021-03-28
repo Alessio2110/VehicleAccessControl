@@ -257,12 +257,14 @@ abstract public class Permit {
 		String s = "Permit holder name: " + getName() + "; # of entries since permit issued: " + getEntries()
 				+ "; # of warnings: " + getWarnings() + "; suspended: ";
 		if (isSuspended())
-			s += "Yes; ";
+			s += "Yes;\n";
 		else
-			s += "No; ";
+			s += "No; \n";
 		if (getVehicleUsedToday() != null)
-			s += "Registration number of the vehicle used today: " + getVehicleUsedToday().getRegNo();
-
+			s += "Registration number of the vehicle used today: " + getVehicleUsedToday().getRegNo() + "+\n";
+		else s+= "No vehicles used today \n";
+		
+		s += "Vehicles registered on this Permit" + permittedVehicles.getAllVehicles();
 		return s;
 	}
 
@@ -286,4 +288,5 @@ abstract public class Permit {
 	public ArrayList<String> getAllVehicles(){
 		return permittedVehicles.getAllVehicles();
 	}
+	
 }

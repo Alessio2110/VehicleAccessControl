@@ -63,6 +63,10 @@ public class System_status extends Observable {
     	return today.getDay();
     }
     
+    public Date getDate() {
+    	return today;
+    }
+    
     public void nextDay() {
     	today.increment();
     	setChanged();

@@ -52,6 +52,16 @@ public class Regular_visitor_permit extends Permit {
 		this.hostName = hostName;
 	}
 
+	/**
+	 * Get the string with the information of a Permit
+	 */
+	public String status() {
+		String s = "Permit type: Regular Visitor Permit \n" + super.status() 
+				+ "Hosted by: " + hostName + "between day #" + lnkDate.getDay() + " and day #" + lnkDate1.getDay();
+		
+		return s;
+	}
+	
 	public void changeHostName(String s) {
 		hostName = s;
 	}

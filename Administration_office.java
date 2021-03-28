@@ -136,7 +136,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JPanel statusMainPanel;
 	private JTextField statusPermitHolder;
 	private JButton statusSearch;
-	private JLabel statusInfo;
+//	private JLabel statusInfo;
+	private JTextArea statusInfo;
 	// Modify Panel
 	private JPanel modifyPanel;
 	private JLabel lblChangeStartDate;
@@ -244,6 +245,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				statusInfo.setText("Invalid Name");
 			}
 		}
+		
 		if (e.getSource() == searchPermit) {
 			String name = modifyPermitName.getText();
 			if (name.isEmpty()) {
@@ -268,6 +270,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				}
 			}
 		}
+		
 		if (e.getSource() == updatePermit) {
 			String name = modifyPermitName.getText();
 
@@ -818,7 +821,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		statusPermitHolder = new JTextField("", 3);
 		statusSearch = new JButton("Search");
 		statusSearch.addActionListener(this);
-		statusInfo = new JLabel();
+//		statusInfo = new JLabel();
+		statusInfo = new JTextArea();
 
 		statusPanelTop.add(day);
 		statusPanelTop.add(lblToday2);

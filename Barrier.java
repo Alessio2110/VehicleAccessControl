@@ -73,6 +73,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 
 	private Permit_list lnkPermit_list;
 	
+	private Date today;
 	private String regNo = "";
 	private JLabel passStopLabel;
 	private JButton checkRegNo;
@@ -119,6 +120,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		lnkSystem_status.addObserver(this);
 	}
 	public void update(Observable o, Object arg) {
+		today = lnkSystem_status.getDate();
 		//	 Fetch (potentially) updated information and display it
 		active = getActive();
 		//setRaised(isAllowedThrough);
@@ -179,9 +181,10 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	}
 
 	public boolean isAllowedThrough() {
-		return lnkVehicle_list.isAllowed(regNo);
+		return true;
+//		return lnkVehicle_list.isAllowed(regNo);
 //		isAllowed in vehicle list doesn't really check much though
 		//You should get the vehicles from vehicle list, take the name of the permit associated with that vehicle
-		//Use that permit holder name to check in Permit list whether that permit is allowed to pass(suspended, if already eneteredtoday, dates)
+		//Use that permit holder name to check in Permit list whether that permit is allowed to pass(suspended \/ another vehicle has eneteredtoday \/ dates)
 	}
 }
