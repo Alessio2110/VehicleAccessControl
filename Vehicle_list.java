@@ -53,6 +53,7 @@ public class Vehicle_list {
 		if (regNo.equals(""))
 			return false;
 
+		
 		boolean allowed = false;
 		Vehicle_info v = getVehicle(regNo);
 
