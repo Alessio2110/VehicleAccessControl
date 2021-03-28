@@ -48,27 +48,27 @@ public class Vehicle_list {
 		lnkVehicle = new Hashtable<String, Vehicle_info>();
 	}
 
-//    Work in progress method
-	public boolean isAllowed(String regNo) {
-		if (regNo.equals(""))
-			return false;
-
-		boolean allowed = false;
-		Vehicle_info v = getVehicle(regNo);
-
-		if (v != null) {
-			Permit p = v.getPermit();
-			allowed = p.isAllowed();
-			if (allowed)
-				updatePermit(p, v);
-		} else
-			allowed = false;
-		return allowed;
-	}
+//    Work in progress method, it doesn't really work at the moment
+//	public boolean isAllowed(String regNo) {
+//		if (regNo.equals(""))
+//			return false;
+//
+//		boolean allowed = false;
+//		Vehicle_info v = getVehicle(regNo);
+//
+//		if (v != null) {
+//			Permit p = v.getPermit();
+//			allowed = p.isAllowed();
+//			if (allowed)
+//				updatePermit(p, v);
+//		} else
+//			allowed = false;
+//		return allowed;
+//	}
 
 	public boolean isRegistered(String reg) {
 		if (lnkVehicle.containsKey(reg)) {
-			System.out.println("Vehicle List--" + reg + " already exists");
+			System.out.println("Vehicle List--" + reg + "  exists");
 			return true;
 		}
 		else {
@@ -76,13 +76,15 @@ public class Vehicle_list {
 		return false;
 		}
 	}
-	
 
 	public void updatePermit(Permit p, Vehicle_info v) {
 		p.increaseEntries();
 		p.setVehicle(v);
 	}
 
+	public void addVehicle(Vehicle_info v) {
+		lnkVehicle.put(v.getRegNo(), v);
+	}
 //	public void addSimpleVehicle(String regNo) {
 //		Vehicle_info v = new Vehicle_info(regNo);
 //		lnkVehicle.put(v.getRegNo(), v);
@@ -97,9 +99,10 @@ public class Vehicle_list {
 //			return false;
 //		}
 //	}
-	public void addPermitVehicle(String reg) {
-		lnkVehicle.put(reg, new Vehicle_info(reg));
-	}
+	
+//	public void addPermitVehicle(Vehicle_info v) {
+//		lnkVehicle.put(v.getRegNo(), v);
+//	}
 	
 	public boolean removeVehicle(String reg) {
 		if (lnkVehicle.containsKey(reg)) {

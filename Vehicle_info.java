@@ -31,22 +31,24 @@ public class Vehicle_info {
      * @directed
      */
     private Permit lnkPermit;
-    
-    public Vehicle_info(String regNo) {
+        
+   public Vehicle_info(String regNo, Permit lnkPermit) {
     	this.regNo = regNo;
+    	this.lnkPermit = lnkPermit;
     }
-  
-//    public Vehicle_info(String regNo, Permit lnkPermit) {
-//    	this.regNo = regNo;
-//    	this.lnkPermit = lnkPermit;
-//    }
+   
+    public void setPermit(Permit p) {
+    	lnkPermit = p;
+    }
     
     public Permit getPermit() {
     	return lnkPermit;
     }
+    
     public Permit getPermit(Vehicle_info v) {
     	return v.getPermit();
     }
+    
     public String getRegNo() {
     	return regNo;
     }

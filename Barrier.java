@@ -48,7 +48,6 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	 * @label Access permits
 	 * @directed*/
 	private Vehicle_list lnkVehicle_list;
-
 	/**
 	 * Each instance of Barrier has a navigable association to the system status so that it can check
 	 * whether the barrier system as a whole is active or inactive, and so that it can send event messages
@@ -58,7 +57,6 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	 * @label Fetch system status info
 	 * @directed*/
 	private System_status lnkSystem_status;
-
 	/**
 	 * This attribute indicates the active/inactive state of the barrier system - as notified by the
 	 * system status when it changes (Barrier Observes System status). If false then the barrier must be up.
@@ -73,7 +71,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	 */
 	private boolean raised = true;
 
-	private Permit_list p_list;
+	private Permit_list lnkPermit_list;
 	
 	private String regNo = "";
 	private JLabel passStopLabel;
@@ -83,7 +81,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	public Barrier(System_status lnkSystem_status, Vehicle_list lnkVehicle_list, Permit_list p_list) {
 		this.lnkSystem_status = lnkSystem_status;
 		this.lnkVehicle_list = lnkVehicle_list;
-		this.p_list = p_list;
+		this.lnkPermit_list = lnkPermit_list;
 
 		setTitle("Barrier");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -127,7 +125,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		raised = getRaised();
 		if (!active) {//if the system is not active, the barrier MUST be raised
 			setRaised(true);
-		checkRegNo.setEnabled(false);
+			checkRegNo.setEnabled(false);
 		} else {checkRegNo.setEnabled(true);}
 
 		if (raised) { //No need to check if the system is active or not, since if it is not active the barrier is up, if it is active it only depends on the barrier position
@@ -146,11 +144,13 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		
 		if (e.getSource() == checkRegNo) {
 			regNo = registrationField.getText();
-			if (p_list.vehicleIsRegistered2(regNo) == true && p_list.vehicleisSuspended(regNo) == true) {
+//			if (lnkVehicle_list.isRegistered(regNo) == true && p_list.vehicleisSuspended(regNo) == true) {
+			//It should check whether the system is active or inactive, if inactive PASS
+			//It should check the date of permits with dates to check whether they are allowed to pass
+			if (lnkVehicle_list.isRegistered(regNo) == true) {
 				setRaised(true); vehicleClear.setEnabled(true);
 				passStopLabel.setText("PASS");		
 				passStopLabel.setBackground(Color.green);}
-			else {}
 			
 		}
 		if (e.getSource() == vehicleClear) {
@@ -180,5 +180,8 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 
 	public boolean isAllowedThrough() {
 		return lnkVehicle_list.isAllowed(regNo);
+//		isAllowed in vehicle list doesn't really check much though
+		//You should get the vehicles from vehicle list, take the name of the permit associated with that vehicle
+		//Use that permit holder name to check in Permit list whether that permit is allowed to pass(suspended, if already eneteredtoday, dates)
 	}
 }

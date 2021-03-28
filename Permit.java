@@ -90,15 +90,6 @@ abstract public class Permit {
 		permittedVehicles = new Vehicle_list();
 	}
 
-	public Permit(String permitHolder, int noOfEntries, int warnings, boolean suspended, boolean enteredToday,
-			Vehicle_info vehicleUsedToday, Vehicle_list permittedVehicles) {
-		this.permitHolder = permitHolder;
-		this.noOfEntries = noOfEntries;
-		this.warnings = warnings;
-		this.suspended = suspended;
-		this.enteredToday = enteredToday;
-		this.permittedVehicles = permittedVehicles;
-	}
 	
 	/**
 	 * Get name of permit holder
@@ -230,22 +221,22 @@ abstract public class Permit {
 	/**
 	 * Add a vehicle to the vehicle list of this permit holder
 	 */
-	public void addPermittedVehicle(String v) {
+	public void addPermittedVehicle(Vehicle_info v) {
 		System.out.println("Permit.addPermittedVehicle ---Adding vehicle: " + v);
-		permittedVehicles.addPermitVehicle(v);
+		permittedVehicles.addVehicle(v);
 	}
 
-	/**
-	 * Check whether a vehicle in vehicle list is allowed to pass through the barrier
-	 * 
-	 * @param v The vehicle registration number we need to check
-	 */
-	public boolean isVehiclePermitted(String v) {
-		if (permittedVehicles.isRegistered(v)) {
-			return true;
-		}
-		return false;
-	}
+//	/**
+//	 * Check whether a vehicle in vehicle list is allowed to pass through the barrier
+//	 * 
+//	 * @param v The vehicle registration number we need to check
+//	 */
+//	public boolean isVehiclePermitted(String v) {
+//		if (permittedVehicles.isRegistered(v)) {
+//			return true;
+//		}
+//		return false;
+//	}
 
 	/**
 	 * Remove a vehicle from the vehicle list of a permit
@@ -286,8 +277,7 @@ abstract public class Permit {
 	/**
 	 * Annual update for this permit
 	 */
-	public void annualReset() {
-		
+	public void annualReset() {	
 	}
 	
 	/**
