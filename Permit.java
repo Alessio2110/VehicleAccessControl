@@ -215,6 +215,10 @@ abstract public class Permit {
 		enteredToday = false;
 	}
 
+	public boolean getEnteredToday() {
+		return enteredToday;
+	}
+
 	/**
 	 * Set the vehicle that has passed through the barrier today
 	 * 
@@ -319,16 +323,13 @@ abstract public class Permit {
 	public String getAllVehicles() {
 		return permittedVehicles.getAllVehicles();
 	}
-	
- public void replaceVehicles(String newReg ) {
-		permittedVehicles.replaceVeicles(permittedVehicles.getAllVehicles(), newReg);
-	}
 
-public boolean isAllowed(Vehicle_info v, Date d) {
+	public boolean isAllowed(Vehicle_info v, Date d) {
 		boolean allowed = true;
-		if (suspended) return false;
-		
-		if(!enteredToday) {
+		if (suspended)
+			return false;
+
+		if (!enteredToday) {
 			setVehicle(v);
 			return true;
 		}
@@ -337,5 +338,5 @@ public boolean isAllowed(Vehicle_info v, Date d) {
 		}
 		return false;
 	}
-	
+
 }

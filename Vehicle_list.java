@@ -1,9 +1,12 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
 
 import com.sun.source.tree.WhileLoopTree;
 
@@ -106,13 +109,8 @@ public class Vehicle_list {
 			}
 		}
 		Collections.reverse(allVehicles);
-		return allVehicles.toString();
+		return Arrays.toString(allVehicles.toArray()).replace("[", "").replace("]", "");
+		// return allVehicles.toString();
 
-	}
-
-	public void replaceVeicles(String allVehicles, String newReg) {
-		Vehicle_info v = (Vehicle_info) lnkVehicle.get(newReg);
-		lnkVehicle.replace(allVehicles, v);
-		
 	}
 }
