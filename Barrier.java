@@ -146,13 +146,18 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		
 		if (e.getSource() == checkRegNo) {
 			regNo = registrationField.getText();
+			Vehicle_info v = lnkVehicle_list.getVehicle(regNo);
+			String permitHolder = v.getPermit().getName();
+			boolean allowed = lnkPermit_list.getPermit(permitHolder).isAllowed(v,today);
+			
 //			if (lnkVehicle_list.isRegistered(regNo) == true && p_list.vehicleisSuspended(regNo) == true) {
 			//It should check whether the system is active or inactive, if inactive PASS
 			//It should check the date of permits with dates to check whether they are allowed to pass
-			if (lnkVehicle_list.isRegistered(regNo) == true) {
+			if (allowed) {
 				setRaised(true); vehicleClear.setEnabled(true);
 				passStopLabel.setText("PASS");		
-				passStopLabel.setBackground(Color.green);}
+				passStopLabel.setBackground(Color.green);
+			}
 			
 		}
 		if (e.getSource() == vehicleClear) {

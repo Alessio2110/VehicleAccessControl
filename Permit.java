@@ -320,8 +320,22 @@ abstract public class Permit {
 		return permittedVehicles.getAllVehicles();
 	}
 	
-	public void replaceVehicles(String newReg ) {
+ public void replaceVehicles(String newReg ) {
 		permittedVehicles.replaceVeicles(permittedVehicles.getAllVehicles(), newReg);
 	}
 
+public boolean isAllowed(Vehicle_info v, Date d) {
+		boolean allowed = true;
+		if (suspended) return false;
+		
+		if(!enteredToday) {
+			setVehicle(v);
+			return true;
+		}
+		if (vehicleUsedToday.getRegNo().equals(v.getRegNo())) {
+			return true;
+		}
+		return false;
+	}
+	
 }
