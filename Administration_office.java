@@ -948,6 +948,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	}
 
+	
 	private void setModifyInfoPVP(String name) {
 		lblChangeStartDate.setVisible(false);
 		modifyStartDate.setVisible(false);
