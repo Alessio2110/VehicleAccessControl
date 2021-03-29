@@ -43,56 +43,6 @@ public class Permit_list {
     }
     
     /**
-  	 * Create a new University Member Permit (UMP) and add it to the permit list
-  	 * 
-  	 * @param permitHolder the permit holder name of the University Member Permit object
-  	 * @param lnkDate the date the permit was issued
-  	 */  
-//    public void createUMP(String permitHolder, Date lnkDate) {
-//    	University_member_permit ump = new University_member_permit(permitHolder, lnkDate);
-////    	lnkPermit.put(permitHolder, ump);
-//    	addPermit(ump);
-//    }
-//    
-//    /**
-//   	 * Create a new Permanent Visitor Permit (PVP) and add it to the permit listst
-//   	 * 
-//   	 * @param permitHolder the permit holder name of the University Member Permit objectd
-//   	 */ 
-//    public void createPVP(String permitHolder) {
-//    	Permanent_visitor_permit pvp = new Permanent_visitor_permit(permitHolder);
-////    	lnkPermit.put(permitHolder, pvp);
-//    	addPermit(pvp);
-//    }
-//    
-//    /**
-//   	 * Create a new Regular Visitor Permit (RVP) and add it to the permit list
-//   	 * 
-//   	 * @param permitHolder the permit holder name of the Regular Visitor Permit object
-//   	 * @param startDate the first day the RVP is allowed to pass through the barrier
-//   	 * @param endDate the last day the RVP is allowed to pass through the barrier
-//   	 * @param hostName the name of the university member hosting the visit
-//   	 */  
-//    public void createRVP(String permitHolder, Date startDate, Date endDate, String hostName) {
-//       	Regular_visitor_permit rvp = new Regular_visitor_permit(permitHolder, startDate, endDate, hostName);
-////       	lnkPermit.put(permitHolder, rvp);
-//       	addPermit(rvp);
-//        }
-//    
-//    /**
-//  	 * Create a new Day Visitor Permit (DVP) and add it to the permit list
-//  	 * 
-//  	 * @param permitHolder the permit holder name of the Regular Visitor Permit object
-//  	 * @param lnkDate the day the DVP is allowed to pass through the barrier
-//  	 * @param hostName the name of the university member hosting the visit
-//  	 */  
-//    public void createDVP(String permitHolder, Date lnkDate, String hostName) {
-//    	Day_visitor_permit dvp = new Day_visitor_permit(permitHolder, lnkDate, hostName);
-////       	lnkPermit.put(permitHolder, dvp);
-//       	addPermit(dvp);
-//        }
-    
-    /**
   	 * Check whether there is a Permit with a given name
   	 * 
   	 * @param permitHolder the permit holder name of the Permit
@@ -109,33 +59,6 @@ public class Permit_list {
 //    	keys.forEach((key -> System.out.println(key)));
     	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
     }
-    
-//    public void vehicleIsRegistered(String regNo) {
-//    	LinkedList<String> keys = getKeys();
-////    	keys.forEach((key -> System.out.println(key)));
-//    	keys.forEach((key) -> lnkPermit.get(key).getVList().isRegistered(regNo));
-//    }
-    
-    /**
-  	 * Check whether the given vehicle registration number is found in any of the vehicle lists of each permit
-  	 * 
-  	 * @param regNo the registration number of the vehicle
-  	 */  
-//    public boolean vehicleIsRegistered2(String regNo) {
-//    	LinkedList<String> keys = getKeys();
-//    	for (String key: keys) {
-//    		if(lnkPermit.get(key).getVList().isRegistered(regNo))
-//    			return true;
-//    	}
-//    	return false;
-    	
-//    	keys.forEach((key) ->{
-//    		if(lnkPermit.get(key).getVList().isRegistered(regNo))
-//    			return true;
-//    		else
-//    			return false;
-//    		};
-//    }
     
     /**
   	 * Get all the keys of the permits in permit list

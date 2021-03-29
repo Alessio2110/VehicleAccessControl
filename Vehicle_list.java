@@ -48,32 +48,13 @@ public class Vehicle_list {
 		lnkVehicle = new Hashtable<String, Vehicle_info>();
 	}
 
-//    Work in progress method, it doesn't really work at the moment
-//	public boolean isAllowed(String regNo) {
-//		if (regNo.equals(""))
-//			return false;
-//
-//		boolean allowed = false;
-//		Vehicle_info v = getVehicle(regNo);
-//
-//		if (v != null) {
-//			Permit p = v.getPermit();
-//			allowed = p.isAllowed();
-//			if (allowed)
-//				updatePermit(p, v);
-//		} else
-//			allowed = false;
-//		return allowed;
-//	}
-
 	public boolean isRegistered(String reg) {
 		if (lnkVehicle.containsKey(reg)) {
 			System.out.println("Vehicle List--" + reg + "  exists");
 			return true;
-		}
-		else {
+		} else {
 			System.out.println("Vehicle " + reg + " not found");
-		return false;
+			return false;
 		}
 	}
 
@@ -97,34 +78,41 @@ public class Vehicle_list {
 
 //  Find vehicle info given the registration number
 	public Vehicle_info getVehicle(String regNo) {
-		Vehicle_info v;
-		v = (Vehicle_info) lnkVehicle.get(regNo);
+		Vehicle_info v = (Vehicle_info) lnkVehicle.get(regNo);
 		return v;
 	}
 
 	public int getSize() {
 		return lnkVehicle.size();
 	}
-	
-	public void printVehicles(){
-    	Enumeration<String> keys = lnkVehicle.keys();
-    	 System.out.println("Vehicle List --- There are " + getSize() + " vehicles:");
-        while(keys.hasMoreElements()){
-            String key = keys.nextElement(); 
-            System.out.println("Vehicle List --- Value of key: "+ key+" Vehicle regNo is: " + lnkVehicle.get(key).getRegNo());
-        }
+
+	public void printVehicles() {
+		Enumeration<String> keys = lnkVehicle.keys();
+		System.out.println("Vehicle List --- There are " + getSize() + " vehicles:");
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			System.out.println(
+					"Vehicle List --- Value of key: " + key + " Vehicle regNo is: " + lnkVehicle.get(key).getRegNo());
+		}
 	}
-	
-	public ArrayList<String>  getAllVehicles(){
+
+	public String getAllVehicles() {
 		ArrayList<String> allVehicles = new ArrayList<>();
-		Enumeration<String> enms = lnkVehicle.keys(); {
-			while(enms.hasMoreElements()){
+		Enumeration<String> enms = lnkVehicle.keys();
+		{
+			while (enms.hasMoreElements()) {
 				String enm = enms.nextElement();
 				allVehicles.add(lnkVehicle.get(enm).getRegNo());
-				}
 			}
+		}
 		Collections.reverse(allVehicles);
-		return allVehicles;
+		return allVehicles.toString();
 
+	}
+
+	public void replaceVeicles(String allVehicles, String newReg) {
+		Vehicle_info v = (Vehicle_info) lnkVehicle.get(newReg);
+		lnkVehicle.replace(allVehicles, v);
+		
 	}
 }
