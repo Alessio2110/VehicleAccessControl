@@ -267,13 +267,16 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 					setModifyInfoRVP(name);
 				} else if (lnkPermit_list.getPermit(name) instanceof Permanent_visitor_permit) {
 					setModifyInfoPVP(name);
-				} else {
-					setModifyInfo(name);
+				} else if (lnkPermit_list.getPermit(name) instanceof Day_visitor_permit) {
+					setModifyInfoDVP(name);
+				} else if (lnkPermit_list.getPermit(name) instanceof University_member_permit) {
+					setModifyInfoUVP(name);
 				}
 
-			} else {
-				JOptionPane.showMessageDialog(null, "No permit with that Name");
-				modifyPermitName.setBorder(border);
+				else {
+					JOptionPane.showMessageDialog(null, "No permit with that Name");
+					modifyPermitName.setBorder(border);
+				}
 			}
 		}
 
@@ -318,15 +321,14 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						}
 					}
 					if (!modifyEnteredToday.getText().isEmpty()) {
-						if (modifyEnteredToday.getText().toLowerCase() == "true") {
+						if (modifyEnteredToday.getText().toLowerCase().equals("true")) {
 							lnkPermit_list.getPermit(name).setEnteredToday();
-						} else if (modifyEnteredToday.getText().toLowerCase() == "false") {
+						} else if (modifyEnteredToday.getText().toLowerCase().equals("false")) {
 							lnkPermit_list.getPermit(name).setNotEnteredToday();
+						} else{
+							JOptionPane.showMessageDialog(null, "Entered today must be True or False");
+							modifyEnteredToday.setBorder(border);
 						}
-//						} else if (modifyEnteredToday.getText().toLowerCase() != "true" || modifyEnteredToday.getText().toLowerCase() != "false"){
-//							JOptionPane.showMessageDialog(null, "Entered today must be True or False");
-//							modifyEnteredToday.setBorder(border);
-//						}
 					}
 					if (!modifyStartDate.getText().isEmpty()) {
 
@@ -941,11 +943,12 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-		modifyStartDate.setText("Date");
-		modifyEndDate.setText("Date");
+		modifyStartDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+		modifyEndDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getEndDate().getDay()));
 
 	}
 
+	
 	private void setModifyInfoPVP(String name) {
 		lblChangeStartDate.setVisible(false);
 		modifyStartDate.setVisible(false);
@@ -957,13 +960,23 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	}
 
-	private void setModifyInfo(String name) {
+	private void setModifyInfoDVP(String name) {
 		lblChangeEndDate.setVisible(false);
 		modifyEndDate.setVisible(false);
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-		modifyStartDate.setText("");
-		
+		modifyStartDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+
+	}
+
+	private void setModifyInfoUVP(String name) {
+		lblChangeEndDate.setVisible(false);
+		modifyEndDate.setVisible(false);
+		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
+		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
+		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
+		modifyStartDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+
 	}
 }
