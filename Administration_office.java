@@ -391,7 +391,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			String permitHolder = tfPermitHolder2.getText();
 			amountOfWarnings = lnkPermit_list.getPermit(permitHolder).getWarnings();
 			if (amountOfWarnings == 3)
-				lblMsgDelete.setText("Warnings not added, permit holder has already 3 warnings, and is already suspended.");
+				JOptionPane.showMessageDialog(null,"Warnings not added, permit holder has already 3 warnings, and is already suspended.");
 
 			else if (amountOfWarnings + warningsToAdd > 3)
 			JOptionPane.showMessageDialog(null, "The maximum warnings for a permit is 3! The permit holder has now 3 permits, and is suspended");
@@ -404,6 +404,9 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 //				lblMsgDelete.setText("Warnings added succesfully! Name: " + lnkPermit_list.getPermit(permitHolder).getName() + "; warnings: " + lnkPermit_list.getPermit(permitHolder).getWarnings());
 				tfPermitHolder2.setText("");
 			}
+			
+			if(amountOfWarnings == 3)
+				lnkPermit_list.getPermit(permitHolder).suspend(); //suspend permit if it reaches 3 warnings
 		} else
 			JOptionPane.showMessageDialog(null, "Warnings not added, invalid permit holder name entered.");
 	}
@@ -422,6 +425,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 			else {
 				lnkPermit_list.getPermit(permitHolder).deleteWarning(amountOfWarningsToDelete);
+				lnkPermit_list.getPermit(permitHolder).unsuspend();
 				lblMsgDelete.setText("Warnings removed succesfully!");
 				tfDeleteWarningPermitHolderName.setText("");
 			}
@@ -897,7 +901,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblToday4 = new JLabel(
 				"                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday4.setFont(lblToday4.getFont().deriveFont(15f));
-		lblToday4.setForeground(Color.black);
+		lblToday4.setForeground(Color.red);
 		lblToday4.setOpaque(true);
 		cancelPermitPanel.add(lblToday4);
 
