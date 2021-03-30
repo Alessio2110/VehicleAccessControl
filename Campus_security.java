@@ -160,7 +160,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 			// Issue warning, don't know how yet
 			if (lnkVehicle_list.isRegistered(reg)) {
 				lnkVehicle_list.getPermit(reg).addWarning();
-				JOptionPane.showMessageDialog(null, "Wanring added to " + lnkVehicle_list.getPermit(reg).getName());
+				JOptionPane.showMessageDialog(null, "Warning added to " + lnkVehicle_list.getPermit(reg).getName());
 				if (lnkVehicle_list.getPermit(reg).getWarnings() >= 3) {
 					JOptionPane.showMessageDialog(null, lnkVehicle_list.getPermit(reg).getName() + " now has three warnings and has been suspended");
 				}
