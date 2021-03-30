@@ -109,8 +109,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JLabel lblMsgDelete;
 	private JLabel lblNumberSelectedFromComboBox;
 	private JComboBox cmbDeleteWarningList; // ComboBox with 3 options of amount of warnings to delete
-						// stores the amount of warnings the user wants to delete, changes whenever new
-						// option is selected from cmbDeleteWarningList
+	// stores the amount of warnings the user wants to delete, changes whenever new
+	// option is selected from cmbDeleteWarningList
 	private int amountOfWarningsToDelete = 0;
 
 	// Fourth panel: Cancel Permit
@@ -276,7 +276,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 		if (e.getSource() == updatePermit) {
 			String name = modifyPermitName.getText();
-
 			if (name.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Please enter a Permit Holder name");
 			} else {
@@ -319,19 +318,38 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 							lnkPermit_list.getPermit(name).setEnteredToday();
 						} else if (modifyEnteredToday.getText().toLowerCase().equals("false")) {
 							lnkPermit_list.getPermit(name).setNotEnteredToday();
-						} else{
+						} else {
 							JOptionPane.showMessageDialog(null, "Entered today must be True or False");
 							modifyEnteredToday.setBorder(border);
 						}
 					}
 					if (!modifyStartDate.getText().isEmpty()) {
-
+						if (lnkPermit_list.getPermit(name) instanceof Regular_visitor_permit) {
+							((Regular_visitor_permit) lnkPermit_list.getPermit(name))
+									.changeStartDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+							JOptionPane.showMessageDialog(null, "Start date has been update");
+						} else if (lnkPermit_list.getPermit(name) instanceof Day_visitor_permit) {
+							((Day_visitor_permit) lnkPermit_list.getPermit(name))
+									.changeDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+							JOptionPane.showMessageDialog(null, "Date has been update");
+						} else if (lnkPermit_list.getPermit(name) instanceof University_member_permit) {
+							((University_member_permit) lnkPermit_list.getPermit(name))
+									.changeDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+							JOptionPane.showMessageDialog(null, "Date has been update");
+						}
+					}
+					if (!modifyEndDate.getText().isEmpty()) {
+						((Regular_visitor_permit) lnkPermit_list.getPermit(name))
+								.changeEndDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+						JOptionPane.showMessageDialog(null, "End date has been update");
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, name + " is not a permit holder");
+					JOptionPane.showMessageDialog(null, modifyPermitName.getText() + " is not a permit holder");
 				}
 			}
+			JOptionPane.showMessageDialog(null, lnkPermit_list.getPermit(name).getName() + " information has been updated");
+			clearModifyInfo();
 		}
 		if (!modifyVehicleInfo.getText().isEmpty()) {
 			String name = modifyPermitName.getText();
@@ -340,12 +358,14 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				modifyNewVehicle(lnkPermit_list.getPermit(name));
 				lblAllVehicles.setText("");
 				modifyVehicleInfo.setText("");
+				JOptionPane.showMessageDialog(null, "Vehicle has been added");
 			}
 			if (e.getSource() == removeVehicle) {
 				lnkPermit_list.getPermit(name).removePermittedVehicle(modifyVehicleInfo.getText());
 				lnkVehicle_list.removeVehicle(modifyVehicleInfo.getText());
 				lblAllVehicles.setText("");
 				modifyVehicleInfo.setText("");
+				JOptionPane.showMessageDialog(null, "Vehicle has been removed");
 			}
 		}
 	}
@@ -834,11 +854,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblCancelPermitHolderName = new JLabel("Permit Holder Name:");
 
 		tfCancelPermitHolderName = new JTextField("", 25);
-		tfCancelPermitHolderName.setSize(30,30);
+		tfCancelPermitHolderName.setSize(30, 30);
 
 		cancelPermitPanel.add(lblCancelPermitHolderName);
 		cancelPermitPanel.add(tfCancelPermitHolderName);
-
 
 		cancelPermit = new JButton("Cancel Permit");
 		cancelPermit.addActionListener(this);
@@ -976,20 +995,21 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	private void setModifyInfoRVP(String name) {
+		lblChangeStartDate.setVisible(true);
+		modifyStartDate.setVisible(true);
 		lblChangeEndDate.setVisible(true);
 		modifyEndDate.setVisible(true);
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-		modifyStartDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
-		modifyEndDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getEndDate().getDay()));
+		modifyStartDate.setText(
+				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+		modifyEndDate.setText(
+				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getEndDate().getDay()));
 
 	}
 
-	
 	private void setModifyInfoPVP(String name) {
-		lblChangeStartDate.setVisible(false);
-		modifyStartDate.setVisible(false);
 		lblChangeEndDate.setVisible(false);
 		modifyEndDate.setVisible(false);
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
@@ -1004,7 +1024,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-		modifyStartDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+		modifyStartDate.setText(
+				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
 
 	}
 
@@ -1014,7 +1035,18 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-		modifyStartDate.setText(String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+		modifyStartDate.setText(
+				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
 
+	}
+	private void clearModifyInfo() {
+		modifyPermitName.setText("");
+		modifynoOfEntries.setText("");
+		modifyWarnings.setText("");
+		modifyEnteredToday.setText("");
+		modifyStartDate.setText("");
+		modifyEndDate.setText("");
+		modifyVehicleInfo.setText("");
+		lblAllVehicles.setText("");
 	}
 }
