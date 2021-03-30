@@ -117,7 +117,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JComboBox cmbDeleteWarningList; // ComboBox with 3 options of amount of warnings to delete
 	// stores the amount of warnings the user wants to delete, changes whenever new
 	// option is selected from cmbDeleteWarningList
-	private int amountOfWarningsToDelete = 0;
+	private int amountOfWarningsToDelete = 1;
 
 	// Fourth panel: Cancel Permit
 	private JLabel lblToday4;
@@ -860,7 +860,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		deleteWarningPanel.add(lblNumberSelectedFromComboBox);
 		Integer[] amountOfWarningsToDelete = { 1, 2, 3 };
 		cmbDeleteWarningList = new JComboBox(amountOfWarningsToDelete);
-		cmbDeleteWarningList.setSelectedIndex(2);
+		cmbDeleteWarningList.setSelectedIndex(0);
 		cmbDeleteWarningList.addActionListener(this);
 
 		deleteWarningPanel.add(cmbDeleteWarningList);
