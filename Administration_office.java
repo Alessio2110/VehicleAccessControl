@@ -313,12 +313,12 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						try {
 							Integer.parseInt(modifyWarnings.getText());// try's to convert the string to an int
 
-							// if statement checks the current number of warnings are below 3 and then
-							// checks to see if current warnings and new warnings together will be 3 or less
-							if (lnkPermit_list.getPermit(name).getWarnings() < 3
-									&& (lnkPermit_list.getPermit(name).getWarnings()
-											+ Integer.parseInt(modifyWarnings.getText())) <= 3) {
-								lnkPermit_list.getPermit(name).setWarning(Integer.parseInt(modifyWarnings.getText()));
+							// if statement checks the current number of warnings are below 3
+							if (lnkPermit_list.getPermit(name).getWarnings() <= 3) {
+								if (Integer.parseInt(modifyWarnings.getText()) <= 3) {
+									lnkPermit_list.getPermit(name)
+											.setWarning(Integer.parseInt(modifyWarnings.getText()));
+								}
 							} else {
 								JOptionPane.showMessageDialog(null, "Permit holder warnings cannot be more than 3");
 							}
@@ -362,7 +362,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 					JOptionPane.showMessageDialog(null, modifyPermitName.getText() + " is not a permit holder");
 				}
 			}
-			JOptionPane.showMessageDialog(null, lnkPermit_list.getPermit(name).getName() + " information has been updated");
+			JOptionPane.showMessageDialog(null,
+					"Information for " + lnkPermit_list.getPermit(name).getName() + " has been updated");
 			clearModifyInfo();
 		}
 		if (!modifyVehicleInfo.getText().isEmpty()) {
@@ -1088,6 +1089,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
 
 	}
+
 	private void clearModifyInfo() {
 		modifyPermitName.setText("");
 		modifynoOfEntries.setText("");

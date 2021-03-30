@@ -153,6 +153,11 @@ abstract public class Permit {
 	 */
 	public void deleteWarning(int deletedWarnings) {
 		this.warnings -= deletedWarnings;
+
+		if (checkMaxWarnings()) {
+			suspended = true;
+		} else
+			suspended = false;
 	}
 
 	/**
@@ -161,7 +166,12 @@ abstract public class Permit {
 	 * @param warnings The number of warnings to be added
 	 */
 	public void setWarning(int warnings) {
-		this.warnings += warnings;
+		this.warnings = warnings;
+
+		if (checkMaxWarnings()) {
+			suspended = true;
+		} else
+			suspended = false;
 	}
 
 	/**
@@ -178,6 +188,8 @@ abstract public class Permit {
 	 */
 	public void clearWarnings() {
 		warnings = 0;
+
+		suspended = false;
 	}
 
 	/**
