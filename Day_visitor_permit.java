@@ -50,4 +50,12 @@ public class Day_visitor_permit extends Permit {
     public String getHostName() {
     	return hostName;
     }
+    
+    public boolean isExpired(Date today) {
+    	System.out.println(today.getDay());
+    	System.out.println(lnkDate.getDay());
+    	if (today.getDay() > lnkDate.getDay())	return true;
+    	
+    	return false;
+    }
 }

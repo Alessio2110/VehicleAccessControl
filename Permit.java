@@ -250,11 +250,12 @@ abstract public class Permit {
 	/**
 	 * Check whether the permit holder is allowed to pass through
 	 */
-	public boolean isAllowed() {
-		if (!suspended)
-			return true;
-		else
+	public boolean isAllowed(Vehicle_info v) {
+		if (suspended)
 			return false;
+		if (vehicleUsedToday != v && enteredToday)
+			return false;
+		return true;
 	}
 
 	/**

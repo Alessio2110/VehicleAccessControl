@@ -22,8 +22,8 @@ public class Main {
 
         Timer timer = new Timer(systemStatus, permitList);     // Frame, boundary class
 
-        Barrier barrier1 = new Barrier(systemStatus, vehicleList, permitList);  // Frame, boundary class
-        Barrier barrier2 = new Barrier(systemStatus, vehicleList, permitList);
+        Barrier barrier1 = new Barrier(systemStatus, vehicleList);  // Frame, boundary class
+        Barrier barrier2 = new Barrier(systemStatus, vehicleList);
           // Repeat for as many barriers as required
 
         Campus_security campusSecurity1 = new Campus_security(systemStatus, vehicleList);  // Frame, boundary class

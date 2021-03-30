@@ -96,7 +96,8 @@ public class Timer extends JFrame
     	if (e.getSource() == addDay) {
 //    		System.out.println("Today is: Day #" + today.getDay());
     		lnkSystem_status.nextDay();
-    		lnkPermit_list.dailyUpdateAll();
+    		today = lnkSystem_status.getDate();
+    		lnkPermit_list.dailyUpdateAll(today);
     		//On the first day of the year update all permits
     		if (lnkSystem_status.getDate().getDay() == 1) lnkPermit_list.annualUpdateAll();
     		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
