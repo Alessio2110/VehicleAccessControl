@@ -92,7 +92,7 @@ public class System_status extends Observable {
     
     @Override
 	public String toString() {
-		return  Arrays.toString(log);
+		return  Arrays.toString(log).replace("[", "").replace("]", "").replace(",", "");
 	}
 
 	public String[] getLogs() {
