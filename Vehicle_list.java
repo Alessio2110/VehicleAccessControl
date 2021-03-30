@@ -65,6 +65,10 @@ public class Vehicle_list {
 		p.increaseEntries();
 		p.setVehicle(v);
 	}
+	
+	public Permit getPermit(String reg) {
+		return lnkVehicle.get(reg).getPermit();
+	}
 
 	public void addVehicle(Vehicle_info v) {
 		lnkVehicle.put(v.getRegNo(), v);
@@ -113,4 +117,5 @@ public class Vehicle_list {
 		// return allVehicles.toString();
 
 	}
+
 }

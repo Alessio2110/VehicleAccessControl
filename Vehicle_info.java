@@ -55,8 +55,4 @@ public class Vehicle_info {
 	public String getRegNo() {
 		return regNo;
 	}
-
-	public void setReg(String reg) {
-		this.regNo = reg;
-	}
 }
