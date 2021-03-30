@@ -61,7 +61,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 	private JButton buttonActive;
 	private JButton buttonInactive;
 	private JButton buttonIssueWarning;
-	private JButton log;
+	private JButton checkLog;
 	private JLabel display;
 	private JLabel labelRegNo;
 	private JTextField fieldRegNo;
@@ -106,9 +106,9 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		window.add(buttonIssueWarning);
 		buttonIssueWarning.addActionListener(this);
 
-		log = new JButton("Check Log");
-		window.add(log);
-		log.addActionListener(this);
+		checkLog = new JButton("Check Log");
+		window.add(checkLog);
+		checkLog.addActionListener(this);
 
 		date = lnkSystem_status.getToday();
 
@@ -167,8 +167,9 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 			fieldRegNo.setText("");
 			fieldRegNo.requestFocusInWindow();
 		}
-		if (e.getSource() == log) {
-
+		if (e.getSource() == checkLog) {
+			//shows all logs
+			logArea.append(lnkSystem_status.toString());
 		}
 	}
 

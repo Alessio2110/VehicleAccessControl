@@ -30,6 +30,7 @@ public class Date {
 	 */
 	public Date(int dayNumber) {
 		this.dayNumber = dayNumber;
+		
 	}
 	/**
 	 * This operation adds one to the day number, wrapping round to 1 after 365 automatically.
