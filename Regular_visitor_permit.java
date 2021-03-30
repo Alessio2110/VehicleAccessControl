@@ -40,8 +40,7 @@ public class Regular_visitor_permit extends Permit {
 	 * numbers and the start and end dates on which the visits will occur. This
 	 * category of visitor would be appropriate for, say, a researcher collaborating
 	 * with someone in the University for a couple of weeks, or for actors appearing
-	 * in a short-running production at the MacRobert Theatre. required: hostName,
-	 * permitHolder, vehicleUsedToday, lnkDate, lnkDate1
+	 * in a short-running production at the MacRobert Theatre. 
 	 **/
 	public Regular_visitor_permit(String permitHolder, Date startDate, Date endDate, String hostName) {
 		// super( permitHolder, noOfEntries, warnings, suspended, enteredToday,
@@ -85,6 +84,12 @@ public class Regular_visitor_permit extends Permit {
 	public void changeEndDate(Date d) {
 		lnkDate1 = d;
 	}
+	
+	public boolean isExpired(Date today) {
+    	if (today.getDay() > lnkDate1.getDay())	return true;
+    	
+    	return false;
+    }
 
 	public String toString() {
 		String s = "Type: Regular Visitor Permit, name: " + this.getName() + "Permit valid between day #"

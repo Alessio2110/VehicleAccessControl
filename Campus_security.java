@@ -137,9 +137,14 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		}
 		if (date != lnkSystem_status.getToday()) {
 			date = lnkSystem_status.getToday();
-			logArea.append("Date: " + date + "\n\n");
+			logArea.append("Date: " + date + "\n");
+			logArea.append("Date: " + date + "\n");
 		}
-
+		String s = "";
+		int numberLogs = lnkSystem_status.logslength();
+		for (int i = 0; i < numberLogs; i++) {
+			
+		}
 	}
 
 	public void actionPerformed(ActionEvent e) {

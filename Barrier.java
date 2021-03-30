@@ -79,10 +79,10 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	private JButton checkRegNo;
 	private JButton vehicleClear;
 	private JTextField registrationField;
-	public Barrier(System_status lnkSystem_status, Vehicle_list lnkVehicle_list, Permit_list p_list) {
+	public Barrier(System_status lnkSystem_status, Vehicle_list lnkVehicle_list) {
 		this.lnkSystem_status = lnkSystem_status;
 		this.lnkVehicle_list = lnkVehicle_list;
-		this.lnkPermit_list = lnkPermit_list;
+//		this.lnkPermit_list = lnkPermit_list;
 
 		setTitle("Barrier");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -128,7 +128,7 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		if (!active) {//if the system is not active, the barrier MUST be raised
 			setRaised(true);
 			checkRegNo.setEnabled(false);
-		} else {checkRegNo.setEnabled(true);}
+		} else {checkRegNo.setEnabled(true); setRaised(false);}
 
 		if (raised) { //No need to check if the system is active or not, since if it is not active the barrier is up, if it is active it only depends on the barrier position
 			passStopLabel.setText("PASS");		
@@ -143,12 +143,19 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 	} // update
 
 	public void actionPerformed(ActionEvent e) {
-		
+		boolean allowed = false;
 		if (e.getSource() == checkRegNo) {
 			regNo = registrationField.getText();
 			Vehicle_info v = lnkVehicle_list.getVehicle(regNo);
-			String permitHolder = v.getPermit().getName();
-			boolean allowed = lnkPermit_list.getPermit(permitHolder).isAllowed(v,today);
+			if (v.getPermit().isAllowed(v)) {
+				v.getPermit().setEnteredToday();
+				v.getPermit().setVehicle(v);
+				allowed = true;
+				lnkSystem_status.addLog(v.getRegNo() + "Succesful");
+			}
+			else lnkSystem_status.addLog(regNo + "Unsuccesful");
+				
+//			boolean allowed = lnkPermit_list.getPermit(permitHolder).isAllowed(v,today);
 			
 //			if (lnkVehicle_list.isRegistered(regNo) == true && p_list.vehicleisSuspended(regNo) == true) {
 			//It should check whether the system is active or inactive, if inactive PASS

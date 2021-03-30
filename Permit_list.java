@@ -108,12 +108,23 @@ public class Permit_list {
     /**
      * Make daily update on each permit in permit list
      */  
-    public void dailyUpdateAll() {
+    public void dailyUpdateAll(Date d) {
     	Enumeration e = lnkPermit.elements();
     	while(e.hasMoreElements()) {
     		Permit p = (Permit) e.nextElement();
-    		p.dailyReset();
+    		
+    		if (p instanceof Regular_visitor_permit) {
+    			if (((Regular_visitor_permit) p).isExpired(d)) {
+    				removePermit(p.getName());
+    			}
     		}
+    		else if (p instanceof Day_visitor_permit) {
+    			if (((Day_visitor_permit) p).isExpired(d)) {
+    				removePermit(p.getName());
+    			}
+    		}
+    	 p.dailyReset();
+    	}
     }
     
     /**

@@ -41,7 +41,7 @@ public class System_status extends Observable {
     
     public System_status() { //Constructor 
     	today = new Date(1);
-    	
+    	log = new String[0];
     }
     
     public void setActive(boolean isActive) {
@@ -54,6 +54,21 @@ public class System_status extends Observable {
     	return this.systemActive;
     }
     
+    public void addLog(String regNo) {
+    	System.out.println(log.length);
+    	String[] newlog = Arrays.copyOf(log, log.length + 1);
+    	for (int i = 0; i < log.length; i++) {
+    		newlog[i] = log[i];
+    	}
+    	newlog[log.length] = regNo;
+    	log = newlog;
+    	System.out.println(log.length);
+    	
+    }
+    
+    public int logslength() {
+    	return log.length;
+    }
     public void showLogs() {
     	for (int i = 0; i < log.length - 1; i ++)
     		System.out.println(log[i]);
