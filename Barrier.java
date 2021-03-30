@@ -151,9 +151,9 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 				v.getPermit().setEnteredToday();
 				v.getPermit().setVehicle(v);
 				allowed = true;
-				lnkSystem_status.addLog(v.getRegNo() + "Succesful");
+				lnkSystem_status.addLog("Date: " + today.getDay() + " RegNo: " + v.getRegNo()+ " Succesful\n");
 			}
-			else lnkSystem_status.addLog(regNo + "Unsuccesful");
+			else lnkSystem_status.addLog("Date: " + today.getDay() + " RegNo: " + regNo + " Unsuccesful\n");
 				
 //			boolean allowed = lnkPermit_list.getPermit(permitHolder).isAllowed(v,today);
 			
