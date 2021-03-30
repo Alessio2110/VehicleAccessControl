@@ -90,7 +90,13 @@ public class System_status extends Observable {
         notifyObservers();
     }
     
-    public String[] getLogs() {
+    @Override
+	public String toString() {
+		return  Arrays.toString(log);
+	}
+
+	public String[] getLogs() {
     	return log;
     }
+    
 }
