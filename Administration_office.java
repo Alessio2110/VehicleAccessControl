@@ -61,6 +61,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	 */
 	private System_status lnkSystem_status;
 
+	private JTabbedPane tb;
+	
 	// First Panel: Add Permit
 	private JPanel addPermitPanel; // Add permit panel
 
@@ -89,25 +91,29 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	private JLabel lblToday2;
 	private JLabel lblPermitHolder2;
-	private JLabel lblRecordWarning;
+	private JLabel lblRecordedWarnings;
 
 	private JTextField tfPermitHolder2;
-	private JTextField tfWarnings;
+//	private JTextField tfWarnings;
 
 	private JComboBox cmbPermitList; // ComboBox with 4 permit type options
-	private JComboBox cmbPermitList2; // ComboBox with 4 permit type options
-
-	private JTabbedPane tb;
-
+	
+	
+	private JButton addWarning;
+	private JComboBox cmbAddWarningList;
+	private int warningsToAdd = 1;
 	// Third panel: Delete warning
-	private JLabel lblToday3;
 	private JPanel deleteWarningPanel;
+	
+	private JLabel lblToday3;
+	private JLabel lblDeleteWarningPermitHolderName;
+	private JLabel lblNumberSelectedFromComboBox;
+	private JLabel lblMsgDelete;
+	
 	private JButton deleteWarning;
 	private JButton deleteAllWarnings;
 	private JTextField tfDeleteWarningPermitHolderName;
-	private JLabel lblDeleteWarningPermitHolderName;
-	private JLabel lblMsgDelete;
-	private JLabel lblNumberSelectedFromComboBox;
+
 	private JComboBox cmbDeleteWarningList; // ComboBox with 3 options of amount of warnings to delete
 	// stores the amount of warnings the user wants to delete, changes whenever new
 	// option is selected from cmbDeleteWarningList
@@ -145,6 +151,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	private JButton searchPermit;
 	private JButton addVehicle;
 	private JButton removeVehicle;
+	private JComboBox cmbPermitList2; // ComboBox with 4 permit type options
 
 	String msg = "Permanent visitor";
 
@@ -223,6 +230,13 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// If clicking on one of 4 types of permit in add permit panel
 		if (e.getSource() == cmbPermitList)
 			setPermit();
+		
+		if (e.getSource() == addWarning )
+			addWarning();
+	
+		// Amount of warnings to delete
+		if (e.getSource() == cmbAddWarningList)
+			warningsToAdd = (int) cmbAddWarningList.getSelectedItem();
 
 		// Amount of warnings to delete
 		if (e.getSource() == cmbDeleteWarningList)
@@ -370,6 +384,49 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		}
 	}
 
+	private void addWarning() {
+		if (lnkPermit_list.getPermit(tfPermitHolder2.getText()) != null) {
+			int amountOfWarnings = 0;
+			String permitHolder = tfPermitHolder2.getText();
+			amountOfWarnings = lnkPermit_list.getPermit(permitHolder).getWarnings();
+			if (amountOfWarnings == 3)
+				lblMsgDelete.setText("Warnings not added, permit holder has already 3 warnings, and is already suspended.");
+
+			else if (amountOfWarnings + warningsToAdd > 3)
+			JOptionPane.showMessageDialog(null, "The maximum warnings for a permit is 3! The permit holder has now 3 permits, and is suspended");
+			else {
+				System.out.println(warningsToAdd);
+				for (int i = warningsToAdd; i > 0; i--) {
+					lnkPermit_list.getPermit(permitHolder).addWarning();
+				}
+				JOptionPane.showMessageDialog(null, "Warnings added succesfully! Name: " + lnkPermit_list.getPermit(permitHolder).getName() + "; warnings: " + lnkPermit_list.getPermit(permitHolder).getWarnings());
+//				lblMsgDelete.setText("Warnings added succesfully! Name: " + lnkPermit_list.getPermit(permitHolder).getName() + "; warnings: " + lnkPermit_list.getPermit(permitHolder).getWarnings());
+				tfPermitHolder2.setText("");
+			}
+		} else
+			JOptionPane.showMessageDialog(null, "Warnings not added, invalid permit holder name entered.");
+	}
+	
+	private void deleteWarning() {
+		if (lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()) != null) {
+			int amountOfWarnings = 0;
+			String permitHolder = tfDeleteWarningPermitHolderName.getText();
+			amountOfWarnings = lnkPermit_list.getPermit(permitHolder).getWarnings();
+			if (amountOfWarnings == 0)
+				lblMsgDelete.setText("Warnings not removed, permit holder has no warnings.");
+
+			else if (amountOfWarnings < amountOfWarningsToDelete)
+				lblMsgDelete.setText("Warnings not removed, permit holder has less warnings(" + amountOfWarnings
+						+ ")  than selected(" + amountOfWarningsToDelete + ").");
+
+			else {
+				lnkPermit_list.getPermit(permitHolder).deleteWarning(amountOfWarningsToDelete);
+				lblMsgDelete.setText("Warnings removed succesfully!");
+				tfDeleteWarningPermitHolderName.setText("");
+			}
+		} else
+			JOptionPane.showMessageDialog(null, "Warnings not removed, invalid permit holder name entered.");
+	}
 	private void cancelPermit() {
 		if (lnkPermit_list.getPermit(tfCancelPermitHolderName.getText()) != null) {
 			System.out.println("canceling permit");
@@ -396,26 +453,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		}
 	}
 
-	private void deleteWarning() {
-		if (lnkPermit_list.getPermit(tfDeleteWarningPermitHolderName.getText()) != null) {
-			int amountOfWarnings = 0;
-			String permitHolder = tfDeleteWarningPermitHolderName.getText();
-			amountOfWarnings = lnkPermit_list.getPermit(permitHolder).getWarnings();
-			if (amountOfWarnings == 0)
-				lblMsgDelete.setText("Warnings not removed, permit holder has no warnings.");
-
-			else if (amountOfWarnings < amountOfWarningsToDelete)
-				lblMsgDelete.setText("Warnings not removed, permit holder has less warnings(" + amountOfWarnings
-						+ ")  than selected(" + amountOfWarningsToDelete + ").");
-
-			else {
-				lnkPermit_list.getPermit(permitHolder).deleteWarning(amountOfWarningsToDelete);
-				lblMsgDelete.setText("Warnings removed succesfully!");
-				tfDeleteWarningPermitHolderName.setText("");
-			}
-		} else
-			lblMsgDelete.setText("Warnings not removed, invalid permit holder name entered.");
-	}
+	
 
 	private void setPermit() {
 		// Day Visitor", "Regular visitor", "Permanent visitor", "University member
@@ -769,16 +807,27 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblToday2.setOpaque(true);
 		secondPanel.add(lblToday2);
 		// label and textfield for permit holder name
-		lblRecordWarning = new JLabel("Record Warning:");
-		secondPanel.add(lblRecordWarning);
-		tfWarnings = new JTextField("", 3);
-		secondPanel.add(tfWarnings);
+//		lblRecordWarning = new JLabel("Record Warning:");
+//		secondPanel.add(lblRecordWarning);
+//		tfWarnings = new JTextField("", 3);
+//		secondPanel.add(tfWarnings);
 
 		lblPermitHolder2 = new JLabel("Permit Holder Name: ");
 		secondPanel.add(lblPermitHolder2);
 		tfPermitHolder2 = new JTextField("", 3);
 		secondPanel.add(tfPermitHolder2);
-
+		lblRecordedWarnings = new JLabel("Select # of warnings");
+		secondPanel.add(lblRecordedWarnings);
+		
+		Integer[] amountOfWarningsToAdd = { 1, 2, 3 };
+		cmbAddWarningList = new JComboBox(amountOfWarningsToAdd);
+		cmbAddWarningList.setSelectedIndex(0);
+		cmbAddWarningList.addActionListener(this);
+		secondPanel.add(cmbAddWarningList);
+		
+		addWarning = new JButton("Add Warning");
+		addWarning.addActionListener(this);
+		secondPanel.add(addWarning);
 		// tfPermitHolder = new JTextField("", 25);
 
 		for (int i = 0; i < 10; i++)
@@ -799,7 +848,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblToday3 = new JLabel(
 				"                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday3.setFont(lblToday3.getFont().deriveFont(15f));
-		lblToday3.setForeground(Color.black);
+		lblToday3.setForeground(Color.red);
 		lblToday3.setOpaque(true);
 		deleteWarningPanel.add(lblToday3);
 
