@@ -20,46 +20,63 @@ public class Day_visitor_permit extends Permit {
      */
     private Date lnkDate;
     
-    
+    /**
+  	 * Day_visitor_permit Constructor
+  	 */
     public Day_visitor_permit(String permitHolder, Date lnkDate, String hostName) {
     	super( permitHolder);
     	this.lnkDate = lnkDate;
     	this.hostName = hostName;
     }
     
-    
-    public Date getVisitDate() {
-    	return lnkDate;
-    }
-    
-    public void changeDate(Date d) {
-    	lnkDate = d;
-    }
-    
-    public void changeHostName(String s) {
-    	hostName = s;
-    }
-    
-    public String getHostName() {
-    	return hostName;
-    }
-    
+    /**
+  	 * Return the visit date
+  	 */
+    public Date getVisitDate() { return lnkDate; }
+        
+    /**
+  	 * Change the visit date
+  	 * 
+  	 * @param hostName new host name
+  	 */
+    public void changeDate(Date lnkDate) { this.lnkDate = lnkDate;  }
+   	
+    /**
+  	 * Change the host's name
+  	 * 
+  	 * @param hostName new host name
+  	 */
+    public void changeHostName(String hostName) { this.hostName = hostName; }
+     	
+    /**
+  	 * Return whether the DVP permit is allowed to pass
+  	 */
+    public String getHostName() { return hostName;  }
+   
+    /**
+  	 * Return whether the DVP permit is allowed to pass
+  	 */
     public boolean isAllowed(Vehicle_info v, Date d) {
-    	if(!super.isAllowed(v, d))
-    		return false;
-    	if (d.isEqual(lnkDate))
+    	if(super.isAllowed(v, d) && d.isEqual(lnkDate))
     		return true;
+    	
     	return false;
     }
+    
     /**
   	 * Get the string with the information of a Permit
   	 */
   	public String status() {
   		String s = "Permit type: Day Visitor Permit \n" + super.status() 
-  				+  "Date of visit: #" + lnkDate.getDay();
+  				+  "Hosted by: " + getHostName() +  "\n Date of visit: #" + lnkDate.getDay();
   		
   		return s;
   	}
   	
+  	 /**
+  	 * Return whether the permit is expired
+  	 * 
+  	 * @param today today's date is compared with the visit date
+  	 */
     public boolean isExpired(Date today) { return  today.getDay() > lnkDate.getDay();}
 }

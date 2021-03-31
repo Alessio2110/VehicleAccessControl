@@ -6,10 +6,12 @@
  */
 public class Permanent_visitor_permit extends Permit {
 	
+	/**
+  	 * Permamemt_visitor_permit Constructor
+  	 */
 	public Permanent_visitor_permit(String permitHolder) {
 		super(permitHolder);
     }
-	
 }
 
 

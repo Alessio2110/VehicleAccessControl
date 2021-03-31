@@ -507,7 +507,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		}
 
 	}
-
+	
+	
 	private void newPermit() {
 		switch (msg) {
 		case "Day Visitor":

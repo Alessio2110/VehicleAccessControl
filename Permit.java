@@ -190,7 +190,7 @@ abstract public class Permit {
 	public void clearWarnings() {
 		warnings = 0;
 
-		suspended = false;
+		unsuspend();
 	}
 
 	/**

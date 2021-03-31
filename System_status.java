@@ -50,9 +50,9 @@ public class System_status extends Observable {
         notifyObservers();
     }
     
-    public boolean getSystemActive() {
-    	return this.systemActive;
-    }
+    public boolean getSystemActive() { 	return this.systemActive; }
+    
+    
     
     public void addLog(String regNo) {
     	System.out.println(log.length);

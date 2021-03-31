@@ -86,8 +86,7 @@ public class Timer extends JFrame
         
         setSize(250,100);
         setLocation(250, 100);
-        setVisible(true);
-        
+        setVisible(true);    
     }
     
     public void actionPerformed(ActionEvent e) {
