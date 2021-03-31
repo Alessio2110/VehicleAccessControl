@@ -86,15 +86,11 @@ public class Timer extends JFrame
         
         setSize(250,100);
         setLocation(250, 100);
-        setVisible(true);
-        
-//        add(new JLabel("View5"));
-        
+        setVisible(true);    
     }
     
     public void actionPerformed(ActionEvent e) {
     	if (e.getSource() == addDay) {
-//    		System.out.println("Today is: Day #" + today.getDay());
     		lnkSystem_status.nextDay();
     		today = lnkSystem_status.getDate();
     		lnkPermit_list.dailyUpdateAll(today);

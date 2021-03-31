@@ -6,6 +6,10 @@ import java.time.LocalDate;
  * For a description of Regular visitors, follow hyperlink to the Administration
  * use case for issuing a new Regular visitor permit.
  */
+/**
+ * @author Utente
+ *
+ */
 public class Regular_visitor_permit extends Permit {
 	/**
 	 * The name of the University member hosting the visit.
@@ -53,6 +57,8 @@ public class Regular_visitor_permit extends Permit {
 
 	/**
 	 * Get the string with the information of a Permit
+	 * 
+	 * @return String: Information about the permit
 	 */
 	public String status() {
 		String s = "Permit type: Regular Visitor Permit \n" + super.status() 
@@ -61,46 +67,68 @@ public class Regular_visitor_permit extends Permit {
 		return s;
 	}
 	
-	public void changeHostName(String s) {
-		hostName = s;
-	}
+	public void changeHostName(String s) {hostName = s;}
 
-	public String getHostName() {
-		return hostName;
-	}
-
-	public Date getStartDate() {
-		return lnkDate;
-	}
-
-	public void changeStartDate(Date d) {
-		lnkDate = d;
-	}
-
-	public Date getEndDate() {
-		return lnkDate1;
-	}
-
-	public void changeEndDate(Date d) {
-		lnkDate1 = d;
-	}
+	/**
+	 * Get host name
+	 * 
+	 * @return String: the host name
+	 */
+	public String getHostName() {return hostName; }
 	
+
+	/**
+	 * Get start date
+	 * 
+	 * @return Date: the start date
+	 */
+	public Date getStartDate() { return lnkDate; }
+	
+	/**
+	 * Change start Date
+	 * 
+	 * @param d the new start date
+	 */
+	public void changeStartDate(Date d) { lnkDate = d; }
+	
+	/** 
+	 * Get end date
+	 * 
+	 * @return Date: end date
+	 */
+	public Date getEndDate() { return lnkDate1; }
+		
+	/**
+	 * Change end date
+	 * 
+	 * @param d new end date
+	 */
+	public void changeEndDate(Date d) { 	lnkDate1 = d; }
+	
+	
+	
+	/**
+	 * Check whether the permit is expired comparing today's date to the end date
+	 * 
+	 * @param today
+	 * @return boolean: whether the permit is expired
+	 */
 	public boolean isExpired(Date today) { return  today.getDay() > lnkDate1.getDay();}
 	
-	public boolean isAllowed(Vehicle_info v, Date d) {
-    	if(!super.isAllowed(v, d))
+	 /**
+  	 * Return whether the RVP permit is allowed to pass
+  	 * @param v: the vehicle we are checking the permit of
+  	 * @param today: today's date
+  	 * @return boolean: whether the permit is expired
+  	 */
+	public boolean isAllowed(Vehicle_info v, Date today) {
+		//If not allowed
+    	if(!super.isAllowed(v, today))
     		return false;
-    	if ((d.isEqual(lnkDate) || d.isAfter(lnkDate)) && (d.isEqual(lnkDate1) || d.isBefore(lnkDate1)))
+    	//Check that start date is after today (or the same day), and end date is before todat (or the same day) 
+    	if ((today.isEqual(lnkDate) || today.isAfter(lnkDate)) && (today.isEqual(lnkDate1) || today.isBefore(lnkDate1)))
     		return true;
     	return false;
     }
 	
-	public String toString() {
-		String s = "Type: Regular Visitor Permit, name: " + this.getName() + "Permit valid between day #"
-				+ lnkDate + " and day #" + lnkDate1 + ". Hosted by: " + hostName + "; #entries:"
-				+ this.getEntries() + "; warnings: " + this.getWarnings() + ". Suspended? " + this.isSuspended()
-				+ ". Vehicle used today: " + this.getVehicleUsedToday().getRegNo() + ". Number of permitted vehicles:"
-				+ this.getVList().getSize();
-		return s;
-	}
 }

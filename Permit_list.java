@@ -37,35 +37,14 @@ public class Permit_list {
 	 * 
 	 * @param permitHolder the permit holder name of the Permit object
 	 */  
-    public Permit getPermit(String permitHolder) {
-    	return lnkPermit.get(permitHolder);
-    }
-    
+    public Permit getPermit(String permitHolder) { return lnkPermit.get(permitHolder); }
+    	
     /**
   	 * Check whether there is a Permit with a given name
   	 * 
   	 * @param permitHolder the permit holder name of the Permit
   	 */  
-    public boolean checkNameExists(String permitHolder) {
-    	return lnkPermit.containsKey(permitHolder);
-    }
-    
-   
-    
-    /**
-  	 * Get all the keys of the permits in permit list
-  	 */  
-    public LinkedList<String> getKeys() {
-    	LinkedList<String> keysList = new LinkedList<String>();
-    	Enumeration<String> keys = lnkPermit.keys();
-        while(keys.hasMoreElements()){
-            String key = keys.nextElement();
-            keysList.add(key);
-//            System.out.println("Permi List --- Value of key: "+key+" is: ");
-//            +lnkPermit.get(key).toString()
-    }
-        return keysList;
-    }
+    public boolean checkNameExists(String permitHolder) {  	return lnkPermit.containsKey(permitHolder); }
     
     /**
   	 * Permanently remove a permit from the permit list
@@ -85,14 +64,8 @@ public class Permit_list {
   	 * add a Permit to the permit list, this could be any of the four subclasses of Permit
   	 */  
     public void addPermit(Permit p) {
-    	Permit p2;
-    	p2 = (Permit) lnkPermit.get(p.getName());
-    	if (p2 == null)
+    	if (!checkNameExists(p.getName()))
     		lnkPermit.put(p.getName(), p);
-    	else {
-    		System.out.println("Permit List --- Collision occurring: two permits cannot share a common permit holder name ");
-    		System.out.println("Existing permit name: " + p2.getName() + " New permit name: " + p.getName());
-    	}	
     }
     
     /**
@@ -102,17 +75,19 @@ public class Permit_list {
     	Enumeration e = lnkPermit.elements();
     	while(e.hasMoreElements()) {
     		Permit p = (Permit) e.nextElement();
-    		
+    		//If it is a RVP, check if it is expired. If so, remove it.
     		if (p instanceof Regular_visitor_permit) {
     			if (((Regular_visitor_permit) p).isExpired(d)) {
     				removePermit(p.getName());
     			}
     		}
+    		//If it is a DVP, check if it is expired. If so, remove it.
     		else if (p instanceof Day_visitor_permit) {
     			if (((Day_visitor_permit) p).isExpired(d)) {
     				removePermit(p.getName());
     			}
     		}
+    	//Daily reset for all permits which have not been removed
     	 p.dailyReset();
     	}
     }
@@ -124,16 +99,9 @@ public class Permit_list {
     	Enumeration e = lnkPermit.elements();
     	while(e.hasMoreElements()) {
     		Permit p = (Permit) e.nextElement();
-    		p.unsuspend();
     		p.clearWarnings();
+    		p.clearEntries();
     		}
     }
     
-//    /**
-//  	 * Print vehicles for each permit, this was used for testing, it is not needed for the final system. It may be worth to keep it.
-//  	 */  
-//    public void printAllVehicles() {
-//    	LinkedList<String> keys = getKeys();
-//    	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
-//    }
 }
