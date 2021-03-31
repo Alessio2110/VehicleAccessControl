@@ -517,7 +517,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				University_member_permit ump = new University_member_permit(name, today);
 				lnkPermit_list.addPermit(ump);
 				if (!tfRegNo.getText().isEmpty()) {
-					newVehicle(ump);
+					newVehicle(ump, tfRegNo.getText());
 				} else {
 					JOptionPane.showMessageDialog(null, "Must have atleast one registration number");
 					tfRegNo.setBorder(border);
@@ -551,7 +551,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lnkPermit_list.addPermit(rvp);
 						lblMsg1.setText("Regular visitor permit added susccesfully");
 						if (!tfRegNo.getText().isEmpty())
-							newVehicle(rvp);
+							newVehicle(rvp, tfRegNo.getText());
 						// The lines below should be modified since you could create a permit without a
 						// vehicle
 						// It should check whether the vehicle already exists in another permit before
@@ -580,7 +580,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 //				lnkPermit_list.createPVP(name);
 				lblMsg1.setText("Permanent visitor permit added susccesfully");
 				if (!tfRegNo.getText().isEmpty())
-					newVehicle(pvp);
+					newVehicle(pvp, tfRegNo.getText());
 			}
 		}
 	}
@@ -611,54 +611,54 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						// JOptionPane.showMessageDialog(null,"Regular visitor permit added
 //										lblMsg1.setText("Regular visitor permit added susccesfully");
 						if (!tfRegNo.getText().isEmpty())
-							newVehicle(dvp);
+							newVehicle(dvp, tfRegNo.getText());
 					} // end else statement
 				} else
 					JOptionPane.showMessageDialog(null, "Entered Date(s) are not a valid day number [1 - 365]");
-
 			}
 
 		}
 	}
 
-	public void newVehicle(Permit p) {
+	public void newVehicle(Permit p, String vehicles) {
 		String name = p.getName();
-		String vehicleNames = tfRegNo.getText();
+		String vehicleNames = vehicles;
 		String str = vehicleNames;
 		str = str.replace(" ", "");
 		String[] arrOfStr = str.split(",");
+		String existingVehicles = "";
 		for (String v : arrOfStr) {
-			// if (!lnkPermit_list.vehicleIsRegistered2(v)) CHANGED!
-			if (!lnkVehicle_list.isRegistered(v)) {
+			if (!lnkVehicle_list.isRegistered(v) && !v.equals("")) {
 				Vehicle_info vehicle = new Vehicle_info(v, p); // Create vehicle
 
-				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted
-																				// vehicles of permit p
+				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted vehicles of permit p
 				lnkVehicle_list.addVehicle(vehicle); // Add vehicle to vehicle_list hashtable
 			}
+			else {
+				existingVehicles += v + ", ";
+			}	
 		} // end for loop
-		System.out.println("Printing all vehicles for each permit:");
-		lnkPermit_list.printAllVehicles();
+		if (existingVehicles.length() > 0)
+			JOptionPane.showMessageDialog(null, "These vehicles could not be added, since they are already registered : " + existingVehicles);
 	}
 
 	public void modifyNewVehicle(Permit p) {
 		String name = p.getName();
 		String vehicleNames = modifyVehicleInfo.getText();
 		String str = vehicleNames;
-		str = str.replace(" ", "");
-		String[] arrOfStr = str.split(",");
+		str = str.replace(" ", ""); //Remove spaces
+		String[] arrOfStr = str.split(","); //a registration number for each comma
+		String existingVehicles = "";
 		for (String v : arrOfStr) {
-			// if (!lnkPermit_list.vehicleIsRegistered2(v)) CHANGED!
 			if (!lnkVehicle_list.isRegistered(v)) {
 				Vehicle_info vehicle = new Vehicle_info(v, p); // Create vehicle
-
-				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted
-				// vehicles of permit p
+				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted vehicles of permit p 
 				lnkVehicle_list.addVehicle(vehicle); // Add vehicle to vehicle_list hashtable
 			}
+			else existingVehicles += v + ", ";
 		} // end for loop
-		System.out.println("Printing all vehicles for each permit:");
-		lnkPermit_list.printAllVehicles();
+		if (existingVehicles.length() > 0)
+			JOptionPane.showMessageDialog(null, "These vehicles could not be added, since they are already registered : " + existingVehicles);
 	}
 
 	// Set university member permit labels and text fields

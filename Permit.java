@@ -85,6 +85,7 @@ abstract public class Permit {
 	private Vehicle_list permittedVehicles;
 
 	// methods to add about/add/delete/modify
+	
 	public Permit(String permitHolder) {
 		this.permitHolder = permitHolder;
 		permittedVehicles = new Vehicle_list();
@@ -248,17 +249,6 @@ abstract public class Permit {
 	}
 
 	/**
-	 * Check whether the permit holder is allowed to pass through
-	 */
-	public boolean isAllowed(Vehicle_info v) {
-		if (suspended)
-			return false;
-		if (vehicleUsedToday != v && enteredToday)
-			return false;
-		return true;
-	}
-
-	/**
 	 * Get the list of vehicles registered for the permit holder
 	 */
 	public Vehicle_list getVList() {
@@ -268,11 +258,8 @@ abstract public class Permit {
 	/**
 	 * Add a vehicle to the vehicle list of this permit holder
 	 */
-	public void addPermittedVehicle(Vehicle_info v) {
-		System.out.println("Permit.addPermittedVehicle ---Adding vehicle: " + v);
-		permittedVehicles.addVehicle(v);
-	}
-
+	public void addPermittedVehicle(Vehicle_info v) { permittedVehicles.addVehicle(v); }
+	
 //	/**
 //	 * Check whether a vehicle in vehicle list is allowed to pass through the barrier
 //	 * 
@@ -298,11 +285,11 @@ abstract public class Permit {
 	}
 
 	/**
-	 * Get the string with the information of a Permit
+	 * Get the string with the information of a Permit, this method is overridden in permit subclasses.
 	 */
 	public String status() {
 		String s = "Permit holder name: " + getName() + "; # of entries since permit issued: " + getEntries()
-				+ "; # of warnings: " + getWarnings() + "; suspended: ";
+				+ "; \n # of warnings: " + getWarnings() + "; suspended: ";
 		if (isSuspended())
 			s += "Yes;\n";
 		else
@@ -312,7 +299,7 @@ abstract public class Permit {
 		else
 			s += "No vehicles used today \n";
 
-		s += "Vehicles registered on this Permit" + permittedVehicles.getAllVehicles();
+		s += "Vehicles registered on this Permit:\t" + permittedVehicles.getAllVehicles();
 		return s;
 	}
 
@@ -343,7 +330,6 @@ abstract public class Permit {
 			return false;
 
 		if (!enteredToday) {
-			setVehicle(v);
 			return true;
 		}
 		if (vehicleUsedToday.getRegNo().equals(v.getRegNo())) {

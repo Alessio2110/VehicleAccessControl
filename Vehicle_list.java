@@ -46,64 +46,75 @@ public class Vehicle_list {
 	 */
 //    private java.util.Hashtable lnkVehicle;
 	private Hashtable<String, Vehicle_info> lnkVehicle;
-
+	  /**
+   	 * Constructor, create a hashtable with Vehicle_info as the object stored, and the registration number, a String, as the key
+   	 */ 
 	public Vehicle_list() {
 		lnkVehicle = new Hashtable<String, Vehicle_info>();
 	}
 
-	public boolean isRegistered(String reg) {
-		if (lnkVehicle.containsKey(reg)) {
-			System.out.println("Vehicle List--" + reg + "  exists");
-			return true;
-		} else {
-			System.out.println("Vehicle " + reg + " not found");
-			return false;
-		}
-	}
-
-	public void updatePermit(Permit p, Vehicle_info v) {
-		p.increaseEntries();
-		p.setVehicle(v);
-	}
+	 /**
+  	 * Check whether there is a vehicle with that given registration number
+  	 * 
+  	 * @param regNo the registration number
+  	 */  
+	public boolean isRegistered(String regNo) { 	return (lnkVehicle.containsKey(regNo)); }
 	
-	public Permit getPermit(String reg) {
-		return lnkVehicle.get(reg).getPermit();
-	}
+	
 
-	public void addVehicle(Vehicle_info v) {
-		lnkVehicle.put(v.getRegNo(), v);
-	}
+	 /**
+  	 * Check whether there is a vehicle with that given registration number
+  	 * 
+  	 * @param regNo the registration number
+  	 */ 
+//	public void updatePermit(Permit p, Vehicle_info v) {
+//		p.increaseEntries();
+//		p.setVehicle(v);
+//	}
+	
+	
+//	public Permit getPermit(String reg) {
+//		return lnkVehicle.get(reg).getPermit();
+//	}
 
+	 /**
+  	 * Add a new vehicle to the vehicle list
+  	 * 
+  	 * @param v the vehicle to add
+  	 */ 
+	public void addVehicle(Vehicle_info v) { lnkVehicle.put(v.getRegNo(), v); }
+
+	 /**
+  	 * Remove a vehicle from the vehicle list
+  	 * Return true if it was removed succesfully, i.e. if the vehicle existed
+  	 * 
+  	 * @param reg the key of the Vehicle_info to remove
+  	 */ 
 	public boolean removeVehicle(String reg) {
 		if (lnkVehicle.containsKey(reg)) {
 			lnkVehicle.remove(reg);
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
-//  Find vehicle info given the registration number
-	public Vehicle_info getVehicle(String regNo) {
-		Vehicle_info v = (Vehicle_info) lnkVehicle.get(regNo);
-		return v;
-	}
+	 /**
+  	 * Get the vehicle given its key
+  	 * 
+  	 * @param reg the key of the Vehicle_info to get
+  	 */ 
+	public Vehicle_info getVehicle(String regNo) { 	return lnkVehicle.get(regNo); }
 
-	public int getSize() {
-		return lnkVehicle.size();
-	}
-
-	public void printVehicles() {
-		Enumeration<String> keys = lnkVehicle.keys();
-		System.out.println("Vehicle List --- There are " + getSize() + " vehicles:");
-		while (keys.hasMoreElements()) {
-			String key = keys.nextElement();
-			System.out.println(
-					"Vehicle List --- Value of key: " + key + " Vehicle regNo is: " + lnkVehicle.get(key).getRegNo());
-		}
-	}
-
+	 /**
+  	 * Return size of vehicle list, i.e. how many vehicles are there
+  	 */ 
+	public int getSize() {	return lnkVehicle.size(); }
 	
+
+
+	/**
+  	 * Get a String of all vehicles' registration numbers
+  	 */ 
 	public String getAllVehicles() {
 		ArrayList<String> allVehicles = new ArrayList<>();
 		Enumeration<String> enms = lnkVehicle.keys();
@@ -116,7 +127,19 @@ public class Vehicle_list {
 		Collections.reverse(allVehicles);
 		return Arrays.toString(allVehicles.toArray()).replace("[", "").replace("]", "");
 		// return allVehicles.toString();
-
 	}
 
+	 /**
+  	 * Method used to debug while creating the system, not needed for the final system. It may be worth to keep it.
+  	 */ 
+	public void printVehicles() {
+		Enumeration<String> keys = lnkVehicle.keys();
+		System.out.println("Vehicle List --- There are " + getSize() + " vehicles:");
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			System.out.println(
+					"Vehicle List --- Value of key: " + key + " Vehicle regNo is: " + lnkVehicle.get(key).getRegNo());
+		}
+	}
+	
 }

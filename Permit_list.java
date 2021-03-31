@@ -1,4 +1,3 @@
-import java.time.LocalDate;
 import java.util.Enumeration;
 import java.util.LinkedList;
 
@@ -51,14 +50,7 @@ public class Permit_list {
     	return lnkPermit.containsKey(permitHolder);
     }
     
-    /**
-  	 * Print vehicles for each permit
-  	 */  
-    public void printAllVehicles() {
-    	LinkedList<String> keys = getKeys();
-//    	keys.forEach((key -> System.out.println(key)));
-    	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
-    }
+   
     
     /**
   	 * Get all the keys of the permits in permit list
@@ -138,4 +130,12 @@ public class Permit_list {
     		p.clearWarnings();
     		}
     }
+    
+//    /**
+//  	 * Print vehicles for each permit, this was used for testing, it is not needed for the final system. It may be worth to keep it.
+//  	 */  
+//    public void printAllVehicles() {
+//    	LinkedList<String> keys = getKeys();
+//    	keys.forEach((key) -> lnkPermit.get(key).getVList().printVehicles());
+//    }
 }

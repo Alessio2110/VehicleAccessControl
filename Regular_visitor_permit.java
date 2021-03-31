@@ -85,12 +85,16 @@ public class Regular_visitor_permit extends Permit {
 		lnkDate1 = d;
 	}
 	
-	public boolean isExpired(Date today) {
-    	if (today.getDay() > lnkDate1.getDay())	return true;
-    	
+	public boolean isExpired(Date today) { return  today.getDay() > lnkDate1.getDay();}
+	
+	public boolean isAllowed(Vehicle_info v, Date d) {
+    	if(!super.isAllowed(v, d))
+    		return false;
+    	if ((d.isEqual(lnkDate) || d.isAfter(lnkDate)) && (d.isEqual(lnkDate1) || d.isBefore(lnkDate1)))
+    		return true;
     	return false;
     }
-
+	
 	public String toString() {
 		String s = "Type: Regular Visitor Permit, name: " + this.getName() + "Permit valid between day #"
 				+ lnkDate + " and day #" + lnkDate1 + ". Hosted by: " + hostName + "; #entries:"
