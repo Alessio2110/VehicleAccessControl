@@ -146,15 +146,17 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		boolean allowed = false;
 		if (e.getSource() == checkRegNo) {
 			regNo = registrationField.getText();
+			if (lnkVehicle_list.isRegistered(regNo)) {
 			Vehicle_info v = lnkVehicle_list.getVehicle(regNo);
-			if (v.getPermit().isAllowed(v)) {
+			if (v.getPermit().isAllowed(v, lnkSystem_status.getDate())) {
 				v.getPermit().setEnteredToday();
 				v.getPermit().setVehicle(v);
+				v.getPermit().increaseEntries();
 				allowed = true;
 				lnkSystem_status.addLog("Date: " + today.getDay() + " RegNo: " + v.getRegNo()+ " Succesful\n");
 			}
 			else lnkSystem_status.addLog("Date: " + today.getDay() + " RegNo: " + regNo + " Unsuccesful\n");
-				
+			}
 //			boolean allowed = lnkPermit_list.getPermit(permitHolder).isAllowed(v,today);
 			
 //			if (lnkVehicle_list.isRegistered(regNo) == true && p_list.vehicleisSuspended(regNo) == true) {
@@ -192,11 +194,4 @@ public class Barrier extends JFrame implements Observer, ActionListener {
 		lnkSystem_status.getToday();
 	}
 
-	public boolean isAllowedThrough() {
-		return true;
-//		return lnkVehicle_list.isAllowed(regNo);
-//		isAllowed in vehicle list doesn't really check much though
-		//You should get the vehicles from vehicle list, take the name of the permit associated with that vehicle
-		//Use that permit holder name to check in Permit list whether that permit is allowed to pass(suspended \/ another vehicle has eneteredtoday \/ dates)
-	}
 }

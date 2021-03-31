@@ -20,20 +20,13 @@ public class Day_visitor_permit extends Permit {
      */
     private Date lnkDate;
     
+    
     public Day_visitor_permit(String permitHolder, Date lnkDate, String hostName) {
     	super( permitHolder);
     	this.lnkDate = lnkDate;
     	this.hostName = hostName;
     }
     
-//    public String toString() {
-//		String s = "Type: Day Visitor Permit, name: " + this.getName() 
-//				+ "Permit valid on day: #" + lnkDate.getDay()
-//				+ "; #entries:" + this.getEntries() + "; warnings: " + this.getWarnings() 
-//				+ ". Suspended? " + this.isSuspended() + ". Vehicle used today: " + this.getVehicleUsedToday().getRegNo() + ". Number of permitted vehicles:"
-//				+ this.getVList().getSize();
-//		return s;
-//	}
     
     public Date getVisitDate() {
     	return lnkDate;
@@ -51,11 +44,13 @@ public class Day_visitor_permit extends Permit {
     	return hostName;
     }
     
-    public boolean isExpired(Date today) {
-    	System.out.println(today.getDay());
-    	System.out.println(lnkDate.getDay());
-    	if (today.getDay() > lnkDate.getDay())	return true;
-    	
+    public boolean isAllowed(Vehicle_info v, Date d) {
+    	if(!super.isAllowed(v, d))
+    		return false;
+    	if (d.isEqual(lnkDate))
+    		return true;
     	return false;
     }
+
+    public boolean isExpired(Date today) { return  today.getDay() > lnkDate.getDay();}
 }

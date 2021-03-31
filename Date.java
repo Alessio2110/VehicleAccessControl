@@ -25,63 +25,49 @@ public class Date {
 	 * For simplicity, dates will be represented just by an integer in the range 1-365. No Leap years!
 	 */
 	private int dayNumber;
+	
 	/**
 	 * Date constructor
 	 */
 	public Date(int dayNumber) {
 		this.dayNumber = dayNumber;
-		
 	}
+	
 	/**
 	 * This operation adds one to the day number, wrapping round to 1 after 365 automatically.
 	 */
 	public void increment() {
-		int yearLength = 365;
+		int yearLength = 3;
 		if (dayNumber < yearLength)
 			dayNumber++;
 		else
 			dayNumber = 1;
 		//		System.out.println("HEY")
 	}
+	
 	/**
 	 * Return the day number
 	 */
-	public int getDay() {
-		return dayNumber;
-	}
+	public int getDay() { return dayNumber;}
+		
 	/**
 	 * This operation returns a boolean value, true if it is the first day, false if it is not the first day of a new academic year
 	 */
-	public boolean isFirstDay() {
-		if (dayNumber == 1)
-			return true;
-		else
-			return false;
-	}
+	public boolean isFirstDay() { return dayNumber == 1; }
+	
 	/**
 	 * This operation returns a boolean value, true the first date comes before the second date, false if the second date comes before the first date
 	 */
-	public boolean isBefore(Date d1) {
-		if (dayNumber < d1.getDay())
-			return true;
-		return false;
-	}
+	public boolean isBefore(Date d1) { return dayNumber < d1.getDay(); }
+	
 	/**
 	 * This operation returns a boolean value, true the first date comes after the second date, false if the second date comes after the first date
 	 */
-	public boolean isAfter(Date d1) {
-		if (dayNumber > d1.getDay())
-			return true;
-		return false;
-	}
+	public boolean isAfter(Date d1) { return dayNumber > d1.getDay();}
+	
 	/**
 	 * This operation returns a boolean value, true if the two dates represent the same day, false if they do not.
 	 */
-	public boolean isEqual(int date1, int date2) {
-		if (date1 == date2)
-			return true;
-		else
-			return false;
-	}
+	public boolean isEqual(Date date1) { return date1.getDay() == dayNumber;}
 
 }
