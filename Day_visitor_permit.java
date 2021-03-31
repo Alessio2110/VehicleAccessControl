@@ -68,7 +68,7 @@ public class Day_visitor_permit extends Permit {
   	 */
   	public String status() {
   		String s = "Permit type: Day Visitor Permit \n" + super.status() 
-  				+  "Hosted by: " + getHostName() +  "\n Date of visit: #" + lnkDate.getDay();
+  				+  " \n Hosted by: " + getHostName() +  ";  Date of visit: #" + lnkDate.getDay();
   		
   		return s;
   	}

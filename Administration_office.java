@@ -215,6 +215,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblToday4.setText("                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday5.setText("                                           Today is:       " + lnkSystem_status.getToday());
 		lblToday6.setText("                                           Today is:       " + lnkSystem_status.getToday());
+		tfIssueDate.setText(" " + lnkSystem_status.getToday());
 	}
 
 	@Override
@@ -283,7 +284,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	/**
-	 * takes input and checks for an existing permit with that name, then displays
+	 * Takes input and checks for an existing permit with that name, then displays
 	 * permit information.
 	 */
 	private void statusSearch() {
@@ -299,8 +300,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	/**
-	 * takes all the information relating to the searched permit and displays to
-	 * admin, admin can then update any information that is available
+	 * Takes all the information relating to the searched permit and displays to
+	 * admin staff; admin staff can then update any information that is available
 	 */
 	private void updatePermit() {
 		String name = modifyPermitName.getText();
@@ -374,7 +375,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	/**
-	 * searches for a permit entered in modify permit tab and checks to see what
+	 * Searches for a permit entered in modify permit tab and checks to see what
 	 * type of permit it is then displays relevant information.
 	 */
 	private void searchPermit() {
@@ -399,7 +400,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	/**
-	 * adds a warning to a  specific permit
+	 * Adds a warning to a  specific permit
 	 */
 	private void addWarning() {
 		if (lnkPermit_list.getPermit(tfAddWarnPermitHolder.getText()) != null) {
@@ -775,11 +776,13 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 		// label and textfield for a University member permit
 		lblIssueDate = new JLabel("Date of issue:");
-		tfIssueDate = new JTextField("", 3);
+		tfIssueDate = new JTextField("" + lnkSystem_status.getToday(), 3);
 		addPermitPanel.add(lblIssueDate);
 		addPermitPanel.add(tfIssueDate);
 		lblIssueDate.setVisible(false);
 		tfIssueDate.setVisible(false);
+//		tfIssueDate.setEnabled(false);
+		tfIssueDate.setEditable(false);
 
 		// Regular Visitor Permit
 
@@ -952,7 +955,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	public void cleanTFP1() {
 		tfPermitHolder.setText("");
 		tfRegNo.setText("");
-		tfIssueDate.setText("");
+//		tfIssueDate.setText("");
 		tfHostName.setText("");
 		tfStartDate.setText("");
 		tfEndDate.setText("");

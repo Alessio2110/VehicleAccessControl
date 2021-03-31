@@ -75,11 +75,13 @@ public class Timer extends JFrame
         Container window = getContentPane();
         window.setLayout(new FlowLayout());     // The default is that JFrame uses BorderLayout
         
+        //Create button
         addDay = new JButton("Add day");
         addDay.setLocation(0, 0);
         window.add(addDay);
         addDay.addActionListener(this);
         
+        //Create day label
         display = new JLabel("");
         display.setText("Days passed since 01/09:  " + lnkSystem_status.getToday());
         add(display);
@@ -90,16 +92,19 @@ public class Timer extends JFrame
     }
     
     public void actionPerformed(ActionEvent e) {
+    	//If a day has passed, i.e. the button "Add day" is pressed
     	if (e.getSource() == addDay) {
+    		//Add one day
     		lnkSystem_status.nextDay();
     		today = lnkSystem_status.getDate();
+    		//Daily update for all permits
     		lnkPermit_list.dailyUpdateAll(today);
     		//On the first day of the year update all permits
-    		if (lnkSystem_status.getDate().getDay() == 1) lnkPermit_list.annualUpdateAll();
+    		if (today.getDay() == 1) lnkPermit_list.annualUpdateAll();
+    		
     		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
 
-    		lnkPermit_list.annualUpdateAll();
-    		System.out.println("Timer--- Today is: Day #" + lnkSystem_status.getToday());
+//    		lnkPermit_list.annualUpdateAll();
     	}
     }
 }
