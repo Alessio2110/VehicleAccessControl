@@ -37,12 +37,11 @@ public class Date {
 	 * This operation adds one to the day number, wrapping round to 1 after 365 automatically.
 	 */
 	public void increment() {
-		int yearLength = 3;
+		int yearLength = 5;
 		if (dayNumber < yearLength)
 			dayNumber++;
 		else
 			dayNumber = 1;
-		//		System.out.println("HEY")
 	}
 	
 	/**

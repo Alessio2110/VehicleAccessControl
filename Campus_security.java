@@ -161,7 +161,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 			if (lnkVehicle_list.isRegistered(reg)) {
 //				lnkVehicle_list.getPermit(reg).addWarning();
 				lnkVehicle_list.getVehicle(reg).getPermit().addWarning();
-				JOptionPane.showMessageDialog(null, "Warning added to " + lnkVehicle_list.getVehicle(reg).getPermit().getName());
+				JOptionPane.showMessageDialog(null, "Warning added to " + lnkVehicle_list.getVehicle(reg).getPermit().getName() + ":   #Warnings: " + lnkVehicle_list.getVehicle(reg).getPermit().getWarnings());
 				if (lnkVehicle_list.getVehicle(reg).getPermit().getWarnings() >= 3) {
 					JOptionPane.showMessageDialog(null, lnkVehicle_list.getVehicle(reg).getPermit().getName() + " now has three warnings and has been suspended");
 				}
@@ -174,6 +174,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		}
 		if (e.getSource() == checkLog) {
 			//shows all logs
+			logArea.setText("");
 			logArea.append(lnkSystem_status.toString());
 		}
 	}

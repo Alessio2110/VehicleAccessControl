@@ -384,9 +384,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			} else if (lnkPermit_list.getPermit(name) instanceof Day_visitor_permit) {
 				setModifyInfoDVP(name);
 			} else if (lnkPermit_list.getPermit(name) instanceof University_member_permit) {
-				setModifyInfoUVP(name);
+				setModifyInfoUMP(name);
 			}
-
 			else {
 				JOptionPane.showMessageDialog(null, "No permit with that Name");
 				modifyPermitName.setBorder(border);
@@ -650,25 +649,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		if (existingVehicles.length() > 0)
 			JOptionPane.showMessageDialog(null, "These vehicles could not be added, since they are already registered : " + existingVehicles);
 	}
-
-//	public void modifyNewVehicle(Permit p) {
-//		String name = p.getName();
-//		String vehicleNames = modifyVehicleInfo.getText();
-//		String str = vehicleNames;
-//		str = str.replace(" ", ""); //Remove spaces
-//		String[] arrOfStr = str.split(","); //a registration number for each comma
-//		String existingVehicles = "";
-//		for (String v : arrOfStr) {
-//			if (!lnkVehicle_list.isRegistered(v)) {
-//				Vehicle_info vehicle = new Vehicle_info(v, p); // Create vehicle
-//				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted vehicles of permit p 
-//				lnkVehicle_list.addVehicle(vehicle); // Add vehicle to vehicle_list hashtable
-//			}
-//			else existingVehicles += v + ", ";
-//		} // end for loop
-//		if (existingVehicles.length() > 0)
-//			JOptionPane.showMessageDialog(null, "These vehicles could not be added, since they are already registered : " + existingVehicles);
-//	}
 
 	// Set university member permit labels and text fields
 	public void setUMP() {
@@ -1011,9 +991,11 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifyVehicleInfo = new JTextField();
 		lblAllVehicles = new JLabel();
 		lblChangeStartDate = new JLabel(" Update Start Date: ");
+		lblChangeStartDate.setVisible(false);
 		lblChangeEndDate = new JLabel(" Update End Date: ");
 		lblChangeEndDate.setVisible(false);
 		modifyStartDate = new JTextField();
+		modifyStartDate.setVisible(false);
 		modifyEndDate = new JTextField();
 		modifyEndDate.setVisible(false);
 		updatePermit = new JButton("Update");
@@ -1068,6 +1050,8 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	private void setModifyInfoPVP(String name) {
+		lblChangeStartDate.setVisible(false);
+		modifyStartDate.setVisible(false);
 		lblChangeEndDate.setVisible(false);
 		modifyEndDate.setVisible(false);
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
@@ -1077,25 +1061,28 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	private void setModifyInfoDVP(String name) {
+		lblChangeStartDate.setVisible(true);
+		modifyStartDate.setVisible(true);
 		lblChangeEndDate.setVisible(false);
 		modifyEndDate.setVisible(false);
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
 		modifyStartDate.setText(
-				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
+				String.valueOf(((Day_visitor_permit) lnkPermit_list.getPermit(name)).getVisitDate().getDay()));
 
 	}
 
-	private void setModifyInfoUVP(String name) {
+	private void setModifyInfoUMP(String name) {
+		lblChangeStartDate.setVisible(false);
+		modifyStartDate.setVisible(false);
 		lblChangeEndDate.setVisible(false);
 		modifyEndDate.setVisible(false);
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
 		modifyStartDate.setText(
-				String.valueOf(((Regular_visitor_permit) lnkPermit_list.getPermit(name)).getStartDate().getDay()));
-
+				String.valueOf(((University_member_permit) lnkPermit_list.getPermit(name)).getIssueDate().getDay()));
 	}
 
 	private void clearModifyInfo() {
