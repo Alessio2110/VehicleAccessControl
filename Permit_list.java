@@ -79,9 +79,7 @@ public class Permit_list {
     /**
    	 * Get number of permits in permit list
    	 */  
-    public int getSize() {
-    	return lnkPermit.size();
-    }
+    public int getSize() { 	return lnkPermit.size(); }
     
     /**
   	 * add a Permit to the permit list, this could be any of the four subclasses of Permit

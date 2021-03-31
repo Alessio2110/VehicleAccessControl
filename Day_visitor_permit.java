@@ -51,6 +51,15 @@ public class Day_visitor_permit extends Permit {
     		return true;
     	return false;
     }
-
+    /**
+  	 * Get the string with the information of a Permit
+  	 */
+  	public String status() {
+  		String s = "Permit type: Day Visitor Permit \n" + super.status() 
+  				+  "Date of visit: #" + lnkDate.getDay();
+  		
+  		return s;
+  	}
+  	
     public boolean isExpired(Date today) { return  today.getDay() > lnkDate.getDay();}
 }

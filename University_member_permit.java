@@ -21,16 +21,22 @@ public class University_member_permit extends Permit {
     	this.lnkDate = lnkDate;
     }
     
-    public String toString() {
-		String s = "Type: University Member Permit, name: " + this.getName() 
-				+ "Permit issued on day: #" + lnkDate.getDay()
-				+ "; #entries:" + this.getEntries() + "; warnings: " + this.getWarnings() 
-				+ ". Suspended? " + this.isSuspended() + ". Vehicle used today: " + this.getVehicleUsedToday().getRegNo() + ". Number of permitted vehicles:"
-				+ this.getVList().getSize();
+    
+    /**
+	 * Get the string with the information of a Permit
+	 */
+	public String status() {
+		String s = "Permit type: University Member Permit \n" + super.status() 
+				+  "Date of issue: #" + lnkDate.getDay();
+		
 		return s;
 	}
     
     public void changeDate(Date d) {
     	lnkDate = d;
+    }
+    
+    public Date getIssueDate() {
+    	return lnkDate;
     }
 }
