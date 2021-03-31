@@ -73,6 +73,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		this.lnkSystem_status = lnkSystem_status;
 		this.lnkVehicle_list = lnkVehicle_list;
 
+		// setting up the layout and adding all the required fields
 		lnkSystem_status.addObserver(this);
 		setTitle("CAMPUS SECURITY");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -96,7 +97,6 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		labelRegNo = new JLabel("");
 		labelRegNo.setText("Registration number: ");
 		add(labelRegNo);
-//		labelRegNo.setFont(labelRegNo.getFont().deriveFont(20f));
 
 		fieldRegNo = new JTextField("", 10);
 		add(fieldRegNo);
@@ -115,15 +115,17 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		logArea = new JTextArea("Date: " + date + "\n\n", 20, 40);
 		scroll = new JScrollPane(logArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//		logArea.setEditable(false);
 		window.add(scroll);
-//		window.add(logArea);
 
 		setSize(600, 500);
 		setLocation(0, 250);
 		setVisible(true);
 	}
 
+	/**
+	 * updates any listeners (being the barrier) allowing the campus security to
+	 * activate and deactivate the barriers.
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		if (lnkSystem_status.getSystemActive()) {
@@ -142,10 +144,13 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		String s = "";
 		int numberLogs = lnkSystem_status.logslength();
 		for (int i = 0; i < numberLogs; i++) {
-			
+
 		}
 	}
 
+	/**
+	 * handles all the actions performed by the user
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonActive) {
 			lnkSystem_status.setActive(true);
@@ -155,15 +160,20 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 			lnkSystem_status.setActive(false);
 
 		}
+		// takes a registration checks to see if it has been registered to a permit and
+		// adds a warning to the permit linked to that registration.
+		// if the warnings get to 3 that permit is then suspended
 		if (e.getSource() == buttonIssueWarning) {
 			String reg = fieldRegNo.getText();
 			// Issue warning, don't know how yet
 			if (lnkVehicle_list.isRegistered(reg)) {
-//				lnkVehicle_list.getPermit(reg).addWarning();
 				lnkVehicle_list.getVehicle(reg).getPermit().addWarning();
-				JOptionPane.showMessageDialog(null, "Warning added to " + lnkVehicle_list.getVehicle(reg).getPermit().getName() + ":   #Warnings: " + lnkVehicle_list.getVehicle(reg).getPermit().getWarnings());
+				JOptionPane.showMessageDialog(null,
+						"Warning added to " + lnkVehicle_list.getVehicle(reg).getPermit().getName() + ":   #Warnings: "
+								+ lnkVehicle_list.getVehicle(reg).getPermit().getWarnings());
 				if (lnkVehicle_list.getVehicle(reg).getPermit().getWarnings() >= 3) {
-					JOptionPane.showMessageDialog(null, lnkVehicle_list.getVehicle(reg).getPermit().getName() + " now has three warnings and has been suspended");
+					JOptionPane.showMessageDialog(null, lnkVehicle_list.getVehicle(reg).getPermit().getName()
+							+ " now has three warnings and has been suspended");
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Vehicle is not registered");
@@ -172,8 +182,9 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 			fieldRegNo.setText("");
 			fieldRegNo.requestFocusInWindow();
 		}
+		// Displays all logs that are saved in system status.
 		if (e.getSource() == checkLog) {
-			//shows all logs
+			// shows all logs
 			logArea.setText("");
 			logArea.append(lnkSystem_status.toString());
 		}
