@@ -34,25 +34,32 @@ public class Vehicle_info {
 	 * @directed
 	 */
 	private Permit lnkPermit;
-
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param regNo the permit holder name
+	 * @param lnkPermit the permit associated with the vehicle
+	 */
 	public Vehicle_info(String regNo, Permit lnkPermit) {
 		this.regNo = regNo;
 		this.lnkPermit = lnkPermit;
 	}
 
-	public void setPermit(Permit p) {
-		lnkPermit = p;
-	}
-
-	public Permit getPermit() {
-		return lnkPermit;
-	}
-
-	public Permit getPermit(Vehicle_info v) {
-		return v.getPermit();
-	}
-
-	public String getRegNo() {
-		return regNo;
-	}
+	/**
+	 * @param p the new permit for this vehicle
+	 */
+	public void setPermit(Permit p) { lnkPermit = p; }
+	
+	/**
+	 * @return the permit associated with the vehicle
+	 */
+	public Permit getPermit() { return lnkPermit; }
+	
+	/**
+	 * @return the registration number 
+	 */
+	public String getRegNo() { return regNo; }
+	
+	
 }

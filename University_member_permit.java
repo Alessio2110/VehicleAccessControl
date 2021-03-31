@@ -16,27 +16,35 @@ public class University_member_permit extends Permit {
      */
     private Date lnkDate;
     
+    /**
+     * Constructor
+     * 
+     * @param permitHolder the permit holder name
+     * @param lnkDate 	   the issue date
+     */
     public University_member_permit(String permitHolder, Date lnkDate) {
     	super( permitHolder);
     	this.lnkDate = lnkDate;
     }
-    
     
     /**
 	 * Get the string with the information of a Permit
 	 */
 	public String status() {
 		String s = "Permit type: University Member Permit \n" + super.status() 
-				+  "Date of issue: #" + lnkDate.getDay();
-		
+				+  " \n Date of issue: #" + lnkDate.getDay();
 		return s;
 	}
+   	
+    /**
+     * @param d the new issue date
+     */
+    public void changeDate(Date lnkDate) { this.lnkDate = lnkDate; }
     
-    public void changeDate(Date d) {
-    	lnkDate = d;
-    }
+    /**
+     * @return the issue date
+     */
+    public Date getIssueDate() { return lnkDate; }
     
-    public Date getIssueDate() {
-    	return lnkDate;
-    }
+   
 }

@@ -86,6 +86,11 @@ abstract public class Permit {
 
 	// methods to add about/add/delete/modify
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param permitHolder the permit holder name
+	 */
 	public Permit(String permitHolder) {
 		this.permitHolder = permitHolder;
 		permittedVehicles = new Vehicle_list();
