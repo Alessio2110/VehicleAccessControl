@@ -39,21 +39,33 @@ public class System_status extends Observable {
     private Date today;
     
     
+    /**
+     * Constructor
+     */
     public System_status() { //Constructor 
     	today = new Date(1);
     	log = new String[0];
     }
     
+    /**
+     * Notify observers after a change
+     * 
+     * @param isActive whether the system is active
+     */
     public void setActive(boolean isActive) {
     	systemActive = isActive;
     	setChanged();
         notifyObservers();
     }
     
+    /**
+     * @return whether the system is active
+     */
     public boolean getSystemActive() { 	return this.systemActive; }
-    
-    
-    
+     
+    /**
+     * @param regNo the String with the date and the registration number
+     */
     public void addLog(String regNo) {
     	System.out.println(log.length);
     	String[] newlog = Arrays.copyOf(log, log.length + 1);
@@ -66,9 +78,14 @@ public class System_status extends Observable {
     	
     }
     
-    public int logslength() {
-    	return log.length;
-    }
+    /**
+     * @return how many logs there are
+     */
+    public int logslength() { return log.length; }
+    
+    /**
+     *  Show all logs
+     */
     public void showLogs() {
     	for (int i = 0; i < log.length - 1; i ++)
     		System.out.println(log[i]);
@@ -76,25 +93,36 @@ public class System_status extends Observable {
         notifyObservers();
     }
     
-    public int getToday() {
-    	return today.getDay();
-    }
-    
-    public Date getDate() {
-    	return today;
-    }
-    
+    /**
+     * @return int: the number of today's date
+     */
+    public int getToday() { return today.getDay();}
+    	
+    /**
+     * @return Date: today's date
+     */
+    public Date getDate() { return today;}
+    	
+    /**
+     * Increase date by one, notify oberservers
+     */
     public void nextDay() {
     	today.increment();
     	setChanged();
         notifyObservers();
     }
     
+    /**
+     * Remove parentheses and commas, useful for campus security logs formatting
+     */
     @Override
 	public String toString() {
 		return  Arrays.toString(log).replace("[", "").replace("]", "").replace(",", "");
 	}
 
+	/**
+	 * @return the array of logs
+	 */
 	public String[] getLogs() {
     	return log;
     }

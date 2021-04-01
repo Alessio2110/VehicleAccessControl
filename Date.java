@@ -37,7 +37,7 @@ public class Date {
 	 * This operation adds one to the day number, wrapping round to 1 after 365 automatically.
 	 */
 	public void increment() {
-		int yearLength = 5;
+		int yearLength = 12;
 		if (dayNumber < yearLength)
 			dayNumber++;
 		else

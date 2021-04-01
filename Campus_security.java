@@ -112,7 +112,7 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 
 		date = lnkSystem_status.getToday();
 
-		logArea = new JTextArea("Date: " + date + "\n\n", 20, 40);
+		logArea = new JTextArea("", 20, 40);
 		scroll = new JScrollPane(logArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		window.add(scroll);
@@ -139,7 +139,6 @@ public class Campus_security extends JFrame implements Observer, ActionListener 
 		}
 		if (date != lnkSystem_status.getToday()) {
 			date = lnkSystem_status.getToday();
-			logArea.append("Date: " + date + "\n");
 		}
 		String s = "";
 		int numberLogs = lnkSystem_status.logslength();

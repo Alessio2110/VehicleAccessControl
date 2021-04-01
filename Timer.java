@@ -91,20 +91,23 @@ public class Timer extends JFrame
         setVisible(true);    
     }
     
+    /**
+     * When a button is pressed, make changes
+     */
     public void actionPerformed(ActionEvent e) {
     	//If a day has passed, i.e. the button "Add day" is pressed
     	if (e.getSource() == addDay) {
-    		//Add one day
-    		lnkSystem_status.nextDay();
-    		today = lnkSystem_status.getDate();
-    		//Daily update for all permits
-    		lnkPermit_list.dailyUpdateAll(today);
-    		//On the first day of the year update all permits
+    		
+    		
+    		lnkSystem_status.nextDay(); //Add one day
+    		today = lnkSystem_status.getDate(); //Store today's date
+    		
+    		lnkPermit_list.dailyUpdateAll(today); //Daily update for all permits
+    		
+    		//On the first day of the year, annual update for all permits
     		if (today.getDay() == 1) lnkPermit_list.annualUpdateAll();
     		
     		display.setText("Days passed since 01/09: " + lnkSystem_status.getToday());
-
-//    		lnkPermit_list.annualUpdateAll();
     	}
     }
 }

@@ -341,9 +341,11 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				if (!modifyEnteredToday.getText().isEmpty()) {
 					if (modifyEnteredToday.getText().toLowerCase().equals("true")) {
 						lnkPermit_list.getPermit(name).setEnteredToday();
-					} else if (modifyEnteredToday.getText().toLowerCase().equals("false")) {
+					}
+					else if (modifyEnteredToday.getText().toLowerCase().equals("false")) {
 						lnkPermit_list.getPermit(name).setNotEnteredToday();
-					} else {
+					}
+					else {
 						JOptionPane.showMessageDialog(null, "Entered today must be True or False");
 					}
 				}
@@ -351,21 +353,24 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				if (!modifyStartDate.getText().isEmpty()) {
 					if (lnkPermit_list.getPermit(name) instanceof Regular_visitor_permit) {
 						((Regular_visitor_permit) lnkPermit_list.getPermit(name))
-								.changeStartDate(new Date(Integer.parseInt(modifyStartDate.getText())));
-					} else if (lnkPermit_list.getPermit(name) instanceof Day_visitor_permit) {
+						.changeStartDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+					}
+					else if (lnkPermit_list.getPermit(name) instanceof Day_visitor_permit) {
 						((Day_visitor_permit) lnkPermit_list.getPermit(name))
-								.changeDate(new Date(Integer.parseInt(modifyStartDate.getText())));
-					} else if (lnkPermit_list.getPermit(name) instanceof University_member_permit) {
+						.changeDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+					}
+					else if (lnkPermit_list.getPermit(name) instanceof University_member_permit) {
 						((University_member_permit) lnkPermit_list.getPermit(name))
-								.changeDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+						.changeDate(new Date(Integer.parseInt(modifyStartDate.getText())));
 					}
 				}
 				if (!modifyEndDate.getText().isEmpty()) {
 					((Regular_visitor_permit) lnkPermit_list.getPermit(name))
-							.changeEndDate(new Date(Integer.parseInt(modifyStartDate.getText())));
+					.changeEndDate(new Date(Integer.parseInt(modifyStartDate.getText())));
 				}
 
-			} else {
+			}
+			else {
 				JOptionPane.showMessageDialog(null, modifyPermitName.getText() + " is not a permit holder");
 			}
 		}
@@ -400,7 +405,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	/**
-	 * Adds a warning to a  specific permit
+	 * Adds a warning to a specific permit
 	 */
 	private void addWarning() {
 		if (lnkPermit_list.getPermit(tfAddWarnPermitHolder.getText()) != null) {
@@ -433,7 +438,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	}
 
 	/**
-	 * deletes a specific amount of waring from the permit
+	 * deletes a specific amount of warnings from the permit
 	 */
 	private void deleteWarning() {
 		if (lnkPermit_list.getPermit(tfDelWarnPermitHolder.getText()) != null) {
@@ -506,7 +511,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			setUMP();
 			break;
 		}
-
 	}
 	
 	
@@ -529,7 +533,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			cleanTFP1();
 			break;
 		}
-
 	}
 
 	/**
@@ -544,15 +547,11 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 				JOptionPane.showMessageDialog(null, "Holder name already exsist");
 			} else {
 				Date today = new Date(lnkSystem_status.getToday());
-//				lnkPermit_list.createUMP(name, today);
-				University_member_permit ump = new University_member_permit(name, today);
-				lnkPermit_list.addPermit(ump);
-				if (!tfRegNo.getText().isEmpty()) {
-					newVehicle(ump, tfRegNo.getText());
-				} else {
-					JOptionPane.showMessageDialog(null, "Must have atleast one registration number");
-
-				}
+				University_member_permit ump = new University_member_permit(name, today); //Create permit
+				lnkPermit_list.addPermit(ump); //Add permit to permit list
+				if (!tfRegNo.getText().isEmpty()) { 
+					newVehicle(ump, tfRegNo.getText()); //Add vehicles to permit
+				} 
 			}
 
 		}
@@ -582,16 +581,10 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 						lblMsg1.setText("Regular visitor permit added susccesfully");
 						if (!tfRegNo.getText().isEmpty())
 							newVehicle(rvp, tfRegNo.getText());
-						// The lines below should be modified since you could create a permit without a
-						// vehicle
-						// It should check whether the vehicle already exists in another permit before
-						// being added
 					}
 				} else
 					JOptionPane.showMessageDialog(null, "Entered Date(s) are not a valid day number [1 - 365]");
-
 			}
-
 		}
 	}
 
@@ -606,12 +599,11 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 			if (lnkPermit_list.checkNameExists(name)) {
 				JOptionPane.showMessageDialog(null, "Holder name already exsist");
 			} else {
-				Permanent_visitor_permit pvp = new Permanent_visitor_permit(name);
+				Permanent_visitor_permit pvp = new Permanent_visitor_permit(name); //Create permit
 				lnkPermit_list.addPermit(pvp); // Add permit to list of permits
-//				lnkPermit_list.createPVP(name);
 				lblMsg1.setText("Permanent visitor permit added susccesfully");
-				if (!tfRegNo.getText().isEmpty())
-					newVehicle(pvp, tfRegNo.getText());
+				if (!tfRegNo.getText().isEmpty()) 
+					newVehicle(pvp, tfRegNo.getText()); //Add vehicles to permit
 			}
 		}
 	}
@@ -622,55 +614,59 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 	public void newDVP() {
 		if (tfPermitHolder.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Permit holder name must not be empty");
-		} else { // Permit holder name is not empty
-
+		} 
+		else { // Permit holder name is not empty
+			
 			String name = tfPermitHolder.getText();
 			if (lnkPermit_list.checkNameExists(name)) {
 				JOptionPane.showMessageDialog(null, "Permit holder name already exists");
-			} else { // Permit holder name is not found in permit list
+			} 
+			else { // Permit holder name is not found in permit list
 
 				if (isInt(tfStartDate.getText())) { // If date is an integer
 					Date startDate = new Date(Integer.parseInt(tfStartDate.getText()));
 
 					if (tfHostName.getText().isEmpty()) {
 						JOptionPane.showMessageDialog(null, "Host name cannot be empty");
-					} else {
+					} 
+					else {
 						String hostName = tfHostName.getText();
-//						lnkPermit_list.createDVP(name, startDate, name);
-						Day_visitor_permit dvp = new Day_visitor_permit(name, startDate, hostName);
-						lnkPermit_list.addPermit(dvp);
-						// JOptionPane.showMessageDialog(null,"Regular visitor permit added
-//										lblMsg1.setText("Regular visitor permit added susccesfully");
+						Day_visitor_permit dvp = new Day_visitor_permit(name, startDate, hostName); //Create permit
+						lnkPermit_list.addPermit(dvp); //Add permit to permit list
 						if (!tfRegNo.getText().isEmpty())
-							newVehicle(dvp, tfRegNo.getText());
+							newVehicle(dvp, tfRegNo.getText()); //Create vehicle
 					} // end else statement
-				} else
+				} 
+				else
 					JOptionPane.showMessageDialog(null, "Entered Date(s) are not a valid day number [1 - 365]");
 			}
 
 		}
 	}
 
+
 	/**
-	 * takes and a permit and the vehicles to be added to the permit. splits the
-	 * vehicles up and the adds them to the permit.
+	 * Takes a permit and the vehicles to be added to the permit. splits the
+	 * vehicles up and them adds them to the permit.
+	 * 
+	 * @param p the permit to add the vehicles to
+	 * @param vehicles a string with all vehicles
 	 */
 	public void newVehicle(Permit p, String vehicles) {
 		String name = p.getName();
 		String vehicleNames = vehicles;
 		String str = vehicleNames;
-		str = str.replace(" ", "");
-		String[] arrOfStr = str.split(",");
+		str = str.replace(" ", ""); //Remove spaces
+		String[] arrOfStr = str.split(","); //Split using commas
 		String existingVehicles = "";
+		
 		for (String v : arrOfStr) {
-			if (!lnkVehicle_list.isRegistered(v) && !v.equals("")) {
+			if (!lnkVehicle_list.isRegistered(v) && !v.equals("")) { //If the vehicle is not registered, and the registration number is not empty
 				Vehicle_info vehicle = new Vehicle_info(v, p); // Create vehicle
-
-				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted
-																				// vehicles of permit p
+				lnkPermit_list.getPermit(name).addPermittedVehicle(vehicle); // Add vehicle to list of permitted vehicles of permit p									
 				lnkVehicle_list.addVehicle(vehicle); // Add vehicle to vehicle_list hashtable
 			} else {
-				existingVehicles += v + ", ";
+				existingVehicles += v + ", "; //For pop-up message for the user
 			}
 		} // end for loop
 		if (existingVehicles.length() > 0)
@@ -683,7 +679,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		// Set UMP visible
 		lblIssueDate.setVisible(true);
 		tfIssueDate.setVisible(true);
-
 		// Hide UMP
 		lblHostName.setVisible(false);
 		tfHostName.setVisible(false);
@@ -702,7 +697,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		tfStartDate.setVisible(true);
 		lblEndDate.setVisible(true);
 		tfEndDate.setVisible(true);
-
 		// Hide UMP
 		lblIssueDate.setVisible(false);
 		tfIssueDate.setVisible(false);
@@ -710,7 +704,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	// Set Permanent visitor permit labels and text fields
 	public void setPVP() {
-
 		// Hide UMP
 		lblIssueDate.setVisible(false);
 		tfIssueDate.setVisible(false);
@@ -725,7 +718,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 
 	// Set Day visitor permit labels and text fields
 	public void setDVP() {
-
 		lblHostName.setVisible(true);
 		tfHostName.setVisible(true);
 		lblStartDate.setVisible(true);
@@ -946,16 +938,17 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		lblMsgCancel = new JLabel("");
 		cancelPermitPanel.add(lblMsgCancel);
 
+		//empty labels just to make spacing look better
 		for (int i = 0; i < 10; i++)
 			cancelPermitPanel.add(new JLabel(""));
-
 	}
 
-	// Clean text fields panel 1
+	/**
+	 * Clean text fields panel 1
+	 */
 	public void cleanTFP1() {
 		tfPermitHolder.setText("");
 		tfRegNo.setText("");
-//		tfIssueDate.setText("");
 		tfHostName.setText("");
 		tfStartDate.setText("");
 		tfEndDate.setText("");
@@ -987,6 +980,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		statusMainPanel.add(statusPanelTop);
 		statusMainPanel.add(statusPanelBot);
 
+		//Creating components
 		JLabel day = new JLabel("Day: ");
 		lblToday5 = new JLabel(" " + lnkSystem_status.getToday());
 		lblToday5.setFont(lblToday5.getFont().deriveFont(15f));
@@ -996,6 +990,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		statusSearch.addActionListener(this);
 		statusInfo = new JTextArea();
 
+		//Add components to panel
 		statusPanelTop.add(day);
 		statusPanelTop.add(lblToday5);
 		statusPanelTop.add(lblPermitHolder);
@@ -1057,6 +1052,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		removeVehicle = new JButton("remove");
 		removeVehicle.addActionListener(this);
 
+		//Add all labels and text fields to the panel
 		modifyPanel.add(modifyTopPanel);
 		modifyPanel.add(modifyBotPanel);
 		modifyTopPanel.add(day);
@@ -1113,7 +1109,6 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-
 	}
 
 	/**
@@ -1127,9 +1122,7 @@ public class Administration_office extends JFrame implements Observer, ActionLis
 		modifynoOfEntries.setText("" + lnkPermit_list.getPermit(name).getEntries());
 		modifyWarnings.setText("" + lnkPermit_list.getPermit(name).getWarnings());
 		modifyEnteredToday.setText("" + lnkPermit_list.getPermit(name).getEnteredToday());
-		modifyStartDate
-				.setText(String.valueOf(((Day_visitor_permit) lnkPermit_list.getPermit(name)).getVisitDate().getDay()));
-
+		modifyStartDate.setText(String.valueOf(((Day_visitor_permit) lnkPermit_list.getPermit(name)).getVisitDate().getDay()));
 	}
 
 	/**
