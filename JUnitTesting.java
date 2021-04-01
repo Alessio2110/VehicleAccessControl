@@ -16,7 +16,7 @@ public class JUnitTesting  extends Permit_list {
      *    If the name is not found, an appropriate message is shown.
      */
     @Test
-    public void testCreateAndCheckPermit() {
+    public void testcheckNameExists() {
         Permanent_visitor_permit testPvp = new Permanent_visitor_permit("John");
         permit_list.addPermit(testPvp);
         assertTrue("Permit with name John does not exist in current list", permit_list.checkNameExists("John"));
@@ -40,11 +40,11 @@ public class JUnitTesting  extends Permit_list {
 
 
     /**
-     *  This test checks how many permits are stored in the.
-     *  In this case, the test does not pass, because it is expected to have 4 Permit holders in the list and there are only 3. 
+     *  This test checks how many permits are stored in the permit list.
+     *  It is needed to check that when we try to add, or remove, a permit the amount of permits in the permit list is actually altered as we would expect. 
      */
     @Test
-    public void testListSize() {
+    public void testGetSize() {
 
         assertEquals(0, permit_list.getSize());
         Regular_visitor_permit testRvp1 = new Regular_visitor_permit("Thomas", new Date(1), new Date(8), "Chris");
@@ -192,8 +192,9 @@ public class JUnitTesting  extends Permit_list {
      */
     @Test
     public void testDailyUpdateAll() {
-    	Date today = new Date(3);
+    	Date today = new Date(3); //Today's date
     	
+    	//Create a permit and a vehicle for each permit, than add it to the permit list
         Permanent_visitor_permit testPvp = new Permanent_visitor_permit("Jane");
         Vehicle_info testVehicle = new Vehicle_info("1", testPvp);
         permit_list.addPermit(testPvp);
@@ -201,7 +202,7 @@ public class JUnitTesting  extends Permit_list {
         permit_list.getPermit("Jane").increaseEntries();
         permit_list.getPermit("Jane").setEnteredToday();
         
-        Day_visitor_permit testDvp = new Day_visitor_permit("Hannah", new Date(3), "Chris");
+        Day_visitor_permit testDvp = new Day_visitor_permit("Hannah", new Date(3), "Chris"); // Visit date is day #3!
         Vehicle_info testVehicle2 = new Vehicle_info("2", testDvp);
         permit_list.addPermit(testDvp);
         permit_list.getPermit("Hannah").setVehicle(testVehicle2);
@@ -215,7 +216,7 @@ public class JUnitTesting  extends Permit_list {
         permit_list.getPermit("Anna").increaseEntries();
         permit_list.getPermit("Anna").setEnteredToday();
         
-        Regular_visitor_permit testRvp = new Regular_visitor_permit("Alexa", new Date(1), new Date(3), "Chris");
+        Regular_visitor_permit testRvp = new Regular_visitor_permit("Alexa", new Date(1), new Date(3), "Chris"); //End date is day #3!
         Vehicle_info testVehicle4 = new Vehicle_info("2", testDvp);
         permit_list.addPermit(testRvp);
         permit_list.getPermit("Alexa").setVehicle(testVehicle4);
@@ -228,17 +229,23 @@ public class JUnitTesting  extends Permit_list {
         assertNotNull("DailyUpdateAll() not updated successfully, vehicle used today is not reset", testRvp.getVehicleUsedToday());
         assertNotNull("DailyUpdateAll() not updated successfully, vehicle used today is not reset", testUmp.getVehicleUsedToday());
 
+        //There are 4 permits in permit list
+        assertEquals("Permit was not added succesfully",4, permit_list.getSize());
+        
         //Before the day is incremented above
         today.increment();
         permit_list.dailyUpdateAll(today); //Today is 4, so RVP and DVP are expired and cancelled from permit list.
         //After the day is incremented below
 
-        //Two permits are no longer there
+        //Two permits are no longer there, two remaining
         assertFalse("Permit holder with name Alexa on this date still exists", permit_list.checkNameExists("Alexa"));
         assertFalse("Permit holder with name Hannah on this date still exists", permit_list.checkNameExists("Hannah"));
         assertTrue("Permit holder with name Jane was wrongly removed", permit_list.checkNameExists("Jane"));
         assertTrue("Permit holder with name Anna was wrongly removed", permit_list.checkNameExists("Anna"));
 
+        assertEquals("Permits were not removed succesfully", 2, permit_list.getSize());
+        assertNotEquals("Permits were not removed succesfully", 4, permit_list.getSize());
+        
         //Remaining permits have not used a vehicle today
         assertNull("DailyUpdateAll() not updated successfully, vehicle used today is not reset", testPvp.getVehicleUsedToday());
         assertNull("DailyUpdateAll() not updated successfully, vehicle used today is not reset", testUmp.getVehicleUsedToday());
@@ -246,17 +253,13 @@ public class JUnitTesting  extends Permit_list {
         //No permit holder has entered today
         assertFalse("Entered today was not reset", permit_list.getPermit("Jane").getEnteredToday());
         assertFalse("Entered today was not reset", permit_list.getPermit("Anna").getEnteredToday());
-
-
-
-
      
     }
-
     /**
-     * 7.	To test annualUpdateAll() method, create a permit, add it to the Permit_list,
+     * 	To test annualUpdateAll() method, create a permit, add it to the Permit_list,
      *  then we suspend it by adding 3 warnings.
-     *   After calling annualUpdateAll(), we test whether it resets all suspensions and warnings for all permits.  
+     *   After calling annualUpdateAll(), we test whether it resets all suspensions and warnings for all permits.
+     *   No permit is actually deleted, that is more dailyUpdateAll job.
      */
     @Test
     public void testAnnualUpdateAll() {
