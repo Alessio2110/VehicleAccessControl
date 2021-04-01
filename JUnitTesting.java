@@ -14,6 +14,7 @@ public class JUnitTesting  extends Permit_list {
      * Since the name of permit holders is used as a key, it is important to ensure there is only at a time with the same name.
      * 
      *    If the name is not found, an appropriate message is shown.
+     *    One sample data from each permit was used to ensure there was no problem with any particular subclass of Permit.
      */
     @Test
     public void testcheckNameExists() {
@@ -42,6 +43,8 @@ public class JUnitTesting  extends Permit_list {
     /**
      *  This test checks how many permits are stored in the permit list.
      *  It is needed to check that when we try to add, or remove, a permit the amount of permits in the permit list is actually altered as we would expect. 
+     *  Sample data from different subclasses of Permit was used to ensure that adding, or removing a permit, would work with all permits and we would
+     *  get the exact permit list size we would expect
      */
     @Test
     public void testGetSize() {
@@ -66,6 +69,11 @@ public class JUnitTesting  extends Permit_list {
         assertEquals("Permit was not added succesfully", 4, permit_list.getSize());
         assertNotEquals("Permit was not added succesfully", 3, permit_list.getSize());
         assertNotEquals("Permit was not added succesfully", 5, permit_list.getSize());
+        permit_list.removePermit("Anna");
+        permit_list.removePermit("James");
+        assertEquals("Permit were not removed succesfully", 2, permit_list.getSize());
+        assertNotEquals("Permit were not removed succesfully", 4, permit_list.getSize());
+        
     }
 
     /**
@@ -73,6 +81,7 @@ public class JUnitTesting  extends Permit_list {
      *  and if the name of the permit holder can be found in the permit list.
      *  This is important to test because in administration there is a "Cancel permit" panel which allows admin staff
      *  to permanently remove a permit.
+     *  Two permits were used as sample data, the subclass type should not matter for this operation.
      */
     @Test
     public void testRemovePermit() {
@@ -94,6 +103,7 @@ public class JUnitTesting  extends Permit_list {
     /**
      * It is important to check that when retrieving information from the permit list, no information is lost about the permit.
      * We check this for each type of permit subclass, more tests are made for permits with more attributes.
+     * Ensuring all data from all subclasses is stored and retrieved correctly is crucial for the type of system we are creating.
      */
     @Test
     public void testGetPermit(){
@@ -188,7 +198,8 @@ public class JUnitTesting  extends Permit_list {
 
     /**
      * For all permits, on a new day set that all permits have not entered today, and their used vehicle to null.
-     * Check whether the expired permit is removed after the end date has passed, this applies for DVP, and RVP only.
+     * Check whether the expired permit is removed after the end date has passed, this applies for DVP, and RVP only
+     * Different operations for some subclasses of Permit, for example RVP, and DVP, are removed from the list if they are expired.
      */
     @Test
     public void testDailyUpdateAll() {
@@ -259,6 +270,7 @@ public class JUnitTesting  extends Permit_list {
      * 	To test annualUpdateAll() method, create a permit, add it to the Permit_list,
      *  then we suspend it by adding 3 warnings.
      *   After calling annualUpdateAll(), we test whether it resets all suspensions and warnings for all permits.
+     *   The type of permit does not really change anything, so two random subclasses of Permit can be used, no need to test each one.
      *   No permit is actually deleted, that is more dailyUpdateAll job.
      */
     @Test
