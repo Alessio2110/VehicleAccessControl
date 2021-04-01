@@ -44,8 +44,8 @@ public class Vehicle_list {
 	 * @supplierCardinality 0..*
 	 * @directed
 	 */
-//    private java.util.Hashtable lnkVehicle;
 	private Hashtable<String, Vehicle_info> lnkVehicle;
+	
 	  /**
    	 * Constructor, create a hashtable with Vehicle_info as the object stored, and the registration number, a String, as the key
    	 */ 
@@ -58,24 +58,7 @@ public class Vehicle_list {
   	 * 
   	 * @param regNo the registration number
   	 */  
-	public boolean isRegistered(String regNo) { 	return (lnkVehicle.containsKey(regNo)); }
-	
-	
-
-	 /**
-  	 * Check whether there is a vehicle with that given registration number
-  	 * 
-  	 * @param regNo the registration number
-  	 */ 
-//	public void updatePermit(Permit p, Vehicle_info v) {
-//		p.increaseEntries();
-//		p.setVehicle(v);
-//	}
-	
-	
-//	public Permit getPermit(String reg) {
-//		return lnkVehicle.get(reg).getPermit();
-//	}
+	public boolean isRegistered(String regNo) { return (lnkVehicle.containsKey(regNo)); }
 
 	 /**
   	 * Add a new vehicle to the vehicle list
@@ -110,8 +93,6 @@ public class Vehicle_list {
   	 */ 
 	public int getSize() {	return lnkVehicle.size(); }
 	
-
-
 	/**
   	 * Get a String of all vehicles' registration numbers
   	 */ 
@@ -127,19 +108,5 @@ public class Vehicle_list {
 		Collections.reverse(allVehicles);
 		return Arrays.toString(allVehicles.toArray()).replace("[", "").replace("]", "");
 		// return allVehicles.toString();
-	}
-
-	 /**
-  	 * Method used to debug while creating the system, not needed for the final system. It may be worth to keep it.
-  	 */ 
-	public void printVehicles() {
-		Enumeration<String> keys = lnkVehicle.keys();
-		System.out.println("Vehicle List --- There are " + getSize() + " vehicles:");
-		while (keys.hasMoreElements()) {
-			String key = keys.nextElement();
-			System.out.println(
-					"Vehicle List --- Value of key: " + key + " Vehicle regNo is: " + lnkVehicle.get(key).getRegNo());
-		}
-	}
-	
+	}	
 }
